@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -24,7 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>分类：leetcode - 松松闲谈</title>
+  <title>单例模式 - 松松闲谈</title>
+  
+    <meta name="keywords" content="单例模式,设计模式,懒加载">
   
 
   
@@ -357,7 +357,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="full" class='cover-wrapper  dock' style="display: none;">
+        <div id="full" class='cover-wrapper datft dock' style="display: none;">
           
             <div class='cover-bg lazyload placeholder' data-bg="https://bing.ioliu.cn/v1/rand?w=1920&h=1200"></div>
           
@@ -432,72 +432,151 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper" id="pjax-container">
           
 
-
 <div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-datft" id="datft" itemscope itemprop="blogPost">
   
+
+
+  
+  <div class="article-meta" id="top">
     
-      
-  <section class="post-list">
     
-      
+    
+      <h1 class="title">
+        单例模式
+      </h1>
+      <div class='new-meta-box'>
         
           
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>申松朋</p>
+  </a>
+</div>
+
+          
         
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/07/09/mysite/">
-        mysite
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+    </a>
   </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
+
+
+          
         
-        <time>2021-07-09</time>
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年7月14日</p>
+  </a>
+</div>
+
+          
         
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/leetcode/">leetcode</a>
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="单例模式" data-path="/2021/07/14/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
         
       </div>
+    
+  </div>
+
+
+  
+  
+  <h2 id="单例设计模式（Singleton）"><a href="#单例设计模式（Singleton）" class="headerlink" title="单例设计模式（Singleton）"></a>单例设计模式（Singleton）</h2><h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><ol>
+<li>模式定义/应用场景/类图分析 </li>
+<li>字节码知识/字节码指令重排序 </li>
+<li>类加载机制 </li>
+<li>JVM序列化机制</li>
+<li>单例模式在Spring框架 &amp; JDK源码中的应用</li>
+</ol>
+<h3 id="模式定义"><a href="#模式定义" class="headerlink" title="模式定义"></a>模式定义</h3><p>保证一个类只有一个实例，并且提供一个全局的访问点</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>重量级对象。不需要单个实例，如线程池，数据库连接池</p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="1-懒汉模式"><a href="#1-懒汉模式" class="headerlink" title="1.懒汉模式"></a>1.懒汉模式</h3><p>懒汉模式：延迟加载， 只有在真正使用的时候，才开始实例化。 </p>
+<p>存在问题：</p>
+<ul>
+<li>线程安全问题 </li>
+<li>double check 加锁优化 </li>
+<li>编译器(JIT),CPU 有可能对指令进行重排序，导致使用到尚未初始化 的实例，可以通过添加volatile 关键字进行修饰，</li>
+</ul>
+<p>对于volatile 修饰的字段，可以防止指令重排。（具体原理后续文章展开）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LazySingleton</span></span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazySingleton instance; </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazySingleton</span><span class="params">()</span></span>&#123; </span><br><span class="line"></span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazySingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">if</span> (instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (LazySingleton.class)&#123; </span><br><span class="line">                <span class="keyword">if</span> (instance==<span class="keyword">null</span>)&#123; </span><br><span class="line">                    instance=<span class="keyword">new</span> LazySingleton(); </span><br><span class="line">            <span class="comment">// 字节码层 </span></span><br><span class="line">            <span class="comment">// JIT ， CPU 有可能对如下指令进行重排序</span></span><br><span class="line">            <span class="comment">// 1 .分配空间 </span></span><br><span class="line">            <span class="comment">// 2 .初始化 </span></span><br><span class="line">            <span class="comment">// 3 .引用赋值</span></span><br><span class="line">            <span class="comment">// 如重排序后的结果为如下 </span></span><br><span class="line">            <span class="comment">// 1 .分配空间 </span></span><br><span class="line">            <span class="comment">// 3 .引用赋值 如果在当前指令执行完，有其他线程来获取实例，将拿到尚未初始化好的实例 </span></span><br><span class="line">            <span class="comment">// 2 .初始化 </span></span><br><span class="line">                &#125; </span><br><span class="line">             &#125; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-饿汉模式："><a href="#2-饿汉模式：" class="headerlink" title="2.饿汉模式："></a>2.饿汉模式：</h3><p>类加载的初始化阶段就完成了实例的初始化。本质上就是借助于jvm 类加载机制，保证实例的唯一性（初始化过程只会执行一次）及线程安全（JVM以同步的形式来完成类加载的整个过程）。 </p>
+<p>类加载过程： </p>
+<ol>
+<li>加载二进制数据到内存中， 生成对应的Class数据结构， </li>
+<li>连接： a. 验证， b.准备（给类的静态成员变量赋默认值），c.解析 </li>
+<li>初始化： 给类的静态变量赋初值</li>
+</ol>
+<p>只有在真正使用对应的类时，才会触发初始化 如（ 当前类是启动类即 main函数所在类，直接进行new 操作，访问静态属性、访问静态方法，用反射访问类，初始化一个类的子类等.）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 饿汉模式 </span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HungrySingleton</span></span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HungrySingleton instance=<span class="keyword">new</span> HungrySingleton(); </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">HungrySingleton</span><span class="params">()</span></span>&#123; &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HungrySingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-静态内部类"><a href="#3-静态内部类" class="headerlink" title="3.静态内部类"></a>3.静态内部类</h3><ol>
+<li>本质上是利用类的加载机制来保证线程安全 </li>
+<li>只有在实际使用的时候，才会触发类的初始化，所以也是懒加载的一 种形式。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InnerClassSingleton</span></span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClassHolder</span></span>&#123; </span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> InnerClassSingleton instance= <span class="keyword">new</span> InnerClassSingleton(); </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">InnerClassSingleton</span><span class="params">()</span></span>&#123;  &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> InnerClassSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123; </span><br><span class="line">        <span class="keyword">return</span> InnerClassHolder.instance;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+  
+  
+  
+  
+
+  
+    <div class="prev-next">
       
-        <div>
-          <a class='readmore' href='/2021/07/09/mysite/'>
-            阅读全文
-          </a>
-        </div>
+        <a class='prev' href='/2021/07/14/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>模板方法模式</p>
+          <p class='content'>模板方法(Template Method)模式定义定义一个操作的算法骨架，而将一些步骤延迟到子类中。Template Method 使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤...</p>
+        </a>
+      
+      
+        <a class='next' href='/2021/07/09/mysite/'>
+          <p class='title'>mysite<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'></p>
+        </a>
       
     </div>
   
+</article>
 
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
 </div>
 
-          </div>
-        
-      
-    
-  </section>
-  
-    
-  
+  </article>
 
 
-    
-  
+
+
+
+
 </div>
 <aside class='l_side'>
   
@@ -505,131 +584,28 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     
     
 
-<section class="widget blogger shadow desktop mobile">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box rectangle' href='/about/'>
-          <img no-lazy src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-        
-        
-          <p><span id="jinrishici-sentence">松松闲谈</span></p>
-          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="/atom.xml"
-              class="social fas fa-rss flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="mailto:1054282887@qq.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/volantis-x/"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="/"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
 
-  
 
-  
-    
-    
-  
-
-  <section class="widget category shadow desktop">
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/categories/'><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/categories/leetcode/" href="/categories/leetcode/"
-            id="categoriesleetcode"
-            ><div class='name'>leetcode</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box"
-            title="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"
-            id="categoriesE8AEBEE8AEA1E6A8A1E5BC8F"
-            ><div class='name'>设计模式</div><div class='badge'>(4)</div></a></li>
-        
-      </ul>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E4%BE%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88Singleton%EF%BC%89"><span class="toc-text">单例设计模式（Singleton）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">知识点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="toc-text">模式定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">使用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%87%92%E6%B1%89%E6%A8%A1%E5%BC%8F"><span class="toc-text">1.懒汉模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%A5%BF%E6%B1%89%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="toc-text">2.饿汉模式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-text">3.静态内部类</span></a></li></ol></li></ol>
     </div>
   </section>
 
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow desktop mobile">
-    
-  <header>
-    
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tags/Observer/" style="font-size: 14px; color: #999">Observer</a> <a href="/tags/Prototype/" style="font-size: 14px; color: #999">Prototype</a> <a href="/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" style="font-size: 14px; color: #999">单例模式</a> <a href="/tags/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" style="font-size: 14px; color: #999">原型模式</a> <a href="/tags/%E6%87%92%E5%8A%A0%E8%BD%BD/" style="font-size: 14px; color: #999">懒加载</a> <a href="/tags/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95/" style="font-size: 14px; color: #999">模板方法</a> <a href="/tags/%E6%B5%85%E6%8B%B7%E8%B4%9D/" style="font-size: 14px; color: #999">浅拷贝</a> <a href="/tags/%E6%B5%8B%E8%AF%95/" style="font-size: 14px; color: #999">测试</a> <a href="/tags/%E6%B5%8B%E8%AF%951/" style="font-size: 14px; color: #999">测试1</a> <a href="/tags/%E6%B7%B1%E6%8B%B7%E8%B4%9D/" style="font-size: 14px; color: #999">深拷贝</a> <a href="/tags/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" style="font-size: 14px; color: #999">观察者模式</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 24px; color: #555">设计模式</a>
-    </div>
-  </section>
-
-
-  
 
   
 
 
 </aside>
+
 
 
 		  
