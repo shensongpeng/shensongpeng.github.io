@@ -1,165 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>原型模式</title>
-      <link href="/2021/07/14/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/"/>
-      <url>/2021/07/14/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</url>
-      
-        <content type="html"><![CDATA[<h1 id="原型模式-Prototype"><a href="#原型模式-Prototype" class="headerlink" title="原型模式(Prototype)"></a>原型模式(Prototype)</h1><h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><ol><li>Cloneable接口/Object#clone方法 详解 </li><li>浅拷贝/深拷贝</li><li>序列化机制实现深拷贝</li></ol><h2 id="模式定义"><a href="#模式定义" class="headerlink" title="模式定义:"></a>模式定义:</h2><p>指原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</p><h2 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h2><p>当代码不应该依赖于需要复制的对象的具体类时，请使用Prototype模式。</p><p>优点： </p><ol><li>可以不耦合具体类的情况下克隆对象 </li><li>避免重复的初始化代码</li><li>更方便的构建复杂对象</li></ol><h2 id="Spring源码中的应用"><a href="#Spring源码中的应用" class="headerlink" title="Spring源码中的应用"></a>Spring源码中的应用</h2><ul><li>org.springframework.beans.factory.support.bstractBeanDefinition</li><li>java.util.Arrays</li></ul>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>单例模式</title>
+    <url>/2021/07/14/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h2 id="单例设计模式（Singleton）"><a href="#单例设计模式（Singleton）" class="headerlink" title="单例设计模式（Singleton）"></a>单例设计模式（Singleton）</h2><h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><ol>
+<li>模式定义/应用场景/类图分析 </li>
+<li>字节码知识/字节码指令重排序 </li>
+<li>类加载机制 </li>
+<li>JVM序列化机制</li>
+<li>单例模式在Spring框架 &amp; JDK源码中的应用</li>
+</ol>
+<h3 id="模式定义"><a href="#模式定义" class="headerlink" title="模式定义"></a>模式定义</h3><p>保证一个类只有一个实例，并且提供一个全局的访问点</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>重量级对象。不需要单个实例，如线程池，数据库连接池</p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="1-懒汉模式"><a href="#1-懒汉模式" class="headerlink" title="1.懒汉模式"></a>1.懒汉模式</h3><p>懒汉模式：延迟加载， 只有在真正使用的时候，才开始实例化。 </p>
+<p>存在问题：</p>
+<ul>
+<li>线程安全问题 </li>
+<li>double check 加锁优化 </li>
+<li>编译器(JIT),CPU 有可能对指令进行重排序，导致使用到尚未初始化 的实例，可以通过添加volatile 关键字进行修饰，</li>
+</ul>
+<p>对于volatile 修饰的字段，可以防止指令重排。（具体原理后续文章展开）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LazySingleton</span></span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazySingleton instance; </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazySingleton</span><span class="params">()</span></span>&#123; </span><br><span class="line"></span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazySingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">if</span> (instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (LazySingleton.class)&#123; </span><br><span class="line">                <span class="keyword">if</span> (instance==<span class="keyword">null</span>)&#123; </span><br><span class="line">                    instance=<span class="keyword">new</span> LazySingleton(); </span><br><span class="line">            <span class="comment">// 字节码层 </span></span><br><span class="line">            <span class="comment">// JIT ， CPU 有可能对如下指令进行重排序</span></span><br><span class="line">            <span class="comment">// 1 .分配空间 </span></span><br><span class="line">            <span class="comment">// 2 .初始化 </span></span><br><span class="line">            <span class="comment">// 3 .引用赋值</span></span><br><span class="line">            <span class="comment">// 如重排序后的结果为如下 </span></span><br><span class="line">            <span class="comment">// 1 .分配空间 </span></span><br><span class="line">            <span class="comment">// 3 .引用赋值 如果在当前指令执行完，有其他线程来获取实例，将拿到尚未初始化好的实例 </span></span><br><span class="line">            <span class="comment">// 2 .初始化 </span></span><br><span class="line">                &#125; </span><br><span class="line">             &#125; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-饿汉模式："><a href="#2-饿汉模式：" class="headerlink" title="2.饿汉模式："></a>2.饿汉模式：</h3><p>类加载的初始化阶段就完成了实例的初始化。本质上就是借助于jvm 类加载机制，保证实例的唯一性（初始化过程只会执行一次）及线程安全（JVM以同步的形式来完成类加载的整个过程）。 </p>
+<p>类加载过程： </p>
+<ol>
+<li>加载二进制数据到内存中， 生成对应的Class数据结构， </li>
+<li>连接： a. 验证， b.准备（给类的静态成员变量赋默认值），c.解析 </li>
+<li>初始化： 给类的静态变量赋初值</li>
+</ol>
+<p>只有在真正使用对应的类时，才会触发初始化 如（ 当前类是启动类即 main函数所在类，直接进行new 操作，访问静态属性、访问静态方法，用反射访问类，初始化一个类的子类等.）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 饿汉模式 </span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HungrySingleton</span></span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HungrySingleton instance=<span class="keyword">new</span> HungrySingleton(); </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">HungrySingleton</span><span class="params">()</span></span>&#123; &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HungrySingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-静态内部类"><a href="#3-静态内部类" class="headerlink" title="3.静态内部类"></a>3.静态内部类</h3><ol>
+<li>本质上是利用类的加载机制来保证线程安全 </li>
+<li>只有在实际使用的时候，才会触发类的初始化，所以也是懒加载的一 种形式。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InnerClassSingleton</span></span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClassHolder</span></span>&#123; </span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> InnerClassSingleton instance= <span class="keyword">new</span> InnerClassSingleton(); </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">InnerClassSingleton</span><span class="params">()</span></span>&#123;  &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> InnerClassSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123; </span><br><span class="line">        <span class="keyword">return</span> InnerClassHolder.instance;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
       <categories>
-          
-          <category> 设计模式 </category>
-          
+        <category>设计模式</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 设计模式 </tag>
-            
-            <tag> 原型模式 </tag>
-            
-            <tag> Prototype </tag>
-            
-            <tag> 浅拷贝 </tag>
-            
-            <tag> 深拷贝 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>观察者模式</title>
-      <link href="/2021/07/14/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
-      <url>/2021/07/14/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
-      
-        <content type="html"><![CDATA[<h1 id="观察者模式-Observer"><a href="#观察者模式-Observer" class="headerlink" title="观察者模式(Observer)"></a>观察者模式(Observer)</h1><h2 id="模式定义"><a href="#模式定义" class="headerlink" title="模式定义"></a>模式定义</h2><p>定义了对象之间的一对多依赖，让多个观察者对象同时监听某一个主题 对象，当主题对象发生变化时，它的所有依赖者都会收到通知并更新。</p><h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>当更改一个对象的状态可能需要更改其他对象，并且实际的对象集事先 未知或动态更改时，请使用观察者模式。</p><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol><li>符合开闭原则 </li><li>可以在运行时建立对象之间的关系</li></ol><h2 id="jdk-amp-源码中的应用"><a href="#jdk-amp-源码中的应用" class="headerlink" title="jdk&amp;源码中的应用"></a>jdk&amp;源码中的应用</h2><ul><li>JDK: java.util.Observable </li><li>Spring: org.springframework.context.ApplicationListener</li></ul>]]></content>
-      
-      
+      <tags>
+        <tag>单例模式</tag>
+        <tag>设计模式</tag>
+        <tag>懒加载</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/07/09/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo </span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
+    <title>mysite</title>
+    <url>/2021/07/09/mysite/</url>
+    <content><![CDATA[]]></content>
       <categories>
-          
-          <category> 设计模式 </category>
-          
+        <category>leetcode</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 设计模式 </tag>
-            
-            <tag> 观察者模式 </tag>
-            
-            <tag> Observer </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>模板方法模式</title>
-      <link href="/2021/07/14/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
-      <url>/2021/07/14/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</url>
-      
-        <content type="html"><![CDATA[<h2 id="模板方法-Template-Method"><a href="#模板方法-Template-Method" class="headerlink" title="模板方法(Template Method)"></a>模板方法(Template Method)</h2><h3 id="模式定义"><a href="#模式定义" class="headerlink" title="模式定义"></a>模式定义</h3><p>定义一个操作的算法骨架，而将一些步骤延迟到子类中。Template Method 使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤</p><h3 id="样例代码"><a href="#样例代码" class="headerlink" title="样例代码"></a>样例代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TemplateMethodTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        AbstractClass abstractClass = <span class="keyword">new</span> SubClass();</span><br><span class="line">        abstractClass.operation();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractClass</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">operation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 定义一个操作的算法骨架</span></span><br><span class="line">        System.out.println(<span class="string">&quot; step 1&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot; step 2&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot; step 3&quot;</span>);</span><br><span class="line">        <span class="comment">//步骤延迟</span></span><br><span class="line">        templateMethod();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">templateMethod</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SubClass</span> <span class="keyword">extends</span> <span class="title">AbstractClass</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">templateMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;subclass step&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ol><li>当你想让客户端只扩展算法的特定步骤，而不是整个算法或其结构 时，请使用Template Method模式。 </li><li>当你有几个类包含几乎相同的算法，但有一些细微的差异时，请使用 此模式。</li></ol><p>优点： </p><ol><li>你可以让客户端只覆盖大型算法的某些部分，从而减少算法其他部分<br>发生的更改对它们的影响。</li><li>你可以将重复的代码拖放到超类中。</li></ol><h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><ul><li>javax.servlet.http.HttpServlet </li><li>org.springframework.web.servlet.mvc.AbstractController</li></ul>]]></content>
-      
-      
+      <tags>
+        <tag>测试</tag>
+        <tag>测试1</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>模板方法模式</title>
+    <url>/2021/07/14/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h2 id="模板方法-Template-Method"><a href="#模板方法-Template-Method" class="headerlink" title="模板方法(Template Method)"></a>模板方法(Template Method)</h2><h3 id="模式定义"><a href="#模式定义" class="headerlink" title="模式定义"></a>模式定义</h3><p>定义一个操作的算法骨架，而将一些步骤延迟到子类中。Template Method 使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤</p>
+<h3 id="样例代码"><a href="#样例代码" class="headerlink" title="样例代码"></a>样例代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TemplateMethodTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        AbstractClass abstractClass = <span class="keyword">new</span> SubClass();</span><br><span class="line">        abstractClass.operation();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractClass</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">operation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 定义一个操作的算法骨架</span></span><br><span class="line">        System.out.println(<span class="string">&quot; step 1&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot; step 2&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot; step 3&quot;</span>);</span><br><span class="line">        <span class="comment">//步骤延迟</span></span><br><span class="line">        templateMethod();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">templateMethod</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SubClass</span> <span class="keyword">extends</span> <span class="title">AbstractClass</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">templateMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;subclass step&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ol>
+<li>当你想让客户端只扩展算法的特定步骤，而不是整个算法或其结构 时，请使用Template Method模式。 </li>
+<li>当你有几个类包含几乎相同的算法，但有一些细微的差异时，请使用 此模式。</li>
+</ol>
+<p>优点： </p>
+<ol>
+<li>你可以让客户端只覆盖大型算法的某些部分，从而减少算法其他部分<br>发生的更改对它们的影响。</li>
+<li>你可以将重复的代码拖放到超类中。</li>
+</ol>
+<h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><ul>
+<li>javax.servlet.http.HttpServlet </li>
+<li>org.springframework.web.servlet.mvc.AbstractController</li>
+</ul>
+]]></content>
       <categories>
-          
-          <category> 设计模式 </category>
-          
+        <category>设计模式</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 设计模式 </tag>
-            
-            <tag> 模板方法 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>单例模式</title>
-      <link href="/2021/07/14/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
-      <url>/2021/07/14/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</url>
-      
-        <content type="html"><![CDATA[<h2 id="单例设计模式（Singleton）"><a href="#单例设计模式（Singleton）" class="headerlink" title="单例设计模式（Singleton）"></a>单例设计模式（Singleton）</h2><h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><ol><li>模式定义/应用场景/类图分析 </li><li>字节码知识/字节码指令重排序 </li><li>类加载机制 </li><li>JVM序列化机制</li><li>单例模式在Spring框架 &amp; JDK源码中的应用</li></ol><h3 id="模式定义"><a href="#模式定义" class="headerlink" title="模式定义"></a>模式定义</h3><p>保证一个类只有一个实例，并且提供一个全局的访问点</p><h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>重量级对象。不需要单个实例，如线程池，数据库连接池</p><h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="1-懒汉模式"><a href="#1-懒汉模式" class="headerlink" title="1.懒汉模式"></a>1.懒汉模式</h3><p>懒汉模式：延迟加载， 只有在真正使用的时候，才开始实例化。 </p><p>存在问题：</p><ul><li>线程安全问题 </li><li>double check 加锁优化 </li><li>编译器(JIT),CPU 有可能对指令进行重排序，导致使用到尚未初始化 的实例，可以通过添加volatile 关键字进行修饰，</li></ul><p>对于volatile 修饰的字段，可以防止指令重排。（具体原理后续文章展开）</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LazySingleton</span></span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazySingleton instance; </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazySingleton</span><span class="params">()</span></span>&#123; </span><br><span class="line"></span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazySingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">if</span> (instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (LazySingleton.class)&#123; </span><br><span class="line">                <span class="keyword">if</span> (instance==<span class="keyword">null</span>)&#123; </span><br><span class="line">                    instance=<span class="keyword">new</span> LazySingleton(); </span><br><span class="line">            <span class="comment">// 字节码层 </span></span><br><span class="line">            <span class="comment">// JIT ， CPU 有可能对如下指令进行重排序</span></span><br><span class="line">            <span class="comment">// 1 .分配空间 </span></span><br><span class="line">            <span class="comment">// 2 .初始化 </span></span><br><span class="line">            <span class="comment">// 3 .引用赋值</span></span><br><span class="line">            <span class="comment">// 如重排序后的结果为如下 </span></span><br><span class="line">            <span class="comment">// 1 .分配空间 </span></span><br><span class="line">            <span class="comment">// 3 .引用赋值 如果在当前指令执行完，有其他线程来获取实例，将拿到尚未初始化好的实例 </span></span><br><span class="line">            <span class="comment">// 2 .初始化 </span></span><br><span class="line">                &#125; </span><br><span class="line">             &#125; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="2-饿汉模式："><a href="#2-饿汉模式：" class="headerlink" title="2.饿汉模式："></a>2.饿汉模式：</h3><p>类加载的初始化阶段就完成了实例的初始化。本质上就是借助于jvm 类加载机制，保证实例的唯一性（初始化过程只会执行一次）及线程安全（JVM以同步的形式来完成类加载的整个过程）。 </p><p>类加载过程： </p><ol><li>加载二进制数据到内存中， 生成对应的Class数据结构， </li><li>连接： a. 验证， b.准备（给类的静态成员变量赋默认值），c.解析 </li><li>初始化： 给类的静态变量赋初值</li></ol><p>只有在真正使用对应的类时，才会触发初始化 如（ 当前类是启动类即 main函数所在类，直接进行new 操作，访问静态属性、访问静态方法，用反射访问类，初始化一个类的子类等.）</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 饿汉模式 </span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HungrySingleton</span></span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HungrySingleton instance=<span class="keyword">new</span> HungrySingleton(); </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">HungrySingleton</span><span class="params">()</span></span>&#123; &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HungrySingleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="3-静态内部类"><a href="#3-静态内部类" class="headerlink" title="3.静态内部类"></a>3.静态内部类</h3><ol><li>本质上是利用类的加载机制来保证线程安全 </li><li>只有在实际使用的时候，才会触发类的初始化，所以也是懒加载的一 种形式。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InnerClassSingleton</span></span>&#123; </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClassHolder</span></span>&#123; </span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> InnerClassSingleton instance= <span class="keyword">new</span> InnerClassSingleton(); </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">InnerClassSingleton</span><span class="params">()</span></span>&#123;  &#125; </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> InnerClassSingleton <span class="title">getInstance</span><span class="params">()</span></span>&#123; </span><br><span class="line">        <span class="keyword">return</span> InnerClassHolder.instance;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol>]]></content>
-      
-      
+      <tags>
+        <tag>设计模式</tag>
+        <tag>模板方法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>观察者模式</title>
+    <url>/2021/07/14/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="观察者模式-Observer"><a href="#观察者模式-Observer" class="headerlink" title="观察者模式(Observer)"></a>观察者模式(Observer)</h1><h2 id="模式定义"><a href="#模式定义" class="headerlink" title="模式定义"></a>模式定义</h2><p>定义了对象之间的一对多依赖，让多个观察者对象同时监听某一个主题 对象，当主题对象发生变化时，它的所有依赖者都会收到通知并更新。</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>当更改一个对象的状态可能需要更改其他对象，并且实际的对象集事先 未知或动态更改时，请使用观察者模式。</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
+<li>符合开闭原则 </li>
+<li>可以在运行时建立对象之间的关系</li>
+</ol>
+<h2 id="jdk-amp-源码中的应用"><a href="#jdk-amp-源码中的应用" class="headerlink" title="jdk&amp;源码中的应用"></a>jdk&amp;源码中的应用</h2><ul>
+<li>JDK: java.util.Observable </li>
+<li>Spring: org.springframework.context.ApplicationListener</li>
+</ul>
+]]></content>
       <categories>
-          
-          <category> 设计模式 </category>
-          
+        <category>设计模式</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 单例模式 </tag>
-            
-            <tag> 设计模式 </tag>
-            
-            <tag> 懒加载 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>mysite</title>
-      <link href="/2021/07/09/mysite/"/>
-      <url>/2021/07/09/mysite/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
+      <tags>
+        <tag>设计模式</tag>
+        <tag>观察者模式</tag>
+        <tag>Observer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>原型模式</title>
+    <url>/2021/07/14/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="原型模式-Prototype"><a href="#原型模式-Prototype" class="headerlink" title="原型模式(Prototype)"></a>原型模式(Prototype)</h1><h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><ol>
+<li>Cloneable接口/Object#clone方法 详解 </li>
+<li>浅拷贝/深拷贝</li>
+<li>序列化机制实现深拷贝</li>
+</ol>
+<h2 id="模式定义"><a href="#模式定义" class="headerlink" title="模式定义:"></a>模式定义:</h2><p>指原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</p>
+<h2 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h2><p>当代码不应该依赖于需要复制的对象的具体类时，请使用Prototype模式。</p>
+<p>优点： </p>
+<ol>
+<li>可以不耦合具体类的情况下克隆对象 </li>
+<li>避免重复的初始化代码</li>
+<li>更方便的构建复杂对象</li>
+</ol>
+<h2 id="Spring源码中的应用"><a href="#Spring源码中的应用" class="headerlink" title="Spring源码中的应用"></a>Spring源码中的应用</h2><ul>
+<li>org.springframework.beans.factory.support.bstractBeanDefinition</li>
+<li>java.util.Arrays</li>
+</ul>
+]]></content>
       <categories>
-          
-          <category> leetcode </category>
-          
+        <category>设计模式</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 测试 </tag>
-            
-            <tag> 测试1 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/2021/07/09/hello-world/"/>
-      <url>/2021/07/09/hello-world/</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo </span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>设计模式</tag>
+        <tag>原型模式</tag>
+        <tag>Prototype</tag>
+        <tag>浅拷贝</tag>
+        <tag>深拷贝</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>三大范式</title>
+    <url>/2021/07/15/%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F/</url>
+    <content><![CDATA[<h2 id="三大范式"><a href="#三大范式" class="headerlink" title="三大范式"></a>三大范式</h2><h3 id="第一范式（1NF）："><a href="#第一范式（1NF）：" class="headerlink" title="第一范式（1NF）："></a>第一范式（1NF）：</h3><p>要求数据库表的每一列都是不可分割的原子数据项。</p>
+<h3 id="第二范式（2NF）："><a href="#第二范式（2NF）：" class="headerlink" title="第二范式（2NF）："></a>第二范式（2NF）：</h3><p>在1NF的基础上，非码属性必须完全依赖于候选码（在1NF基础上消除非主属性对主码的部分函数依赖）</p>
+<p>第二范式需要确保数据库表中的每一列都和主键相关，而不能只与主键的某一部分相关（主要针对联合主键而言）。</p>
+<h3 id="第三范式（3NF）："><a href="#第三范式（3NF）：" class="headerlink" title="第三范式（3NF）："></a>第三范式（3NF）：</h3><p>在2NF基础上，任何非主属性不依赖于其它非主属性（在2NF基础上消除传递依赖）</p>
+<p>第三范式需要确保数据表中的每一列数据都和主键直接相关，而不能间接相关。</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>范式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mysql索引</title>
+    <url>/2021/07/15/mysql%E7%B4%A2%E5%BC%95/</url>
+    <content><![CDATA[<h2 id="mysql索引"><a href="#mysql索引" class="headerlink" title="mysql索引"></a>mysql索引</h2><h3 id="索引是什么"><a href="#索引是什么" class="headerlink" title="索引是什么"></a>索引是什么</h3><p>索引是帮助Mysql高效获取数据的排好序的数据结构。</p>
+<p>索引可以用的数据结构有：</p>
+<ul>
+<li>二叉树</li>
+<li>红黑树</li>
+<li>Hash表</li>
+<li>B-Tree</li>
+</ul>
+<h3 id="BTree"><a href="#BTree" class="headerlink" title="BTree"></a>BTree</h3><ul>
+<li><p>叶子节点具有相同的深度，叶节点的指针为空</p>
+</li>
+<li><p>所有索引元素不重复</p>
+</li>
+<li><p>节点中的数据索引从左往右递增排列</p>
+<h3 id="B-树（B树变种）"><a href="#B-树（B树变种）" class="headerlink" title="B+树（B树变种）"></a>B+树（B树变种）</h3></li>
+<li><p>非叶子节点不存储data，只存储索引（索引会冗余），因此每页可以存储更多索引</p>
+</li>
+<li><p>叶子节点包含所有索引字段</p>
+</li>
+<li><p>叶子节点用指针连接，提高区间访问能力</p>
+</li>
+</ul>
+<h3 id="聚集索引"><a href="#聚集索引" class="headerlink" title="聚集索引"></a>聚集索引</h3><p>索引文件和数据文件在一起的是聚集索引。</p>
+<h3 id="非聚集索引"><a href="#非聚集索引" class="headerlink" title="非聚集索引"></a>非聚集索引</h3><p>索引文件和数据文件分离的是非聚集索引</p>
+<h3 id="InnoDB索引实现"><a href="#InnoDB索引实现" class="headerlink" title="InnoDB索引实现"></a>InnoDB索引实现</h3><p>InnoDb索引是聚集索引。表数据本身就是按照B+树结构存储的一个索引结构文件。因此InnDB存储的表必须存在主键。<br>辅助索引使用的非聚集索引。存储的是主键值。聚集索引的叶子节点包含了完整的数据记录。</p>
+<h4 id="为何InonoDB非主键索引结构叶子节点存储的是主键值"><a href="#为何InonoDB非主键索引结构叶子节点存储的是主键值" class="headerlink" title="为何InonoDB非主键索引结构叶子节点存储的是主键值"></a>为何InonoDB非主键索引结构叶子节点存储的是主键值</h4><p>非主键索引叶子节点存储主键而不是存储数据是从两方面考虑。一是如果存储数据数据的更新删除添加操作会存在数据不一致问题。<br>维护数据一致性会很复杂。二是会浪费大量空间。</p>
+<h4 id="为什么InnoDb表必须有主键且推荐使用整型的自增主键"><a href="#为什么InnoDb表必须有主键且推荐使用整型的自增主键" class="headerlink" title="为什么InnoDb表必须有主键且推荐使用整型的自增主键"></a>为什么InnoDb表必须有主键且推荐使用整型的自增主键</h4><p>表数据本身就是按照B+树结构存储的，因此必须有主键，</p>
+<h3 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h3><p>联合索引的存储结构也是采用b+树，索引值是按照构建索引时键的顺序存储。<br>叶子节点存储的是主键值。</p>
+<h4 id="最左前缀原理"><a href="#最左前缀原理" class="headerlink" title="最左前缀原理"></a>最左前缀原理</h4><p>如果要使用联合索引必须要遵循最左前缀原理使用。比如key（a,b,c）<br>直接使用c是几乎不会走索引的。也就是说要使用联合索引的字段进行查询。<br>在联合索引中这个字段的左侧字段也必须使用。不然不会走索引（覆盖索引例外）。</p>
+<h3 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h3>]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>索引</tag>
+        <tag>数据结构</tag>
+        <tag>B+数</tag>
+        <tag>Hash</tag>
+      </tags>
+  </entry>
 </search>

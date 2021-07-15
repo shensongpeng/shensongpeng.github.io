@@ -6,7 +6,7 @@
   <link href="https://shensongpeng.github.io/atom.xml" rel="self"/>
   
   <link href="https://shensongpeng.github.io/"/>
-  <updated>2021-07-14T12:18:04.123Z</updated>
+  <updated>2021-07-15T03:38:47.074Z</updated>
   <id>https://shensongpeng.github.io/</id>
   
   <author>
@@ -15,6 +15,64 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mysql索引</title>
+    <link href="https://shensongpeng.github.io/2021/07/15/mysql%E7%B4%A2%E5%BC%95/"/>
+    <id>https://shensongpeng.github.io/2021/07/15/mysql%E7%B4%A2%E5%BC%95/</id>
+    <published>2021-07-15T03:38:47.000Z</published>
+    <updated>2021-07-15T03:38:47.074Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="mysql索引"><a href="#mysql索引" class="headerlink" title="mysql索引"></a>mysql索引</h2><h3 id="索引是什么"><a href="#索引是什么" class="headerlink" title="索引是什么"></a>索引是什么</h3><p>索引是帮助Mysql高效获取数据的排好序的数据结构。</p><p>索引可以用的数据结构有：</p><ul><li>二叉树</li><li>红黑树</li><li>Hash表</li><li>B-Tree</li></ul><h3 id="BTree"><a href="#BTree" class="headerlink" title="BTree"></a>BTree</h3><ul><li><p>叶子节点具有相同的深度，叶节点的指针为空</p></li><li><p>所有索引元素不重复</p></li><li><p>节点中的数据索引从左往右递增排列</p><h3 id="B-树（B树变种）"><a href="#B-树（B树变种）" class="headerlink" title="B+树（B树变种）"></a>B+树（B树变种）</h3></li><li><p>非叶子节点不存储data，只存储索引（索引会冗余），因此每页可以存储更多索引</p></li><li><p>叶子节点包含所有索引字段</p></li><li><p>叶子节点用指针连接，提高区间访问能力</p></li></ul><h3 id="聚集索引"><a href="#聚集索引" class="headerlink" title="聚集索引"></a>聚集索引</h3><p>索引文件和数据文件在一起的是聚集索引。</p><h3 id="非聚集索引"><a href="#非聚集索引" class="headerlink" title="非聚集索引"></a>非聚集索引</h3><p>索引文件和数据文件分离的是非聚集索引</p><h3 id="InnoDB索引实现"><a href="#InnoDB索引实现" class="headerlink" title="InnoDB索引实现"></a>InnoDB索引实现</h3><p>InnoDb索引是聚集索引。表数据本身就是按照B+树结构存储的一个索引结构文件。因此InnDB存储的表必须存在主键。<br>辅助索引使用的非聚集索引。存储的是主键值。聚集索引的叶子节点包含了完整的数据记录。</p><h4 id="为何InonoDB非主键索引结构叶子节点存储的是主键值"><a href="#为何InonoDB非主键索引结构叶子节点存储的是主键值" class="headerlink" title="为何InonoDB非主键索引结构叶子节点存储的是主键值"></a>为何InonoDB非主键索引结构叶子节点存储的是主键值</h4><p>非主键索引叶子节点存储主键而不是存储数据是从两方面考虑。一是如果存储数据数据的更新删除添加操作会存在数据不一致问题。<br>维护数据一致性会很复杂。二是会浪费大量空间。</p><h4 id="为什么InnoDb表必须有主键且推荐使用整型的自增主键"><a href="#为什么InnoDb表必须有主键且推荐使用整型的自增主键" class="headerlink" title="为什么InnoDb表必须有主键且推荐使用整型的自增主键"></a>为什么InnoDb表必须有主键且推荐使用整型的自增主键</h4><p>表数据本身就是按照B+树结构存储的，因此必须有主键，</p><h3 id="联合索引"><a href="#联合索引" class="headerlink" title="联合索引"></a>联合索引</h3><p>联合索引的存储结构也是采用b+树，索引值是按照构建索引时键的顺序存储。<br>叶子节点存储的是主键值。</p><h4 id="最左前缀原理"><a href="#最左前缀原理" class="headerlink" title="最左前缀原理"></a>最左前缀原理</h4><p>如果要使用联合索引必须要遵循最左前缀原理使用。比如key（a,b,c）<br>直接使用c是几乎不会走索引的。也就是说要使用联合索引的字段进行查询。<br>在联合索引中这个字段的左侧字段也必须使用。不然不会走索引（覆盖索引例外）。</p><h3 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h3>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;mysql索引&quot;&gt;&lt;a href=&quot;#mysql索引&quot; class=&quot;headerlink&quot; title=&quot;mysql索引&quot;&gt;&lt;/a&gt;mysql索引&lt;/h2&gt;&lt;h3 id=&quot;索引是什么&quot;&gt;&lt;a href=&quot;#索引是什么&quot; class=&quot;headerlink&quot; ti</summary>
+      
+    
+    
+    
+    <category term="数据库" scheme="https://shensongpeng.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="数据库" scheme="https://shensongpeng.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    <category term="索引" scheme="https://shensongpeng.github.io/tags/%E7%B4%A2%E5%BC%95/"/>
+    
+    <category term="数据结构" scheme="https://shensongpeng.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    <category term="B+数" scheme="https://shensongpeng.github.io/tags/B-%E6%95%B0/"/>
+    
+    <category term="Hash" scheme="https://shensongpeng.github.io/tags/Hash/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>三大范式</title>
+    <link href="https://shensongpeng.github.io/2021/07/15/%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F/"/>
+    <id>https://shensongpeng.github.io/2021/07/15/%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F/</id>
+    <published>2021-07-15T03:33:24.000Z</published>
+    <updated>2021-07-15T03:33:24.833Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="三大范式"><a href="#三大范式" class="headerlink" title="三大范式"></a>三大范式</h2><h3 id="第一范式（1NF）："><a href="#第一范式（1NF）：" class="headerlink" title="第一范式（1NF）："></a>第一范式（1NF）：</h3><p>要求数据库表的每一列都是不可分割的原子数据项。</p><h3 id="第二范式（2NF）："><a href="#第二范式（2NF）：" class="headerlink" title="第二范式（2NF）："></a>第二范式（2NF）：</h3><p>在1NF的基础上，非码属性必须完全依赖于候选码（在1NF基础上消除非主属性对主码的部分函数依赖）</p><p>第二范式需要确保数据库表中的每一列都和主键相关，而不能只与主键的某一部分相关（主要针对联合主键而言）。</p><h3 id="第三范式（3NF）："><a href="#第三范式（3NF）：" class="headerlink" title="第三范式（3NF）："></a>第三范式（3NF）：</h3><p>在2NF基础上，任何非主属性不依赖于其它非主属性（在2NF基础上消除传递依赖）</p><p>第三范式需要确保数据表中的每一列数据都和主键直接相关，而不能间接相关。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;三大范式&quot;&gt;&lt;a href=&quot;#三大范式&quot; class=&quot;headerlink&quot; title=&quot;三大范式&quot;&gt;&lt;/a&gt;三大范式&lt;/h2&gt;&lt;h3 id=&quot;第一范式（1NF）：&quot;&gt;&lt;a href=&quot;#第一范式（1NF）：&quot; class=&quot;headerlink&quot; titl</summary>
+      
+    
+    
+    
+    <category term="数据库" scheme="https://shensongpeng.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="数据库" scheme="https://shensongpeng.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    <category term="范式" scheme="https://shensongpeng.github.io/tags/%E8%8C%83%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>原型模式</title>
