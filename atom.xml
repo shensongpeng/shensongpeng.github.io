@@ -3,11 +3,11 @@
   <title>松松闲谈</title>
   
   
-  <link href="https://shensongpeng.github.io/atom.xml" rel="self"/>
+  <link href="https://songsong.ink/atom.xml" rel="self"/>
   
-  <link href="https://shensongpeng.github.io/"/>
-  <updated>2021-07-20T05:59:45.177Z</updated>
-  <id>https://shensongpeng.github.io/</id>
+  <link href="https://songsong.ink/"/>
+  <updated>2021-07-21T04:13:57.593Z</updated>
+  <id>https://songsong.ink/</id>
   
   <author>
     <name>shensongpeng</name>
@@ -17,9 +17,75 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>垃圾收集</title>
+    <link href="https://songsong.ink/2021/07/21/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86/"/>
+    <id>https://songsong.ink/2021/07/21/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86/</id>
+    <published>2021-07-21T02:25:59.000Z</published>
+    <updated>2021-07-21T04:13:57.593Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="对象已死判断"><a href="#对象已死判断" class="headerlink" title="对象已死判断"></a>对象已死判断</h2><h3 id="引用计数法"><a href="#引用计数法" class="headerlink" title="引用计数法"></a>引用计数法</h3><p>引用计数法实在对象中添加一个引用计数器，每当有一个地方引用他时，计数器就加一；当引用失效时，计数器减一；任何时刻计数器为0的对象就是不可能在被使用的。</p><p>引用计数法回占用一些额外的存储空间来进行计数，但是原理简单，判断效率搞。但是看似简单的算法有很多例外的情况需要考虑，譬如单纯的引用计数法无法解决对象之间循环引用的问题，这就需要大量额外处理才能保证正确地工作。</p><h4 id="循环引用问题"><a href="#循环引用问题" class="headerlink" title="循环引用问题"></a>循环引用问题</h4><p>对象objA 和 objB都有字段instance，令 ，objB.instance = objA。此外两个对象没有其他引用，实际上两个对象已经不可能在被访问，但是他们互选引用着对方，导致他们的引用计数器不为0，引用计数算法无法对他们进行回收。</p><p>代码样例</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReferenceCountingGC</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> Object instance = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _1MB = <span class="number">1024</span>*<span class="number">1024</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 这个成员属性的唯一意义就是占点内存，以便能在GC日志中看清楚是否有回收过</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] bigSize = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1MB];</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testGC</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ReferenceCountingGC objA = <span class="keyword">new</span> ReferenceCountingGC();</span><br><span class="line">        ReferenceCountingGC objB = <span class="keyword">new</span> ReferenceCountingGC();</span><br><span class="line">        objA.instance = objB;</span><br><span class="line">        objB.instance = objA;</span><br><span class="line"></span><br><span class="line">        objA = <span class="keyword">null</span>;</span><br><span class="line">        objB = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 假设在这行发生GC，objA和objB是否能被回收？</span></span><br><span class="line">        System.gc();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        testGC();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="可达性分析"><a href="#可达性分析" class="headerlink" title="可达性分析"></a>可达性分析</h3><p>可达性分析（eachability Analysis）的基本思路时通过一系列GC ROOTs 的根对象作为其实节点集，从这些节点开始，根据引用关系向下搜索，搜索过程所走过的路径称为“引用链”（Reference Chain）如果这个对象到GC ROOTS没有任何引用链相连，或者说不可达，则证明对象不可能再使用的。</p><h4 id="GC-ROOTs的对象"><a href="#GC-ROOTs的对象" class="headerlink" title="GC ROOTs的对象"></a>GC ROOTs的对象</h4><h5 id="固定的GC-ROOTS集合"><a href="#固定的GC-ROOTS集合" class="headerlink" title="固定的GC ROOTS集合"></a>固定的GC ROOTS集合</h5><ul><li>虚拟机栈（栈帧中的本地变量表）中引用的对象，比如使用到的参数、局部变量、临时变量等</li><li>方法区中类静态属性引用的变量，比如java类的引用类型静态变量</li><li>方法区中常量引用的对象，比如字符串常量池（String table）的引用</li><li>本地方法栈中JNI（native方法）引用的对象</li><li>java虚拟机内部的引用，比如基本数据类型对应的Class对象，常驻异常对象（OutOfMEmoryError NullPointException）等，还有系统类加载器</li><li>同步锁持有的对象</li><li>java虚拟机内部情况的JMXBean、JVMTI中注册的回调、本地代码缓存</li></ul><h5 id="非固定的GC-ROOTS"><a href="#非固定的GC-ROOTS" class="headerlink" title="非固定的GC ROOTS"></a>非固定的GC ROOTS</h5><p>根据用户所选用的垃圾收集器以及当前回收的内存区域不同，还可以有其他对象“临时性”地加入，共同构成完整GC Roots集合。（跨代引用问题）</p><h3 id="引用分类"><a href="#引用分类" class="headerlink" title="引用分类"></a>引用分类</h3><p>引用计数算法和可达性分析都是通过引用来判断对象是否存活。一个对象只有“引用”和“引用未”这两种状态在有些情况下不能完全适用。比如缓存这种对象，当内存空间还足够时，能够保留在内存中，如果内存空间进行垃圾收集后仍然非常紧张，那就可以抛弃这些对象。</p><p>JDK1.2后引用的概念进行了扩充引用的分类有</p><ul><li>强引用 Object obj=new Object() 这种引用关系。无论任何情况下，只要强引用关系还存在，垃圾收集器就永远不会回收掉被引用的对象。</li><li>软引用 描述一些还有用，但非必须的对象。只被软引用关联着的对象，在系统将要发生内存溢出异常前，会把这些对象列进回收范围之中进行第二次回收，如果这次回收还没有足够的内存，才会抛出内存溢出异常。在JDK 1.2版之后提供了SoftReference类来实现软引用。</li><li>弱引用 描述那些非必须对象，但是它的强度比软引用更弱一些，被弱引用关联的对象只能生存到下一次垃圾收集发生为止。当垃圾收集器开始工作，无论当前内存是否足够，都会回收掉只被弱引用关联的对象。在JDK 1.2版之后提供了WeakReference类来实现弱引用。</li><li>虚引用 也称为“幽灵引用”或者“幻影引用”，它是最弱的一种引用关系。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用来取得一个对象实例。为一个对象设置虚引用关联的唯一目的只是为了能在这个对象被收集器回收时收到一个系统通知。在JDK 1.2版之后提供了PhantomReference类来实现虚引用。</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;对象已死判断&quot;&gt;&lt;a href=&quot;#对象已死判断&quot; class=&quot;headerlink&quot; title=&quot;对象已死判断&quot;&gt;&lt;/a&gt;对象已死判断&lt;/h2&gt;&lt;h3 id=&quot;引用计数法&quot;&gt;&lt;a href=&quot;#引用计数法&quot; class=&quot;headerlink&quot; title=</summary>
+      
+    
+    
+    
+    <category term="jvm" scheme="https://songsong.ink/categories/jvm/"/>
+    
+    
+    <category term="垃圾收集算法" scheme="https://songsong.ink/tags/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="对象死亡判断" scheme="https://songsong.ink/tags/%E5%AF%B9%E8%B1%A1%E6%AD%BB%E4%BA%A1%E5%88%A4%E6%96%AD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mysql缓冲池</title>
+    <link href="https://songsong.ink/2021/07/20/mysql%E7%BC%93%E5%86%B2%E6%B1%A0/"/>
+    <id>https://songsong.ink/2021/07/20/mysql%E7%BC%93%E5%86%B2%E6%B1%A0/</id>
+    <published>2021-07-20T10:05:19.000Z</published>
+    <updated>2021-07-21T05:31:38.298Z</updated>
+    
+    
+    
+    
+    <category term="mysql" scheme="https://songsong.ink/categories/mysql/"/>
+    
+    
+    <category term="缓冲池" scheme="https://songsong.ink/tags/%E7%BC%93%E5%86%B2%E6%B1%A0/"/>
+    
+    <category term="mysql" scheme="https://songsong.ink/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>7.20工作记录</title>
+    <link href="https://songsong.ink/2021/07/20/7-20%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/"/>
+    <id>https://songsong.ink/2021/07/20/7-20%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/</id>
+    <published>2021-07-20T08:13:10.000Z</published>
+    <updated>2021-07-20T08:14:12.406Z</updated>
+    
+    <content type="html"><![CDATA[<p>创意目前先将物料存放到对象里，之后在确定是否落到数据库</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;创意目前先将物料存放到对象里，之后在确定是否落到数据库&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>JVM基础故障处理工具</title>
-    <link href="https://shensongpeng.github.io/2021/07/19/JVM%E5%9F%BA%E7%A1%80%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/"/>
-    <id>https://shensongpeng.github.io/2021/07/19/JVM%E5%9F%BA%E7%A1%80%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/</id>
+    <link href="https://songsong.ink/2021/07/19/JVM%E5%9F%BA%E7%A1%80%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/"/>
+    <id>https://songsong.ink/2021/07/19/JVM%E5%9F%BA%E7%A1%80%E6%95%85%E9%9A%9C%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7/</id>
     <published>2021-07-19T05:51:53.000Z</published>
     <updated>2021-07-20T05:59:45.177Z</updated>
     
@@ -33,19 +99,19 @@
     
     
     
-    <category term="jvm" scheme="https://shensongpeng.github.io/categories/jvm/"/>
+    <category term="jvm" scheme="https://songsong.ink/categories/jvm/"/>
     
     
-    <category term="jvm" scheme="https://shensongpeng.github.io/tags/jvm/"/>
+    <category term="jvm" scheme="https://songsong.ink/tags/jvm/"/>
     
-    <category term="基础故障" scheme="https://shensongpeng.github.io/tags/%E5%9F%BA%E7%A1%80%E6%95%85%E9%9A%9C/"/>
+    <category term="基础故障" scheme="https://songsong.ink/tags/%E5%9F%BA%E7%A1%80%E6%95%85%E9%9A%9C/"/>
     
   </entry>
   
   <entry>
     <title>5815. 扣分后的最大得分</title>
-    <link href="https://shensongpeng.github.io/2021/07/18/5815-%E6%89%A3%E5%88%86%E5%90%8E%E7%9A%84%E6%9C%80%E5%A4%A7%E5%BE%97%E5%88%86/"/>
-    <id>https://shensongpeng.github.io/2021/07/18/5815-%E6%89%A3%E5%88%86%E5%90%8E%E7%9A%84%E6%9C%80%E5%A4%A7%E5%BE%97%E5%88%86/</id>
+    <link href="https://songsong.ink/2021/07/18/5815-%E6%89%A3%E5%88%86%E5%90%8E%E7%9A%84%E6%9C%80%E5%A4%A7%E5%BE%97%E5%88%86/"/>
+    <id>https://songsong.ink/2021/07/18/5815-%E6%89%A3%E5%88%86%E5%90%8E%E7%9A%84%E6%9C%80%E5%A4%A7%E5%BE%97%E5%88%86/</id>
     <published>2021-07-18T06:21:40.499Z</published>
     <updated>2021-07-18T10:40:49.802Z</updated>
     
@@ -59,21 +125,21 @@
     
     
     
-    <category term="leetcode" scheme="https://shensongpeng.github.io/categories/leetcode/"/>
+    <category term="leetcode" scheme="https://songsong.ink/categories/leetcode/"/>
     
     
-    <category term="周赛" scheme="https://shensongpeng.github.io/tags/%E5%91%A8%E8%B5%9B/"/>
+    <category term="周赛" scheme="https://songsong.ink/tags/%E5%91%A8%E8%B5%9B/"/>
     
-    <category term="面试" scheme="https://shensongpeng.github.io/tags/%E9%9D%A2%E8%AF%95/"/>
+    <category term="面试" scheme="https://songsong.ink/tags/%E9%9D%A2%E8%AF%95/"/>
     
-    <category term="中等" scheme="https://shensongpeng.github.io/tags/%E4%B8%AD%E7%AD%89/"/>
+    <category term="中等" scheme="https://songsong.ink/tags/%E4%B8%AD%E7%AD%89/"/>
     
   </entry>
   
   <entry>
     <title>面试题 10.02. 变位词组</title>
-    <link href="https://shensongpeng.github.io/2021/07/17/%E6%96%B0%E7%9A%84%E6%96%87%E7%AB%A0/"/>
-    <id>https://shensongpeng.github.io/2021/07/17/%E6%96%B0%E7%9A%84%E6%96%87%E7%AB%A0/</id>
+    <link href="https://songsong.ink/2021/07/17/%E6%96%B0%E7%9A%84%E6%96%87%E7%AB%A0/"/>
+    <id>https://songsong.ink/2021/07/17/%E6%96%B0%E7%9A%84%E6%96%87%E7%AB%A0/</id>
     <published>2021-07-17T14:48:34.000Z</published>
     <updated>2021-07-18T02:31:51.774Z</updated>
     
@@ -87,21 +153,21 @@
     
     
     
-    <category term="leetcode" scheme="https://shensongpeng.github.io/categories/leetcode/"/>
+    <category term="leetcode" scheme="https://songsong.ink/categories/leetcode/"/>
     
     
-    <category term="面试题" scheme="https://shensongpeng.github.io/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    <category term="面试题" scheme="https://songsong.ink/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
     
-    <category term="leetcode" scheme="https://shensongpeng.github.io/tags/leetcode/"/>
+    <category term="leetcode" scheme="https://songsong.ink/tags/leetcode/"/>
     
-    <category term="每日一题" scheme="https://shensongpeng.github.io/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/"/>
+    <category term="每日一题" scheme="https://songsong.ink/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title>mysql索引</title>
-    <link href="https://shensongpeng.github.io/2021/07/15/mysql%E7%B4%A2%E5%BC%95/"/>
-    <id>https://shensongpeng.github.io/2021/07/15/mysql%E7%B4%A2%E5%BC%95/</id>
+    <link href="https://songsong.ink/2021/07/15/mysql%E7%B4%A2%E5%BC%95/"/>
+    <id>https://songsong.ink/2021/07/15/mysql%E7%B4%A2%E5%BC%95/</id>
     <published>2021-07-15T03:38:47.000Z</published>
     <updated>2021-07-15T03:38:47.074Z</updated>
     
@@ -115,25 +181,25 @@
     
     
     
-    <category term="数据库" scheme="https://shensongpeng.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://songsong.ink/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-    <category term="数据库" scheme="https://shensongpeng.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://songsong.ink/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
-    <category term="索引" scheme="https://shensongpeng.github.io/tags/%E7%B4%A2%E5%BC%95/"/>
+    <category term="索引" scheme="https://songsong.ink/tags/%E7%B4%A2%E5%BC%95/"/>
     
-    <category term="数据结构" scheme="https://shensongpeng.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    <category term="数据结构" scheme="https://songsong.ink/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
-    <category term="B+数" scheme="https://shensongpeng.github.io/tags/B-%E6%95%B0/"/>
+    <category term="B+数" scheme="https://songsong.ink/tags/B-%E6%95%B0/"/>
     
-    <category term="Hash" scheme="https://shensongpeng.github.io/tags/Hash/"/>
+    <category term="Hash" scheme="https://songsong.ink/tags/Hash/"/>
     
   </entry>
   
   <entry>
     <title>三大范式</title>
-    <link href="https://shensongpeng.github.io/2021/07/15/%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F/"/>
-    <id>https://shensongpeng.github.io/2021/07/15/%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F/</id>
+    <link href="https://songsong.ink/2021/07/15/%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F/"/>
+    <id>https://songsong.ink/2021/07/15/%E4%B8%89%E5%A4%A7%E8%8C%83%E5%BC%8F/</id>
     <published>2021-07-15T03:33:24.000Z</published>
     <updated>2021-07-15T03:33:24.833Z</updated>
     
@@ -147,19 +213,19 @@
     
     
     
-    <category term="数据库" scheme="https://shensongpeng.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://songsong.ink/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-    <category term="数据库" scheme="https://shensongpeng.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <category term="数据库" scheme="https://songsong.ink/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
-    <category term="范式" scheme="https://shensongpeng.github.io/tags/%E8%8C%83%E5%BC%8F/"/>
+    <category term="范式" scheme="https://songsong.ink/tags/%E8%8C%83%E5%BC%8F/"/>
     
   </entry>
   
   <entry>
     <title>原型模式</title>
-    <link href="https://shensongpeng.github.io/2021/07/14/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://shensongpeng.github.io/2021/07/14/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</id>
+    <link href="https://songsong.ink/2021/07/14/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://songsong.ink/2021/07/14/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</id>
     <published>2021-07-14T12:18:04.000Z</published>
     <updated>2021-07-14T12:18:04.123Z</updated>
     
@@ -173,25 +239,25 @@
     
     
     
-    <category term="设计模式" scheme="https://shensongpeng.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://songsong.ink/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
     
-    <category term="设计模式" scheme="https://shensongpeng.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://songsong.ink/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
-    <category term="原型模式" scheme="https://shensongpeng.github.io/tags/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/"/>
+    <category term="原型模式" scheme="https://songsong.ink/tags/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/"/>
     
-    <category term="Prototype" scheme="https://shensongpeng.github.io/tags/Prototype/"/>
+    <category term="Prototype" scheme="https://songsong.ink/tags/Prototype/"/>
     
-    <category term="浅拷贝" scheme="https://shensongpeng.github.io/tags/%E6%B5%85%E6%8B%B7%E8%B4%9D/"/>
+    <category term="浅拷贝" scheme="https://songsong.ink/tags/%E6%B5%85%E6%8B%B7%E8%B4%9D/"/>
     
-    <category term="深拷贝" scheme="https://shensongpeng.github.io/tags/%E6%B7%B1%E6%8B%B7%E8%B4%9D/"/>
+    <category term="深拷贝" scheme="https://songsong.ink/tags/%E6%B7%B1%E6%8B%B7%E8%B4%9D/"/>
     
   </entry>
   
   <entry>
     <title>观察者模式</title>
-    <link href="https://shensongpeng.github.io/2021/07/14/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://shensongpeng.github.io/2021/07/14/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</id>
+    <link href="https://songsong.ink/2021/07/14/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://songsong.ink/2021/07/14/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</id>
     <published>2021-07-14T12:07:30.000Z</published>
     <updated>2021-07-14T12:07:30.405Z</updated>
     
@@ -205,21 +271,21 @@
     
     
     
-    <category term="设计模式" scheme="https://shensongpeng.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://songsong.ink/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
     
-    <category term="设计模式" scheme="https://shensongpeng.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://songsong.ink/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
-    <category term="观察者模式" scheme="https://shensongpeng.github.io/tags/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
+    <category term="观察者模式" scheme="https://songsong.ink/tags/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
     
-    <category term="Observer" scheme="https://shensongpeng.github.io/tags/Observer/"/>
+    <category term="Observer" scheme="https://songsong.ink/tags/Observer/"/>
     
   </entry>
   
   <entry>
     <title>模板方法模式</title>
-    <link href="https://shensongpeng.github.io/2021/07/14/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://shensongpeng.github.io/2021/07/14/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</id>
+    <link href="https://songsong.ink/2021/07/14/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://songsong.ink/2021/07/14/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</id>
     <published>2021-07-14T11:51:04.000Z</published>
     <updated>2021-07-14T11:59:24.943Z</updated>
     
@@ -233,19 +299,19 @@
     
     
     
-    <category term="设计模式" scheme="https://shensongpeng.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://songsong.ink/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
     
-    <category term="设计模式" scheme="https://shensongpeng.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://songsong.ink/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
-    <category term="模板方法" scheme="https://shensongpeng.github.io/tags/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95/"/>
+    <category term="模板方法" scheme="https://songsong.ink/tags/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>单例模式</title>
-    <link href="https://shensongpeng.github.io/2021/07/14/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://shensongpeng.github.io/2021/07/14/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</id>
+    <link href="https://songsong.ink/2021/07/14/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://songsong.ink/2021/07/14/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</id>
     <published>2021-07-14T10:48:33.000Z</published>
     <updated>2021-07-14T11:44:53.647Z</updated>
     
@@ -259,21 +325,21 @@
     
     
     
-    <category term="设计模式" scheme="https://shensongpeng.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://songsong.ink/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
     
-    <category term="单例模式" scheme="https://shensongpeng.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    <category term="单例模式" scheme="https://songsong.ink/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
     
-    <category term="设计模式" scheme="https://shensongpeng.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://songsong.ink/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
-    <category term="懒加载" scheme="https://shensongpeng.github.io/tags/%E6%87%92%E5%8A%A0%E8%BD%BD/"/>
+    <category term="懒加载" scheme="https://songsong.ink/tags/%E6%87%92%E5%8A%A0%E8%BD%BD/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="https://shensongpeng.github.io/2021/07/09/hello-world/"/>
-    <id>https://shensongpeng.github.io/2021/07/09/hello-world/</id>
+    <link href="https://songsong.ink/2021/07/09/hello-world/"/>
+    <id>https://songsong.ink/2021/07/09/hello-world/</id>
     <published>2021-07-09T04:39:55.408Z</published>
     <updated>2021-07-12T02:55:38.647Z</updated>
     
