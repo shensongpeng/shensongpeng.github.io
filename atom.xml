@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>松松闲谈</title>
+  
+  
+  <link href="https://songsong.ink/atom.xml" rel="self"/>
+  
+  <link href="https://songsong.ink/"/>
+  <updated>2021-09-23T15:24:02.797Z</updated>
+  <id>https://songsong.ink/</id>
+  
+  <author>
+    <name>shensongpeng</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>5815. 扣分后的最大得分</title>
+    <link href="https://songsong.ink/2021/09/23/d09fd5a3e36d.html"/>
+    <id>https://songsong.ink/2021/09/23/d09fd5a3e36d.html</id>
+    <published>2021-09-23T15:24:02.797Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="扣分后的最大得分"><a href="#扣分后的最大得分" class="headerlink" title="扣分后的最大得分"></a>扣分后的最大得分</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个 m x n 的整数矩阵 points （下标从 0 开始）。一开始你的得分为 0 ，你想最大化从矩阵中得到的分数。</p><p>你的得分方式为：每一行 中选取一个格子，选中坐标为 (r, c) 的格子会给你的总得分 增加 points[r][c] 。</p><p>然而，相邻行之间被选中的格子如果隔得太远，你会失去一些得分。对于相邻行 r 和 r + 1 （其中 0 &lt;= r &lt; m - 1），选中坐标为 (r, c1) 和 (r + 1, c2) 的格子，你的总得分 减少 abs(c1 - c2) 。</p><p>请你返回你能得到的 最大 得分。</p><p>abs(x) 定义为：</p><ul><li>如果 x &gt;= 0 ，那么值为 x 。</li><li>如果 x &lt; 0 ，那么值为 -x 。</li></ul><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ul><li>回溯</li><li>动态规划</li><li>动态规划优化</li></ul><p>选择问题一般都可以用回溯的思路进行解决，但是回溯的时间复杂度很大。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">maxPoints</span><span class="params">(<span class="keyword">int</span>[][] points)</span> </span>&#123;</span><br><span class="line">        dfs(points,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span>[][] points,<span class="keyword">int</span> row, <span class="keyword">int</span> col, <span class="keyword">int</span> score)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (row &gt;= points.length) &#123;</span><br><span class="line">            res = Math.max(res,score);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; points[row].length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> newScore = score + points[row][i];</span><br><span class="line">            <span class="keyword">if</span> (row &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                newScore -= Math.abs(col - i);</span><br><span class="line">            &#125;</span><br><span class="line">            dfs(points,row+<span class="number">1</span>,i,newScore);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>动态规划解法<br>dp[i][j] 代表i行j列的最大得分</p><p>状态转移方程：<br>dp[i][j] = max{ dp[i-1][k] + points[i][j] + abs(j-k) ,k = 0-n n为points列长度}<br>时间复杂度？</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">maxPoints</span><span class="params">(<span class="keyword">int</span>[][] points)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (points.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> m = points.length;</span><br><span class="line">        <span class="keyword">int</span> n = points[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">long</span>[][] dp = <span class="keyword">new</span> <span class="keyword">long</span>[m][n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">                dp[<span class="number">0</span>][i] = points[<span class="number">0</span>][i];</span><br><span class="line">            result = Math.max(result,dp[<span class="number">0</span>][i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; m; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; k++) &#123;</span><br><span class="line">                    <span class="keyword">long</span> score = points[i][j] + dp[i-<span class="number">1</span>][k] - Math.abs(j-k);</span><br><span class="line">                    dp[i][j] = Math.max(score,dp[i][j]);</span><br><span class="line">                &#125;</span><br><span class="line">                result = Math.max(result,dp[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>动态规划优化解法</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;扣分后的最大得分&quot;&gt;&lt;a href=&quot;#扣分后的最大得分&quot; class=&quot;headerlink&quot; title=&quot;扣分后的最大得分&quot;&gt;&lt;/a&gt;扣分后的最大得分&lt;/h1&gt;&lt;h2 id=&quot;题目&quot;&gt;&lt;a href=&quot;#题目&quot; class=&quot;headerlink&quot; titl</summary>
+      
+    
+    
+    
+    <category term="leetcode" scheme="https://songsong.ink/categories/leetcode/"/>
+    
+    
+    <category term="周赛" scheme="https://songsong.ink/tags/%E5%91%A8%E8%B5%9B/"/>
+    
+    <category term="面试" scheme="https://songsong.ink/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+    <category term="中等" scheme="https://songsong.ink/tags/%E4%B8%AD%E7%AD%89/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>msyql事务隔离级别与锁机制</title>
+    <link href="https://songsong.ink/2021/09/23/ae1deb3370e1.html"/>
+    <id>https://songsong.ink/2021/09/23/ae1deb3370e1.html</id>
+    <published>2021-09-23T15:24:02.797Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>我们的数据库一般都会并发执行多个事务，多个事务可能会并发的对相同的一批数据进行增删改查操作，可能就会导致我们说的脏写、脏读、不可重复读、幻读这些问题。<br>这些问题的本质都是数据库的多事务并发问题，为了解决多事务并发问题，数据库设计了事务隔离机制、锁机制、MVCC多版本并发控制隔离机制，用一整套机制来解决多事务并发问题。接下来，我们会深入讲解这些机制，让大家彻底理解数据库内部的执行原理。</p><h2 id="事务及其ACID属性"><a href="#事务及其ACID属性" class="headerlink" title="事务及其ACID属性"></a>事务及其ACID属性</h2><p>事务是由一组SQL语句组成的逻辑处理单元,事务具有以下4个属性,通常简称为事务的ACID属性。</p><ol><li>原子性(Atomicity) ：事务是一个原子操作单元,其对数据的修改,要么全都执行,要么全都不执行。</li><li>一致性(Consistent) ：在事务开始和完成时,数据都必须保持一致状态。这意味着所有相关的数据规则都必须应用于事务的修改,以保持数据的完整性。</li><li>隔离性(Isolation) ：数据库系统提供一定的隔离机制,保证事务在不受外部并发操作影响的“独立”环境执行。这意味着事务处理过程中的中间状态对外部是不可见的,反之亦然。</li><li>持久性(Durable) ：事务完成之后,它对于数据的修改是永久性的,即使出现系统故障也能够保持。</li></ol><h2 id="并发事务处理带来的问题"><a href="#并发事务处理带来的问题" class="headerlink" title="并发事务处理带来的问题"></a>并发事务处理带来的问题</h2><h3 id="1-更新丢失-Lost-Update-或脏写"><a href="#1-更新丢失-Lost-Update-或脏写" class="headerlink" title="1. 更新丢失(Lost Update)或脏写"></a>1. 更新丢失(Lost Update)或脏写</h3><p>　　当两个或多个事务选择同一行，然后基于最初选定的值更新该行时，由于每个事务都不知道其他事务的存在，就会发生丢失更新问题–最后的更新覆盖了由其他事务所做的更新。</p><h3 id="2-脏读（Dirty-Reads）"><a href="#2-脏读（Dirty-Reads）" class="headerlink" title="2. 脏读（Dirty Reads）"></a>2. 脏读（Dirty Reads）</h3><p>　　一个事务正在对一条记录做修改，在这个事务完成并提交前，这条记录的数据就处于不一致的状态；这时，另一个事务也来读取同一条记录，如果不加控制，第二个事务读取了这些“脏”数据，并据此作进一步的处理，就会产生未提交的数据依赖关系。这种现象被形象的叫做“脏读”。<br>　　一句话：事务A读取到了事务B已经修改但尚未提交的数据，还在这个数据基础上做了操作。此时，如果B事务回滚，A读取的数据无效，不符合一致性要求。</p><h3 id="3-不可重读（Non-Repeatable-Reads）"><a href="#3-不可重读（Non-Repeatable-Reads）" class="headerlink" title="3. 不可重读（Non-Repeatable Reads）"></a>3. 不可重读（Non-Repeatable Reads）</h3><p>　　一个事务在读取某些数据后的某个时间，再次读取以前读过的数据，却发现其读出的数据已经发生了改变、或某些记录已经被删除了！这种现象就叫做“不可重复读”。<br>　　一句话：事务A内部的相同查询语句在不同时刻读出的结果不一致，不符合隔离性</p><h3 id="4-幻读（Phantom-Reads）"><a href="#4-幻读（Phantom-Reads）" class="headerlink" title="4. 幻读（Phantom Reads）"></a>4. 幻读（Phantom Reads）</h3><p>　　一个事务按相同的查询条件重新读取以前检索过的数据，却发现其他事务插入了满足其查询条件的新数据，这种现象就称为“幻读”。<br>　　一句话：事务A读取到了事务B提交的新增数据，不符合隔离性</p><h2 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h2><p>“脏读”、“不可重复读”和“幻读”,其实都是数据库读一致性问题,必须由数据库提供一定的事务隔离机制来解决。</p><p>数据库的事务隔离越严格,并发副作用越小,但付出的代价也就越大,因为事务隔离实质上就是使事务在一定程度上“串行化”进行,这显然与“并发”是矛盾的。<br>同时,不同的应用对读一致性和事务隔离程度的要求也是不同的,比如许多应用对“不可重复读”和“幻读”并不敏感,可能更关心数据并发访问的能力。<br>常看当前数据库的事务隔离级别: show variables like ‘tx_isolation’;<br>设置事务隔离级别：set tx_isolation=’REPEATABLE-READ’;<br>Mysql默认的事务隔离级别是可重复读，用Spring开发程序时，如果不设置隔离级别默认用Mysql设置的隔离级别，如果Spring设置了就用已经设置的隔离级别</p><h2 id="锁详解"><a href="#锁详解" class="headerlink" title="锁详解"></a>锁详解</h2><p>锁是计算机协调多个进程或线程并发访问某一资源的机制。<br>在数据库中，除了传统的计算资源（如CPU、RAM、I/O等）的争用以外，数据也是一种供需要用户共享的资源。如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一个问题，锁冲突也是影响数据库并发访问性能的一个重要因素。</p><h3 id="锁分类"><a href="#锁分类" class="headerlink" title="锁分类"></a>锁分类</h3><ol><li>从性能上分为乐观锁(用版本对比来实现)和悲观锁</li><li>从对数据库操作的类型分，分为读锁和写锁(都属于悲观锁)</li><li>读锁（共享锁，S锁(Shared)）：针对同一份数据，多个读操作可以同时进行而不会互相影响</li><li>写锁（排它锁，X锁(eXclusive)）：当前写操作没有完成前，它会阻断其他写锁和读锁</li><li>从对数据操作的粒度分，分为表锁和行锁</li></ol><h3 id="表锁"><a href="#表锁" class="headerlink" title="表锁"></a>表锁</h3><p>每次操作锁住整张表。开销小，加锁快；不会出现死锁；锁定粒度大，发生锁冲突的概率最高，并发度最低；一般用在整表数据迁移的场景。行锁实际上是对主键索引加锁开销大<br>基本操作    </p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--建表SQL</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `mylock` (</span><br><span class="line">`id` <span class="type">INT</span> (<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">`NAME` <span class="type">VARCHAR</span> (<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line"><span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE <span class="operator">=</span> MyISAM <span class="keyword">DEFAULT</span> CHARSET <span class="operator">=</span> utf8;</span><br><span class="line"></span><br><span class="line"><span class="comment">--插入数据</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span>`test`.`mylock` (`id`, `NAME`) <span class="keyword">VALUES</span> (<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;a&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span>`test`.`mylock` (`id`, `NAME`) <span class="keyword">VALUES</span> (<span class="string">&#x27;2&#x27;</span>, <span class="string">&#x27;b&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span>`test`.`mylock` (`id`, `NAME`) <span class="keyword">VALUES</span> (<span class="string">&#x27;3&#x27;</span>, <span class="string">&#x27;c&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span>`test`.`mylock` (`id`, `NAME`) <span class="keyword">VALUES</span> (<span class="string">&#x27;4&#x27;</span>, <span class="string">&#x27;d&#x27;</span>);</span><br></pre></td></tr></table></figure><p>手动增加表锁</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lock <span class="keyword">table</span> 表名称 read(write),表名称<span class="number">2</span> read(write);</span><br></pre></td></tr></table></figure><p>查看表上加过的锁</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">open</span> tables;</span><br></pre></td></tr></table></figure><p>删除表锁</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unlock tables;</span><br></pre></td></tr></table></figure><p>案例分析(加读锁）</p><p>当前session和其他session都可以读该表<br>当前session中插入或者更新锁定的表都会报错，其他session插入或更新则会等待</p><p>案例分析(加写锁）</p><p>当前session对该表的增删改查都没有问题，其他session对该表的所有操作被阻塞</p><p>案例结论<br>1、对MyISAM表的读操作(加读锁) ,不会阻塞其他进程对同一表的读请求,但会阻塞对同一表的写请求。只有当读锁释放后,才会执行其它进程的写操作。<br>2、对MylSAM表的写操作(加写锁) ,会阻塞其他进程对同一表的读和写操作,只有当写锁释放后,才会执行其它进程的读写操作</p><h3 id="行锁"><a href="#行锁" class="headerlink" title="行锁"></a>行锁</h3><p>每次操作锁住一行数据。开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低，并发度最高。<br>InnoDB与MYISAM的最大不同有两点：<br>InnoDB支持事务（TRANSACTION）<br>InnoDB支持行级锁</p><p>行锁演示<br>一个session开启事务更新不提交，另一个session更新同一条记录会阻塞，更新不同记录不会阻塞</p><p>总结：<br>MyISAM在执行查询语句SELECT前，会自动给涉及的所有表加读锁,在执行update、insert、delete操作会自动给涉及的表加写锁。<br>InnoDB在执行查询语句SELECT时(非串行隔离级别)，不会加锁。但是update、insert、delete操作会加行锁。<br>简而言之，就是读锁会阻塞写，但是不会阻塞读。而写锁则会把读和写都阻塞。</p><h2 id="行锁与事务隔离级别案例分析"><a href="#行锁与事务隔离级别案例分析" class="headerlink" title="行锁与事务隔离级别案例分析"></a>行锁与事务隔离级别案例分析</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `account` (</span><br><span class="line">  `id` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `name` <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `balance` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `test`.`account` (`name`, `balance`) <span class="keyword">VALUES</span> (<span class="string">&#x27;lilei&#x27;</span>, <span class="string">&#x27;450&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `test`.`account` (`name`, `balance`) <span class="keyword">VALUES</span> (<span class="string">&#x27;hanmei&#x27;</span>, <span class="string">&#x27;16000&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `test`.`account` (`name`, `balance`) <span class="keyword">VALUES</span> (<span class="string">&#x27;lucy&#x27;</span>, <span class="string">&#x27;2400&#x27;</span>);</span><br></pre></td></tr></table></figure><h3 id="读未提交："><a href="#读未提交：" class="headerlink" title="读未提交："></a>读未提交：</h3><p>（1）打开一个客户端A，并设置当前事务模式为read uncommitted（未提交读），查询表account的初始值：</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># MySQL8查询事务应该使用transaction_isolation，tx_isolation在MySQL <span class="number">5.7</span><span class="number">.20</span>后被弃用。</span><br><span class="line"><span class="keyword">set</span> tx_isolation<span class="operator">=</span><span class="string">&#x27;read-uncommitted&#x27;</span>;</span><br><span class="line"><span class="comment">-- 8.0</span></span><br><span class="line"><span class="keyword">set</span> transaction_isolation<span class="operator">=</span><span class="string">&#x27;read-uncommitted&#x27;</span>;</span><br></pre></td></tr></table></figure><p>（2）在客户端A的事务提交之前，打开另一个客户端B，更新表account：</p><p> <br>（3）这时，虽然客户端B的事务还没提交，但是客户端A就可以查询到B已经更新的数据： </p><p>　　　　<br>（4）一旦客户端B的事务因为某种原因回滚，所有的操作都将会被撤销，那客户端A查询到的数据其实就是脏数据： </p><p> 　　　　<br>（5）在客户端A执行更新语句update account set balance = balance - 50 where id =1，lilei的balance没有变成350，居然是400，是不是很奇怪，数据不一致啊，如果你这么想就太天真 了，在应用程序中，我们会用400-50=350，并不知道其他会话回滚了，要想解决这个问题可以采用读已提交的隔离级别</p><p> </p><h3 id="3、读已提交"><a href="#3、读已提交" class="headerlink" title="3、读已提交"></a>3、读已提交</h3><p>（1）打开一个客户端A，并设置当前事务模式为read committed（未提交读），查询表account的所有记录：<br>set tx_isolation=’read-committed’;</p><p>　　　　<br>（2）在客户端A的事务提交之前，打开另一个客户端B，更新表account： </p><p>　　　　<br>（3）这时，客户端B的事务还没提交，客户端A不能查询到B已经更新的数据，解决了脏读问题： </p><p>　　　　<br>（4）客户端B的事务提交</p><p>　　　　<br>（5）客户端A执行与上一步相同的查询，结果 与上一步不一致，即产生了不可重复读的问题</p><p> </p><h3 id="4、可重复读"><a href="#4、可重复读" class="headerlink" title="4、可重复读"></a>4、可重复读</h3><p>（1）打开一个客户端A，并设置当前事务模式为repeatable read，查询表account的所有记录<br>set tx_isolation=’repeatable-read’;</p><p>　　　　<br>（2）在客户端A的事务提交之前，打开另一个客户端B，更新表account并提交</p><p>　　　　<br>（3）在客户端A查询表account的所有记录，与步骤（1）查询结果一致，没有出现不可重复读的问题</p><p>　　　　<br>（4）在客户端A，接着执行update account set balance = balance - 50 where id = 1，balance没有变成400-50=350，lilei的balance值用的是步骤2中的350来算的，所以是300，数据的一致性倒是没有被破坏。可重复读的隔离级别下使用了MVCC(multi-version concurrency control)机制，select操作不会更新版本号，是快照读（历史版本）；insert、update和delete会更新版本号，是当前读（当前版本）。</p><p>（5）重新打开客户端B，插入一条新数据后提交</p><p>（6）在客户端A查询表account的所有记录，没有查出新增数据，所以没有出现幻读</p><p>（7)验证幻读<br>在客户端A执行update account set balance=888 where id = 4;能更新成功，再次查询能查到客户端B新增的数据</p><h3 id="5、串行化"><a href="#5、串行化" class="headerlink" title="5、串行化"></a>5、串行化</h3><p>（1）打开一个客户端A，并设置当前事务模式为serializable，查询表account的初始值：<br>set tx_isolation=’serializable’;</p><p>（2）打开一个客户端B，并设置当前事务模式为serializable，更新相同的id为1的记录会被阻塞等待，更新id为2的记录可以成功，说明在串行模式下innodb的查询也会被加上行锁。<br>如果客户端A执行的是一个范围查询，那么该范围内的所有行包括每行记录所在的间隙区间范围(就算该行数据还未被插入也会加锁，这种是间隙锁)都会被加锁。此时如果客户端B在该范围内插入数据都会被阻塞，所以就避免了幻读。<br>这种隔离级别并发性极低，开发中很少会用到。  </p><h2 id="间隙锁-Gap-Lock"><a href="#间隙锁-Gap-Lock" class="headerlink" title="间隙锁(Gap Lock)"></a>间隙锁(Gap Lock)</h2><p>间隙锁，锁的就是两个值之间的空隙。Mysql默认级别是repeatable-read，有办法解决幻读问题吗？间隙锁在某些情况下可以解决幻读问题。<br>假设account表里数据如下：</p><p>那么间隙就有 id 为 (3,10)，(10,20)，(20,正无穷) 这三个区间，<br>在Session_1下面执行 update account set name = ‘zhuge’ where id &gt; 8 and id &lt;18;，则其他Session没法在这个范围所包含的所有行记录(包括间隙行记录)以及行记录所在的间隙里插入或修改任何数据，即id在(3,20]区间都无法修改数据，注意最后那个20也是包含在内的。<br>间隙锁是在可重复读隔离级别下才会生效。</p><h2 id="临键锁-Next-key-Locks"><a href="#临键锁-Next-key-Locks" class="headerlink" title="临键锁(Next-key Locks)"></a>临键锁(Next-key Locks)</h2><p>Next-Key Locks是行锁与间隙锁的组合。像上面那个例子里的这个(3,20]的整个区间可以叫做临键锁。</p><p>无索引行锁会升级为表锁(RR级别会升级为表锁，RC级别不会升级为表锁)<br>锁主要是加在索引上，如果对非索引字段更新，行锁可能会变表锁<br>session1 执行：update account set balance = 800 where name = ‘lilei’;<br>session2 对该表任一行操作都会阻塞住<br>InnoDB的行锁是针对索引加的锁，不是针对记录加的锁。并且该索引不能失效，否则都会从行锁升级为表锁。</p><p>锁定某一行还可以用lock in share mode(共享锁) 和for update(排它锁)，例如：select * from test_innodb_lock where a = 2 for update; 这样其他session只能读这行数据，修改则会被阻塞，直到锁定行的session提交</p><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>Innodb存储引擎由于实现了行级锁定，虽然在锁定机制的实现方面所带来的性能损耗可能比表级锁定会要更高一下，但是在整体并发处理能力方面要远远优于MYISAM的表级锁定的。当系统并发量高的时候，Innodb的整体性能和MYISAM相比就会有比较明显的优势了。<br>但是，Innodb的行级锁定同样也有其脆弱的一面，当我们使用不当的时候，可能会让Innodb的整体性能表现不仅不能比MYISAM高，甚至可能会更差。</p><h2 id="行锁分析"><a href="#行锁分析" class="headerlink" title="行锁分析"></a>行锁分析</h2><p>通过检查InnoDB_row_lock状态变量来分析系统上的行锁的争夺情况<br>show status like ‘innodb_row_lock%’;</p><p>对各个状态量的说明如下：<br>Innodb_row_lock_current_waits: 当前正在等待锁定的数量<br>Innodb_row_lock_time: 从系统启动到现在锁定总时间长度<br>Innodb_row_lock_time_avg: 每次等待所花平均时间<br>Innodb_row_lock_time_max：从系统启动到现在等待最长的一次所花时间<br>Innodb_row_lock_waits: 系统启动后到现在总共等待的次数</p><p>对于这5个状态变量，比较重要的主要是：<br>Innodb_row_lock_time_avg （等待平均时长）<br>Innodb_row_lock_waits （等待总次数）<br>Innodb_row_lock_time（等待总时长）</p><p>尤其是当等待次数很高，而且每次等待时长也不小的时候，我们就需要分析系统中为什么会有如此多的等待，然后根据分析结果着手制定优化计划。</p><p>查看INFORMATION_SCHEMA系统库锁相关数据表<br>– 查看事务<br>select * from INFORMATION_SCHEMA.INNODB_TRX;<br>– 查看锁<br>select * from INFORMATION_SCHEMA.INNODB_LOCKS;<br>– 查看锁等待<br>select * from INFORMATION_SCHEMA.INNODB_LOCK_WAITS;</p><p>– 释放锁，trx_mysql_thread_id可以从INNODB_TRX表里查看到<br>kill trx_mysql_thread_id</p><p>– 查看锁等待详细信息<br>show engine innodb status\G; </p><h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>set tx_isolation=’repeatable-read’;<br>Session_1执行：select * from account where id=1 for update;<br>Session_2执行：select * from account where id=2 for update;<br>Session_1执行：select * from account where id=2 for update;<br>Session_2执行：select * from account where id=1 for update;<br>查看近期死锁日志信息：show engine innodb status\G;<br>大多数情况mysql可以自动检测死锁并回滚产生死锁的那个事务，但是有些情况mysql没法自动检测死锁</p><h2 id="锁优化建议"><a href="#锁优化建议" class="headerlink" title="锁优化建议"></a>锁优化建议</h2><p>尽可能让所有数据检索都通过索引来完成，避免无索引行锁升级为表锁<br>合理设计索引，尽量缩小锁的范围<br>尽可能减少检索条件范围，避免间隙锁<br>尽量控制事务大小，减少锁定资源量和时间长度，涉及事务加锁的sql尽量放在事务最后执行<br>尽可能低级别事务隔离</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;我们的数据库一般都会并发执行多个事务，多个事务可能会并发的对相同的一批数据进行增删改查操作，可能就会导致我们说的脏写、脏读、不可重复读、幻读</summary>
+      
+    
+    
+    
+    
+    <category term="mysql" scheme="https://songsong.ink/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx负载均衡</title>
+    <link href="https://songsong.ink/2021/09/18/a3e5f334146b.html"/>
+    <id>https://songsong.ink/2021/09/18/a3e5f334146b.html</id>
+    <published>2021-09-18T16:44:16.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<p>nginx负载均衡算法</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;nginx负载均衡算法&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="nginx" scheme="https://songsong.ink/categories/nginx/"/>
+    
+    
+    <category term="nginx" scheme="https://songsong.ink/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>spring面试</title>
+    <link href="https://songsong.ink/2021/09/09/a1a07dd22c32.html"/>
+    <id>https://songsong.ink/2021/09/09/a1a07dd22c32.html</id>
+    <published>2021-09-09T16:02:43.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title=&quot;&quot;&gt;&lt;/a&gt;&lt;/h1&gt;</summary>
+      
+    
+    
+    
+    <category term="spring" scheme="https://songsong.ink/categories/spring/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>redis常用操作哦</title>
+    <link href="https://songsong.ink/2021/08/23/5ed71c7fdf57.html"/>
+    <id>https://songsong.ink/2021/08/23/5ed71c7fdf57.html</id>
+    <published>2021-08-23T20:43:53.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-redis的五种数据结构"><a href="#1-redis的五种数据结构" class="headerlink" title="1.redis的五种数据结构"></a>1.redis的五种数据结构</h1><ol><li>字符串String</li><li>哈希表hash</li><li>列表list</li><li>集合set</li><li>有序集合zset</li></ol><h2 id="1-1字符串的常用操作"><a href="#1-1字符串的常用操作" class="headerlink" title="1.1字符串的常用操作"></a>1.1字符串的常用操作</h2><ol><li>set key value  存储一个键值对</li><li>mset key value key value … 存储多个键值对</li><li>setnx key value 存储一个不存在的键值对</li><li>get key 获取一个value</li><li>mget key … 批量获取key的value</li><li>del key … 批量删除键值对</li><li>expire key seconds 设置过期时间</li><li>incr key key的整数值加1</li><li>decr key key的整数值减1</li><li>incrby key increment key的值加increment</li><li>decrby key decrement key的值减去decrement</li></ol><p>规范化自己的代码风格，使用缓存优化效率，在高并发情况下的边界问题问题处理。学习优秀的开源项目源码，并且加上自己的实现完成自己的开发。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;1-redis的五种数据结构&quot;&gt;&lt;a href=&quot;#1-redis的五种数据结构&quot; class=&quot;headerlink&quot; title=&quot;1.redis的五种数据结构&quot;&gt;&lt;/a&gt;1.redis的五种数据结构&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;字符串String&lt;/li&gt;
+&lt;</summary>
+      
+    
+    
+    
+    <category term="redis" scheme="https://songsong.ink/categories/redis/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ubuntu修改hostname</title>
+    <link href="https://songsong.ink/2021/08/20/3f9300d23ecc.html"/>
+    <id>https://songsong.ink/2021/08/20/3f9300d23ecc.html</id>
+    <published>2021-08-20T15:40:40.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="修改-etc-cloud-cloud-cfg文件"><a href="#修改-etc-cloud-cloud-cfg文件" class="headerlink" title="修改/etc/cloud/cloud.cfg文件"></a>修改/etc/cloud/cloud.cfg文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">preserve_hostname: <span class="literal">false</span></span><br><span class="line">修改</span><br><span class="line">preserve_hostname: <span class="literal">true</span></span><br></pre></td></tr></table></figure><h2 id="执行命令-hostnamectl-set-hostname-主机名"><a href="#执行命令-hostnamectl-set-hostname-主机名" class="headerlink" title="执行命令 hostnamectl set-hostname 主机名"></a>执行命令 hostnamectl set-hostname 主机名</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname testname</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;修改-etc-cloud-cloud-cfg文件&quot;&gt;&lt;a href=&quot;#修改-etc-cloud-cloud-cfg文件&quot; class=&quot;headerlink&quot; title=&quot;修改/etc/cloud/cloud.cfg文件&quot;&gt;&lt;/a&gt;修改/etc/cloud/c</summary>
+      
+    
+    
+    
+    <category term="linux" scheme="https://songsong.ink/categories/linux/"/>
+    
+    
+    <category term="ubuntu hostname" scheme="https://songsong.ink/tags/ubuntu-hostname/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux端口号</title>
+    <link href="https://songsong.ink/2021/08/20/c4bf1f45066d.html"/>
+    <id>https://songsong.ink/2021/08/20/c4bf1f45066d.html</id>
+    <published>2021-08-20T15:17:13.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="第一种："><a href="#第一种：" class="headerlink" title="第一种："></a>第一种：</h2><p>lsof -i:端口号</p><h2 id="第二种："><a href="#第二种：" class="headerlink" title="第二种："></a>第二种：</h2><p>netstat -nltp | grep 端口号</p><ol><li>-a：显示本机所有连接和监听地端口</li><li>-n：网络IP地址的形式，显示当前建立的有效连接和端口</li><li>-r：显示路由表信息</li><li>-s：显示按协议的统计信息</li><li>-v：显示当前有效的连接</li><li>-t：显示所有TCP协议连接情况</li><li>-u：显示所有UDP协议连接情况</li><li>-i：显示自动配置端口的状态</li><li>-l：仅仅显示连接状态为listening的服务网络状态</li><li>-p：显示pid/program name</li></ol><h2 id="TCP连接的几种状态"><a href="#TCP连接的几种状态" class="headerlink" title="TCP连接的几种状态"></a>TCP连接的几种状态</h2><ol><li>ESTABLISHED    已建立 </li><li>CLOSED   已关闭 </li><li>LISTENING  正在监听</li><li>FIN-WAIT-2   等待连接关闭</li><li>TIME-WAIT   等待足够时间，确保服务器正常关闭该连接</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;第一种：&quot;&gt;&lt;a href=&quot;#第一种：&quot; class=&quot;headerlink&quot; title=&quot;第一种：&quot;&gt;&lt;/a&gt;第一种：&lt;/h2&gt;&lt;p&gt;lsof -i:端口号&lt;/p&gt;
+&lt;h2 id=&quot;第二种：&quot;&gt;&lt;a href=&quot;#第二种：&quot; class=&quot;headerlin</summary>
+      
+    
+    
+    
+    <category term="linux" scheme="https://songsong.ink/categories/linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>hashmap</title>
+    <link href="https://songsong.ink/2021/08/17/18c3a0674c7f.html"/>
+    <id>https://songsong.ink/2021/08/17/18c3a0674c7f.html</id>
+    <published>2021-08-17T15:01:51.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="HashMap源码分析（jdk1-8，保证你能看懂）"><a href="#HashMap源码分析（jdk1-8，保证你能看懂）" class="headerlink" title="HashMap源码分析（jdk1.8，保证你能看懂）"></a>HashMap源码分析（jdk1.8，保证你能看懂）</h1><hr><p>现在的面试当中凡是那些大厂，基本上都会问到一些关于HashMap的问题了，而且这个集合在开发中也经常会使用到。于是花费了大量的时间去研究分析写了这篇文章。本文是基于jdk1.8来分析的。篇幅较长，但是都是循序渐进的。耐心读完相信你会有所收获。</p><p><strong>一、带着问题分析</strong></p><p>这篇文章，希望能解决以下问题。</p><p>（1）HashMap的底层数据结构是什么？</p><p>（2）HashMap中增删改查操作的底部实现原理是什么？</p><p>（3）HashMap是如何实现扩容的？</p><p>（4）HashMap是如何解决hash冲突的？</p><p>（7）HashMap为什么是非线程安全的？</p><p>下面我们就带着这些问题，揭开HashMap的面纱。</p><p><strong>二、认识HashMap</strong></p><p>HashMap最早是在jdk1.2中开始出现的，一直到jdk1.7一直没有太大的变化。但是到了jdk1.8突然进行了一个很大的改动。其中一个最显著的改动就是：</p><blockquote><p>之前jdk1.7的存储结构是数组+链表，到了jdk1.8变成了数组+链表+红黑树。</p></blockquote><p>另外，HashMap是非线程安全的，也就是说在多个线程同时对HashMap中的某个元素进行增删改操作的时候，是不能保证数据的一致性的。</p><p>下面我们就开始一步一步的分析。</p><p><strong>三、深入分析HashMap</strong></p><p><strong>1、底层数据结构</strong></p><p>为了进行一个对比分析，我们先给出一个jdk1.7的存储结构图</p><p><img src="https://pic4.zhimg.com/v2-13f265dfbfe4f6bf0505cd31d7b3cf47_b.jpg" class="lazyload" data-srcset="https://pic4.zhimg.com/v2-13f265dfbfe4f6bf0505cd31d7b3cf47_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p><p>从上图我们可以看到，在jdk1.7中，首先是把元素放在一个个数组里面，后来存放的数据元素越来越多，于是就出现了链表，对于数组中的每一个元素，都可以有一条链表来存储元素。这就是有名的“拉链式”存储方法。</p><p>就这样用了几年，后来存储的元素越来越多，链表也越来越长，在查找一个元素时候效率不仅没有提高（链表不适合查找，适合增删），反倒是下降了不少，于是就对这条链表进行了一个改进。如何改进呢？就是把这条链表变成一个适合查找的树形结构，没错就是红黑树。于是HashMap的存储数据结构就变成了下面的这种。</p><p><img src="https://pic2.zhimg.com/v2-14ccbe757a467d874cb7999f62caddcd_b.jpg" class="lazyload" data-srcset="https://pic2.zhimg.com/v2-14ccbe757a467d874cb7999f62caddcd_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p><p>我们会发现优化的部分就是把链表结构变成了红黑树。原来jdk1.7的优点是增删效率高，于是在jdk1.8的时候，不仅仅增删效率高，而且查找效率也提升了。</p><p><strong>注意：不是说变成了红黑树效率就一定提高了，只有在链表的长度不小于8，而且数组的长度不小于64的时候才会将链表转化为红黑树，</strong></p><p><strong>问题一：什么是红黑树呢？</strong></p><p>红黑树是一个自平衡的二叉查找树，也就是说红黑树的查找效率是非常的高，查找效率会从链表的o(n)降低为o(logn)。如果之前没有了解过红黑树的话，也没关系，你就记住红黑树的查找效率很高就OK了。</p><p><strong>问题二：为什么不一下子把整个链表变为红黑树呢？</strong></p><p>这个问题的意思是这样的，就是说我们为什么非要等到链表的长度大于等于8的时候，才转变成红黑树？在这里可以从两方面来解释</p><p>（1）构造红黑树要比构造链表复杂，在链表的节点不多的时候，从整体的性能看来， 数组+链表+红黑树的结构可能不一定比数组+链表的结构性能高。就好比杀鸡焉用牛刀的意思。</p><p>（2）HashMap频繁的扩容，会造成底部红黑树不断的进行拆分和重组，这是非常耗时的。因此，也就是链表长度比较长的时候转变成红黑树才会显著提高效率。</p><p>OK，到这里相信我们对hashMap的底层数据结构有了一个认识。现在带着上面的结构图，看一下如何存储一个元素。</p><p><strong>2、存储元素put</strong></p><p>我们在存储一个元素的时候，大多是使用下面的这种方式。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        HashMap&lt;String, Integer&gt; map= new HashMap&lt;&gt;();</span><br><span class="line">        //存储一个元素</span><br><span class="line">        map.put(&quot;张三&quot;, 20);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>在这里HashMap&lt;String, Integer&gt;，第一个参数是键，第二个参数是值，合起来叫做键值对。存储的时候只需要调用put方法即可。那底层的实现原理是怎么样的呢？这里还是先给出一个流程图</p><p><img src="https://pic3.zhimg.com/v2-bb8ee0ee1c0cc51537ae5f8e02038102_b.jpg" class="lazyload" data-srcset="https://pic3.zhimg.com/v2-bb8ee0ee1c0cc51537ae5f8e02038102_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p><p>上面这个流程，不知道你能否看到，红色字迹的是三个判断框，也是转折点，我们使用文字来梳理一下这个流程：</p><p>（1）第一步：调用put方法传入键值对</p><p>（2）第二步：使用hash算法计算hash值</p><p>（3）第三步：根据hash值确定存放的位置，判断是否和其他键值对位置发生了冲突</p><p>（4）第四步：若没有发生冲突，直接存放在数组中即可</p><p>（5）第五步：若发生了冲突，还要判断此时的数据结构是什么？</p><p>（6）第六步：若此时的数据结构是红黑树，那就直接插入红黑树中</p><p>（7）第七步：若此时的数据结构是链表，判断插入之后是否大于等于8</p><p>（8）第八步：插入之后大于8了，就要先调整为红黑树，在插入</p><p>（9）第九步：插入之后不大于8，那么就直接插入到链表尾部即可。</p><p>上面就是插入数据的整个流程，光看流程还不行，我们还需要深入到源码中去看看底部是如何按照这个流程写代码的。</p><p>鼠标聚焦在put方法上面，按一下F3，我们就能进入put的源码。来看一下：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public V put(K key, V value) &#123;</span><br><span class="line">     return putVal(hash(key), key, value, false, true);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>也就是说，put方法其实调用的是putVal方法。putVal方法有5个参数：</p><p>（1）第一个参数hash：调用了hash方法计算hash值</p><p>（2）第二个参数key：就是我们传入的key值，也就是例子中的张三</p><p>（3）第三个参数value：就是我们传入的value值，也就是例子中的20</p><p>（4）第四个参数onlyIfAbsent：也就是当键相同时，不修改已存在的值</p><p>（5）第五个参数evict ：如果为false，那么数组就处于创建模式中，所以一般为true。</p><p>知道了这5个参数的含义，我们就进入到这个putVal方法中。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,</span><br><span class="line">               boolean evict) &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;</span><br><span class="line">    //第一部分</span><br><span class="line">    if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">        n = (tab = resize()).length;</span><br><span class="line">    //第二部分</span><br><span class="line">    if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">        tab[i] = newNode(hash, key, value, null);</span><br><span class="line">    //第三部分</span><br><span class="line">    else &#123;</span><br><span class="line">        Node&lt;K,V&gt; e; K k;</span><br><span class="line">        //第三部分第一小节</span><br><span class="line">        if (p.hash == hash &amp;&amp;</span><br><span class="line">            ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">            e = p;</span><br><span class="line">        //第三部分第二小节</span><br><span class="line">        else if (p instanceof TreeNode)</span><br><span class="line">            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br><span class="line">        //第三部分第三小节</span><br><span class="line">        else &#123;</span><br><span class="line">            for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">                //第三小节第一段</span><br><span class="line">                if ((e = p.next) == null) &#123;</span><br><span class="line">                    p.next = newNode(hash, key, value, null);</span><br><span class="line">                    if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                        treeifyBin(tab, hash);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                //第三小节第一段</span><br><span class="line">                if (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                    break;</span><br><span class="line">                //第三小节第三段</span><br><span class="line">                p = e;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //第三部分第四小节</span><br><span class="line">        if (e != null) &#123; // existing mapping for key</span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            if (!onlyIfAbsent || oldValue == null)</span><br><span class="line">                e.value = value;</span><br><span class="line">            afterNodeAccess(e);</span><br><span class="line">            return oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ++modCount;</span><br><span class="line">    //第四部分</span><br><span class="line">    if (++size &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">    afterNodeInsertion(evict);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>乍一看，这代码完全没有读下去的欲望，第一次看的时候真实恶心到想吐，但是结合上一开始画的流程图再来分析，相信就会好很多。我们把代码进行拆分（整体分了四大部分）：</p><p>（1）Node&lt;K,V&gt;[] tab中tab表示的就是数组。Node&lt;K,V&gt; p中p表示的就是当前插入的节点</p><p>（2）第一部分：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">       n = (tab = resize()).length;</span><br></pre></td></tr></table></figure><p>这一部分表示的意思是如果数组是空的，那么就通过resize方法来创建一个新的数组。在这里resize方法先不说明，在下一小节扩容的时候会提到。</p><p>（3）第二部分：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">      tab[i] = newNode(hash, key, value, null);</span><br></pre></td></tr></table></figure><p>i表示在数组中插入的位置，计算的方式为(n - 1) &amp; hash。在这里需要判断插入的位置是否是冲突的，如果不冲突就直接newNode，插入到数组中即可，这就和流程图中第一个判断框对应了。</p><p>如果插入的hash值冲突了，那就转到第三部分，处理冲突</p><p>（4）第三部分：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">else &#123;</span><br><span class="line">    Node&lt;K,V&gt; e; K k;</span><br><span class="line">    //第三部分a</span><br><span class="line">    if (p.hash == hash &amp;&amp;</span><br><span class="line">        ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">        e = p;</span><br><span class="line">    //第三部分b</span><br><span class="line">    else if (p instanceof TreeNode)</span><br><span class="line">        e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br><span class="line">    //第三部分c</span><br><span class="line">    else &#123;</span><br><span class="line">        for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">            //第三小节第一段</span><br><span class="line">            if ((e = p.next) == null) &#123;</span><br><span class="line">                p.next = newNode(hash, key, value, null);</span><br><span class="line">                if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                    treeifyBin(tab, hash);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            //第三小节第一段</span><br><span class="line">            if (e.hash == hash &amp;&amp;</span><br><span class="line">                ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                break;</span><br><span class="line">            //第三小节第三段</span><br><span class="line">            p = e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //第三部分d</span><br><span class="line">    if (e != null) &#123; // existing mapping for key</span><br><span class="line">        V oldValue = e.value;</span><br><span class="line">        if (!onlyIfAbsent || oldValue == null)</span><br><span class="line">            e.value = value;</span><br><span class="line">        afterNodeAccess(e);</span><br><span class="line">        return oldValue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>我们会看到，处理冲突还真是麻烦，好在我们对这一部分又进行了划分</p><p>a）第三部分第一小节：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (p.hash == hash </span><br><span class="line">     &amp;&amp;((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">     e = p;</span><br></pre></td></tr></table></figure><p>在这里判断table[i]中的元素是否与插入的key一样，若相同那就直接使用插入的值p替换掉旧的值e。</p><p>b）第三部分第二小节：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">else if (p instanceof TreeNode)</span><br><span class="line">       e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br></pre></td></tr></table></figure><p>判断插入的数据结构是红黑树还是链表，在这里表示如果是红黑树，那就直接putTreeVal到红黑树中。这就和流程图里面的第二个判断框对应了。</p><p>c）第三部分第三小节：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//第三部分c</span><br><span class="line">else &#123;</span><br><span class="line">     for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">        //第三小节第一段</span><br><span class="line">         if ((e = p.next) == null) &#123;</span><br><span class="line">              p.next = newNode(hash, key, value, null);</span><br><span class="line">              if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                  treeifyBin(tab, hash);</span><br><span class="line">                  break;</span><br><span class="line">         &#125;</span><br><span class="line">         //第三小节第一段</span><br><span class="line">         if (e.hash == hash &amp;&amp;</span><br><span class="line">               ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">              break;</span><br><span class="line">         //第三小节第三段</span><br><span class="line">         p = e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>如果数据结构是链表，首先要遍历table数组是否存在，如果不存在直接newNode(hash, key, value, null)。如果存在了直接使用新的value替换掉旧的。</p><p>注意一点：不存在并且在链表末尾插入元素的时候，会判断binCount &gt;= TREEIFY_THRESHOLD - 1。也就是判断当前链表的长度是否大于阈值8，如果大于那就会把当前链表转变成红黑树，方法是treeifyBin。这也就和流程图中第三个判断框对应了。</p><p>（5）第四部分：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (++size &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">afterNodeInsertion(evict);</span><br><span class="line">return null;</span><br></pre></td></tr></table></figure><p>插入成功之后，还要判断一下实际存在的键值对数量size是否大于阈值threshold。如果大于那就开始扩容了。</p><p><strong>3、扩容</strong></p><p>为什么扩容呢？很明显就是当前容量不够，也就是put了太多的元素。为此我们还是先给出一个流程图，再来进行分析。</p><p><img src="https://pic2.zhimg.com/v2-f43eafe4e5d4d7616f885335fc185f3d_b.jpg" class="lazyload" data-srcset="https://pic2.zhimg.com/v2-f43eafe4e5d4d7616f885335fc185f3d_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p><p>这个扩容就比较简单了，HaspMap扩容就是就是先计算 新的hash表容量和新的容量阀值，然后初始化一个新的hash表，将旧的键值对重新映射在新的hash表里。如果在旧的hash表里涉及到红黑树，那么在映射到新的hash表中还涉及到红黑树的拆分。整个流程也符合我们正常扩容一个容量的过程，我们根据流程图结合代码来分析：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">final Node&lt;K,V&gt;[] resize() &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] oldTab = table;</span><br><span class="line">    int oldCap = (oldTab == null) ? 0 : oldTab.length;</span><br><span class="line">    int oldThr = threshold;</span><br><span class="line">    int newCap, newThr = 0;</span><br><span class="line">    //第一部分：扩容</span><br><span class="line">    if (oldCap &gt; 0) &#123;</span><br><span class="line">        if (oldCap &gt;= MAXIMUM_CAPACITY) &#123;</span><br><span class="line">            threshold = Integer.MAX_VALUE;</span><br><span class="line">            return oldTab;</span><br><span class="line">        &#125;</span><br><span class="line">        else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;</span><br><span class="line">                 oldCap &gt;= DEFAULT_INITIAL_CAPACITY)</span><br><span class="line">            newThr = oldThr &lt;&lt; 1; // double threshold</span><br><span class="line">    &#125;</span><br><span class="line">    //第二部分：设置阈值</span><br><span class="line">    else if (oldThr &gt; 0) // initial capacity was placed in threshold</span><br><span class="line">        newCap = oldThr;</span><br><span class="line">    else &#123;               // zero initial threshold signifies using defaults</span><br><span class="line">        newCap = DEFAULT_INITIAL_CAPACITY;</span><br><span class="line">        newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);</span><br><span class="line">    &#125;</span><br><span class="line">    if (newThr == 0) &#123;</span><br><span class="line">        float ft = (float)newCap * loadFactor;</span><br><span class="line">        newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?</span><br><span class="line">                  (int)ft : Integer.MAX_VALUE);</span><br><span class="line">    &#125;</span><br><span class="line">    threshold = newThr;</span><br><span class="line">    @SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span><br><span class="line">        Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];</span><br><span class="line">    table = newTab;</span><br><span class="line">    //第三部分：旧数据保存在新数组里面</span><br><span class="line">    if (oldTab != null) &#123;</span><br><span class="line">        for (int j = 0; j &lt; oldCap; ++j) &#123;</span><br><span class="line">            Node&lt;K,V&gt; e;</span><br><span class="line">            if ((e = oldTab[j]) != null) &#123;</span><br><span class="line">                oldTab[j] = null;</span><br><span class="line">                //只有一个节点，通过索引位置直接映射</span><br><span class="line">                if (e.next == null)</span><br><span class="line">                    newTab[e.hash &amp; (newCap - 1)] = e;</span><br><span class="line">                //如果是红黑树，需要进行树拆分然后映射</span><br><span class="line">                else if (e instanceof TreeNode)</span><br><span class="line">                    ((TreeNode&lt;K,V&gt;)e).split(this, newTab, j, oldCap);</span><br><span class="line">                else &#123;</span><br><span class="line">                     //如果是多个节点的链表，将原链表拆分为两个链表</span><br><span class="line">                    Node&lt;K,V&gt; loHead = null, loTail = null;</span><br><span class="line">                    Node&lt;K,V&gt; hiHead = null, hiTail = null;</span><br><span class="line">                    Node&lt;K,V&gt; next;</span><br><span class="line">                    do &#123;</span><br><span class="line">                        next = e.next;</span><br><span class="line">                        if ((e.hash &amp; oldCap) == 0) &#123;</span><br><span class="line">                            if (loTail == null)</span><br><span class="line">                                loHead = e;</span><br><span class="line">                            else</span><br><span class="line">                                loTail.next = e;</span><br><span class="line">                            loTail = e;</span><br><span class="line">                        &#125;</span><br><span class="line">                        else &#123;</span><br><span class="line">                            if (hiTail == null)</span><br><span class="line">                                hiHead = e;</span><br><span class="line">                            else</span><br><span class="line">                                hiTail.next = e;</span><br><span class="line">                            hiTail = e;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; while ((e = next) != null);</span><br><span class="line">                    //链表1存于原索引</span><br><span class="line">                    if (loTail != null) &#123;</span><br><span class="line">                        loTail.next = null;</span><br><span class="line">                        newTab[j] = loHead;</span><br><span class="line">                    &#125;</span><br><span class="line">                    //链表2存于原索引加上原hash桶长度的偏移量</span><br><span class="line">                    if (hiTail != null) &#123;</span><br><span class="line">                        hiTail.next = null;</span><br><span class="line">                        newTab[j + oldCap] = hiHead;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return newTab;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这代码量同样让人恶心，不过我们还是分段来分析：</p><p>（1）第一部分：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//第一部分：扩容</span><br><span class="line">if (oldCap &gt; 0) &#123;</span><br><span class="line">      if (oldCap &gt;= MAXIMUM_CAPACITY) &#123;</span><br><span class="line">           threshold = Integer.MAX_VALUE;</span><br><span class="line">           return oldTab;</span><br><span class="line">      &#125;</span><br><span class="line">      else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;</span><br><span class="line">          oldCap &gt;= DEFAULT_INITIAL_CAPACITY)</span><br><span class="line">            newThr = oldThr &lt;&lt; 1; // double threshold</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>根据代码也能看明白：首先如果超过了数组的最大容量，那么就直接将阈值设置为整数最大值，然后如果没有超过，那就扩容为原来的2倍，这里要注意是oldThr &lt;&lt; 1，移位操作来实现的。</p><p>（2）第二部分：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//第二部分：设置阈值</span><br><span class="line">else if (oldThr &gt; 0) //阈值已经初始化了，就直接使用</span><br><span class="line">      newCap = oldThr;</span><br><span class="line">else &#123;    // 没有初始化阈值那就初始化一个默认的容量和阈值</span><br><span class="line">      newCap = DEFAULT_INITIAL_CAPACITY;</span><br><span class="line">      newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);</span><br><span class="line">&#125;</span><br><span class="line">if (newThr == 0) &#123;</span><br><span class="line">      float ft = (float)newCap * loadFactor;</span><br><span class="line">      newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?</span><br><span class="line">                      (int)ft : Integer.MAX_VALUE);</span><br><span class="line">&#125;</span><br><span class="line">//为当前的容量阈值赋值</span><br><span class="line">threshold = newThr;</span><br><span class="line">@SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span><br><span class="line">Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];</span><br><span class="line">table = newTab;</span><br></pre></td></tr></table></figure><p>首先第一个else if表示如果阈值已经初始化过了，那就直接使用旧的阈值。然后第二个else表示如果没有初始化，那就初始化一个新的数组容量和新的阈值。</p><p>（3）第三部分</p><p>第三部分同样也很复杂，就是把旧数据复制到新数组里面。这里面需要注意的有下面几种情况：</p><p>A：扩容后，若hash值新增参与运算的位=0，那么元素在扩容后的位置=原始位置</p><p>B：扩容后，若hash值新增参与运算的位=1，那么元素在扩容后的位置=原始位置+扩容后的旧位置。</p><p>hash值新增参与运算的位是什么呢？我们把hash值转变成二进制数字，新增参与运算的位就是倒数第五位。</p><p>这里面有一个非常好的设计理念，扩容后长度为原hash表的2倍，于是把hash表分为两半，分为低位和高位，如果能把原链表的键值对， 一半放在低位，一半放在高位，而且是通过e.hash &amp; oldCap == 0来判断，这个判断有什么优点呢？</p><p>举个例子：n = 16，二进制为10000，第5位为1，e.hash &amp; oldCap 是否等于0就取决于e.hash第5 位是0还是1，这就相当于有50%的概率放在新hash表低位，50%的概率放在新hash表高位。</p><p>OK，到这一步基本上就算是把扩容这一部分讲完了，还有一个问题没有解决，也就是说存储的原理讲明白了，存储的元素多了如何扩容也明白了，扩容之后出现了地址冲突怎么办呢？</p><p><strong>4、解决地址冲突</strong></p><p>解决地址冲突的前提是计算的hash值出现了重复，我们就先来看看HashMap中，是如何计算hash值的。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">     int h;</span><br><span class="line">     return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>代码是超级简单，hash值其实就是通过hashcode与16异或计算的来的，为什么要使用异或运算呢？画一张图你就明白了：</p><p><img src="https://pic1.zhimg.com/v2-fe6755c8e427026b155c867f11efdbd0_b.jpg" class="lazyload" data-srcset="https://pic1.zhimg.com/v2-fe6755c8e427026b155c867f11efdbd0_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p><p>也就是说，通过异或运算能够是的计算出来的hash比较均匀，不容易出现冲突。但是偏偏出现了冲突现象，这时候该如何去解决呢？</p><p><strong>在数据结构中，我们处理hash冲突常使用的方法有：开发定址法、再哈希法、链地址法、建立公共溢出区。而hashMap中处理hash冲突的方法就是链地址法。</strong></p><p>这种方法的基本思想是将所有哈希地址为i的元素构成一个称为同义词链的单链表，并将单链表的头指针存在哈希表的第i个单元中，因而查找、插入和删除主要在同义词链中进行。链地址法适用于经常进行插入和删除的情况。</p><p><img src="https://pic2.zhimg.com/v2-08b1b12dfb7507704d45ecca236ebf91_b.jpg" class="lazyload" data-srcset="https://pic2.zhimg.com/v2-08b1b12dfb7507704d45ecca236ebf91_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p><p>相信大家都能看明白，出现地址冲突的时候，一个接一个排成一条链就OK了。正好与HashMap底层的数据结构相呼应。</p><p><strong>5、构造一个HashMap</strong></p><p>上面可能出现的问题，我们都已经说明了，关于他的构造方法却姗姗来迟。下面我们好好说一下他的构造方法：</p><p>他的构造方法一共有四个：</p><p>第一个：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public HashMap() &#123;</span><br><span class="line">     this.loadFactor = DEFAULT_LOAD_FACTOR; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>第二个：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public HashMap(int initialCapacity) &#123;</span><br><span class="line">     this(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>第三个：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public HashMap(Map&lt;? extends K, ? extends V&gt; m) &#123;</span><br><span class="line">    this.loadFactor = DEFAULT_LOAD_FACTOR;</span><br><span class="line">    putMapEntries(m, false);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>第四个：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public HashMap(int initialCapacity, float loadFactor) &#123;</span><br><span class="line">     if (initialCapacity &lt; 0)</span><br><span class="line">         throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</span><br><span class="line">                                            initialCapacity);</span><br><span class="line">     if (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">         initialCapacity = MAXIMUM_CAPACITY;</span><br><span class="line">     if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))</span><br><span class="line">         throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</span><br><span class="line">                                            loadFactor);</span><br><span class="line">     this.loadFactor = loadFactor;</span><br><span class="line">     this.threshold = tableSizeFor(initialCapacity);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure><p>这四个构造方法很明显第四个最麻烦，我们就来分析一下第四个构造方法，其他三个自然而然也就明白了。上面出现了两个新的名词：loadFactor和initialCapacity。我们一个一个来分析：</p><p>（1）initialCapacity初始容量</p><p>官方要求我们要输入一个2的N次幂的值，比如说2、4、8、16等等这些，但是我们忽然一个不小心，输入了一个20怎么办？没关系，虚拟机会根据你输入的值，找一个离20最近的2的N次幂的值，比如说16离他最近，就取16为初始容量。</p><p>（2）loadFactor负载因子</p><p>负载因子，默认值是0.75。负载因子表示一个散列表的空间的使用程度，有这样一个公式：initailCapacity*loadFactor=HashMap的容量。 所以负载因子越大则散列表的装填程度越高，也就是能容纳更多的元素，元素多了，链表大了，所以此时索引效率就会降低。反之，负载因子越小则链表中的数据量就越稀疏，此时会对空间造成烂费，但是此时索引效率高。</p><p>为什么默认值会是0.75呢？我们截取一段jdk文档：</p><p><img src="https://pic3.zhimg.com/v2-4e6b224503e39e90b9419946ba2f7166_b.jpg" class="lazyload" data-srcset="https://pic3.zhimg.com/v2-4e6b224503e39e90b9419946ba2f7166_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p><p><img src="https://pic1.zhimg.com/v2-2936da1806372ffe26efa072de7da934_b.jpg" class="lazyload" data-srcset="https://pic1.zhimg.com/v2-2936da1806372ffe26efa072de7da934_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p><p>英语不好的人看的我真是一脸懵逼，不过好在大概意思还能明白。看第三行Poisson_distribution这不就是泊淞分布嘛。而且最关键的就是</p><p>当桶中元素到达8个的时候，概率已经变得非常小，也就是说用0.75作为加载因子，每个碰撞位置的链表长度超过８个是几乎不可能的。当桶中元素到达8个的时候，概率已经变得非常小，也就是说用0.75作为加载因子，每个碰撞位置的链表长度超过８个是几乎不可能的。</p><p><strong>6、HashMap为什么是非线程安全的？</strong></p><p>想要解决这个问题，答案很简单，因为源码里面方法全部都是非线程安全的呀，你根本找不到synchronized这样的关键字。保证不了线程安全。于是出现了ConcurrentHashMap。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;HashMap源码分析（jdk1-8，保证你能看懂）&quot;&gt;&lt;a href=&quot;#HashMap源码分析（jdk1-8，保证你能看懂）&quot; class=&quot;headerlink&quot; title=&quot;HashMap源码分析（jdk1.8，保证你能看懂）&quot;&gt;&lt;/a&gt;HashMap源</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>进程间通信</title>
+    <link href="https://songsong.ink/2021/08/16/f5eb7f7f9a8b.html"/>
+    <id>https://songsong.ink/2021/08/16/f5eb7f7f9a8b.html</id>
+    <published>2021-08-16T20:27:19.000Z</published>
+    <updated>2021-09-23T15:24:02.801Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="进程间的通信方式"><a href="#进程间的通信方式" class="headerlink" title="进程间的通信方式"></a>进程间的通信方式</h1><ul><li>管道</li><li>消息队列</li><li>共享内存</li><li>信号量</li><li>信号</li><li>Socket</li></ul><h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>管道方式举例: | 就是一个匿名管道将ps aux的输出作为后一个命令的输入，而且很显然管道是单向的。双向通信就需要两个管道。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep mysql</span><br></pre></td></tr></table></figure><h3 id="管道分类"><a href="#管道分类" class="headerlink" title="管道分类"></a>管道分类</h3><ul><li>匿名管道 | （用完就销毁）</li><li>命名管道 FIFO （数据是先进先出的形式）</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfifo myPipe</span><br></pre></td></tr></table></figure><p>myPipe 就是我们创建的管道的名称，linux一切皆文件这个pipe的文件类型是P</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">song@MateBooke13:~$ ls -l pipe</span><br><span class="line">prw-r--r-- 1 song song 0 Aug 16 20:51 pipe</span><br></pre></td></tr></table></figure><p>往管道写入数据</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;hello&quot;</span> &gt; pipe //写入数据</span><br><span class="line">//卡住</span><br></pre></td></tr></table></figure><h3 id="管道的原理"><a href="#管道的原理" class="headerlink" title="管道的原理"></a>管道的原理</h3><p>管道就是内核的一串缓存，从管道的一段写入数据，实际上就是缓存在内核中的，另一端读取也就是从内核中读取这段数据。另外管道传输的数据是无格式的且大小受限。</p><p>匿名管道必须在父子进程中进行。而命名管道无此限制 在shell中执行 A|B，A和B都是shell创建的子进程。</p><h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul><li>管道的通信方式效率很低，不适合在进程间频繁的交换数据。</li></ul><h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><p>消息队列可以解决管道的缺点。A进程给B发消息，A把数据放到消息队列里面就可以走了。B需要的时候就去取<br>消息队列是保存在内核中的消息链表，发送前要确认好数据格式。消息队列随内核存在。</p><h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3><ul><li>通信不及时</li><li>邮件大小有限制</li><li>通信过程存在切换内核态开销</li></ul><h2 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h2><p>共享内存是为了解决消息队列存在内核态和用户态切换的问题。<br>共享内存的机制就是拿出一块虚拟地址，映射到相同的物理内存中，这个对内存的读取另一个进程马上就能看到。</p><h3 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h3><ul><li><p>共享内存区域在多个进程同时修改同一个共享内存时，内容被覆盖</p><h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><p>信号量时为了防止多进程竞争共享资源的一种保护机制（PV操作实现进程的互斥与同步）<br>以上都是常规状态下的工作模式</p><h2 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h2><p>linux下为了响应各种事件，提供了几十种信号，分别带别不同的意义。（kill -l 查看）</p></li><li><p>Ctrl +C 产生SIGINT信号终止进程</p></li><li><p>CTRL+Z SIGTSTP 停止该进程</p></li><li><p>kill -9 1050 表示给PID1050发送SIGKILL信号，来立即结束进程</p><h2 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h2><p>socket来实现跨网络通信</p></li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;进程间的通信方式&quot;&gt;&lt;a href=&quot;#进程间的通信方式&quot; class=&quot;headerlink&quot; title=&quot;进程间的通信方式&quot;&gt;&lt;/a&gt;进程间的通信方式&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;管道&lt;/li&gt;
+&lt;li&gt;消息队列&lt;/li&gt;
+&lt;li&gt;共享内存&lt;/li&gt;
+&lt;li&gt;</summary>
+      
+    
+    
+    
+    <category term="进程" scheme="https://songsong.ink/categories/%E8%BF%9B%E7%A8%8B/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>HTTP1.1如何优化</title>
+    <link href="https://songsong.ink/2021/08/16/dd6d47563dee.html"/>
+    <id>https://songsong.ink/2021/08/16/dd6d47563dee.html</id>
+    <published>2021-08-16T19:13:29.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="三种优化思路"><a href="#三种优化思路" class="headerlink" title="三种优化思路"></a>三种优化思路</h1><ol><li>如何避免发HTTP请求</li><li>如何减少HTTP请求</li><li>如何减少HTTP请求数据大小</li></ol><h2 id="如何避免发HTTP请求"><a href="#如何避免发HTTP请求" class="headerlink" title="如何避免发HTTP请求"></a>如何避免发HTTP请求</h2><ol><li>使用缓存</li></ol><p>对于一些重复性的请求把请求响应缓存在本地。url作为Key响应作为value，同时设置过期时间。过期后的重复请求在请求时携带摘要，服务端验证将服务端数据和摘要比较看是否修改，没有修改就返回304 NOt Modified。</p><h2 id="如何减少HTTP请求"><a href="#如何减少HTTP请求" class="headerlink" title="如何减少HTTP请求"></a>如何减少HTTP请求</h2><ol><li>合并请求 （小数据合并到一起请求）</li><li>减少重定向次数 </li><li>延迟发送请求（按需加载）</li></ol><h2 id="减少HTTP响应的数据大小"><a href="#减少HTTP响应的数据大小" class="headerlink" title="减少HTTP响应的数据大小"></a>减少HTTP响应的数据大小</h2><ol><li>无损压缩</li><li>有损压缩</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;三种优化思路&quot;&gt;&lt;a href=&quot;#三种优化思路&quot; class=&quot;headerlink&quot; title=&quot;三种优化思路&quot;&gt;&lt;/a&gt;三种优化思路&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;如何避免发HTTP请求&lt;/li&gt;
+&lt;li&gt;如何减少HTTP请求&lt;/li&gt;
+&lt;li&gt;如何减少HTT</summary>
+      
+    
+    
+    
+    <category term="HTTP" scheme="https://songsong.ink/categories/HTTP/"/>
+    
+    
+    <category term="HTTP.1" scheme="https://songsong.ink/tags/HTTP-1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>排序算法得性质</title>
+    <link href="https://songsong.ink/2021/08/16/0f646613617c.html"/>
+    <id>https://songsong.ink/2021/08/16/0f646613617c.html</id>
+    <published>2021-08-16T19:13:29.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<table><thead><tr><th>算法种类</th><th>最好情况</th><th>平均情况</th><th>最坏情况</th><th>空间复杂度</th><th>是否稳定</th></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>直接插入排序</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>冒泡排序</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>简单选择排序</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>希尔排序</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>快速排序</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>堆排序</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>2路归并排序</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>基数排序</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;算法种类&lt;/th&gt;
+&lt;th&gt;最好情况&lt;/th&gt;
+&lt;th&gt;平均情况&lt;/th&gt;
+&lt;th&gt;最坏情况&lt;/th&gt;
+&lt;th&gt;空间复杂度&lt;/th&gt;
+&lt;th&gt;是否稳定&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;&lt;/t</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>一次git误删除本地commit的补救</title>
+    <link href="https://songsong.ink/2021/08/14/aae24ddbc03a.html"/>
+    <id>https://songsong.ink/2021/08/14/aae24ddbc03a.html</id>
+    <published>2021-08-14T20:44:23.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="事故起因"><a href="#事故起因" class="headerlink" title="事故起因"></a>事故起因</h2><p>为了保证push到远端时commit是干净的，准备对本地的commit进行合并，此时处于马上要下班的兴奋时刻，手一哆嗦把误点了drop。准备提交的所有commit消失不见</p><h2 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h2><ol><li>git status</li><li>git reflog  –date=iso 查看git的记录找到当时的commit</li><li>git checkout -b tmp a823ba6 ## a823ba6为删除的最后一个commit的id</li><li>git log</li><li>git branch</li><li>git checkout kfapi8-11-19-54</li><li>git branch</li><li>git branch -m kfapi8-11-19-54-back</li><li>git checkout tmp</li><li>git branch -m kfapi8-11-19-54</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;事故起因&quot;&gt;&lt;a href=&quot;#事故起因&quot; class=&quot;headerlink&quot; title=&quot;事故起因&quot;&gt;&lt;/a&gt;事故起因&lt;/h2&gt;&lt;p&gt;为了保证push到远端时commit是干净的，准备对本地的commit进行合并，此时处于马上要下班的兴奋时刻，手一哆嗦把误点</summary>
+      
+    
+    
+    
+    <category term="git" scheme="https://songsong.ink/categories/git/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>linux create service</title>
+    <link href="https://songsong.ink/2021/08/05/9877030524ce.html"/>
+    <id>https://songsong.ink/2021/08/05/9877030524ce.html</id>
+    <published>2021-08-05T13:12:25.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<p>linux服务配置文件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 创建服务文件 </span></span><br><span class="line">vim /etc/systemd/system/EmbyMedia_GoogleMovie_play.service</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Rclone</span><br><span class="line">AssertPathIsDirectory=/mnt/googledrive</span><br><span class="line">After=network-online.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/usr/bin/rclone mount googledrive:movies /mnt/googledrive   --umask 0000  --default-permissions  --allow-non-empty  --allow-other  --buffer-size 32M  --dir-cache-time 12h --vfs-cache-mode writes --vfs-read-chunk-size 64M  --vfs-read-chunk-size-limit 1G</span><br><span class="line">ExecStop=/bin/fusermount -u /mnt/googledrive   </span><br><span class="line">Restart=on-abort</span><br><span class="line">User=root</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=default.target</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#重载daemon，让新的服务文件生效</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">#启动rclone</span><br><span class="line">systemctl start EmbyMedia_VIP_Movie_play EmbyMedia_VIP_TVasia_play EmbyMedia_VIP_TVnf_play</span><br><span class="line">#设置开机启动：</span><br><span class="line">systemctl</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;linux服务配置文件&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/sp</summary>
+      
+    
+    
+    
+    <category term="linux" scheme="https://songsong.ink/categories/linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>linux命令</title>
+    <link href="https://songsong.ink/2021/08/05/1982596e3a33.html"/>
+    <id>https://songsong.ink/2021/08/05/1982596e3a33.html</id>
+    <published>2021-08-05T12:59:25.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<p>查看端口被那个进程占用</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -lnp|grep 7000 </span><br><span class="line">lsof -i :22</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;查看端口被那个进程占用&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/sp</summary>
+      
+    
+    
+    
+    <category term="linux" scheme="https://songsong.ink/categories/linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>git命令</title>
+    <link href="https://songsong.ink/2021/08/03/d105761cf6b8.html"/>
+    <id>https://songsong.ink/2021/08/03/d105761cf6b8.html</id>
+    <published>2021-08-03T12:49:53.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>新建feature分支  git checkout -b feature_x  checkout 切换  -b feature_x branch feature_x 新建分支x</li><li>查看分支 git branch</li><li>删除本地分支 git branch -d feature_x</li><li>删除远程分支 git push origin –delete feature_x</li><li>git rebase master -&gt; git rebase –contionue</li><li>纳入版本控制 git add xxx.xx</li><li>git pull 拉代码</li><li>git push 推代码</li><li>git cherry-pick <commitHash> 将指定的提交（commit）应用于其他分支。</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;新建feature分支  git checkout -b feature_x  checkout 切换  -b feature_x branch feature_x 新建分支x&lt;/li&gt;
+&lt;li&gt;查看分支 git branch&lt;/li&gt;
+&lt;li&gt;删除本地分支 g</summary>
+      
+    
+    
+    
+    <category term="git" scheme="https://songsong.ink/categories/git/"/>
+    
+    
+    <category term="git" scheme="https://songsong.ink/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>spingboot配置</title>
+    <link href="https://songsong.ink/2021/08/02/5c1a3fdb1604.html"/>
+    <id>https://songsong.ink/2021/08/02/5c1a3fdb1604.html</id>
+    <published>2021-08-02T14:43:22.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="使用profile切换配置环境"><a href="#使用profile切换配置环境" class="headerlink" title="使用profile切换配置环境"></a>使用profile切换配置环境</h2><p>spring boot允许你通过命名约定按照一定的格式(application-{profile}.properties)来定义多个配置文件，然后通过在application.properyies通过spring.profiles.active来具体激活一个或者多个配置文件，如果没有没有指定任何profile的配置文件的话，spring boot默认会启动application-default.properties。</p><h3 id="vm参数配置-Dspring-profiles-active"><a href="#vm参数配置-Dspring-profiles-active" class="headerlink" title="vm参数配置 -Dspring.profiles.active"></a>vm参数配置 -Dspring.profiles.active</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">groovyScript(&quot;def result=&#x27;&#x27;; </span><br><span class="line">def params=\&quot;$&#123;_1&#125;\&quot;.replaceAll(&#x27;[\\\\[|\\\\]|\\\\s]&#x27;, &#x27;&#x27;).split(&#x27;,&#x27;).toList(); </span><br><span class="line">result+= params.size()  += &#x27;\\n&#x27;; </span><br><span class="line">for(i = 0; i &lt; params.size(); i++) &#123;</span><br><span class="line">if(params[i] == &#x27;&#x27;) </span><br><span class="line">return result;</span><br><span class="line">if(i==0) </span><br><span class="line">result += &#x27;\\n&#x27;; </span><br><span class="line">result+=&#x27; * @param &#x27; + params[i] + ((i &lt; params.size() - 1) ? &#x27;\\n&#x27; : &#x27;&#x27;)</span><br><span class="line">&#125;; </span><br><span class="line">return result&quot;, </span><br><span class="line">methodParameters()) </span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;使用profile切换配置环境&quot;&gt;&lt;a href=&quot;#使用profile切换配置环境&quot; class=&quot;headerlink&quot; title=&quot;使用profile切换配置环境&quot;&gt;&lt;/a&gt;使用profile切换配置环境&lt;/h2&gt;&lt;p&gt;spring boot允许你通过命名</summary>
+      
+    
+    
+    
+    <category term="springboot" scheme="https://songsong.ink/categories/springboot/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>idea常用快捷键总结</title>
+    <link href="https://songsong.ink/2021/08/02/5046cc886a09.html"/>
+    <id>https://songsong.ink/2021/08/02/5046cc886a09.html</id>
+    <published>2021-08-02T14:12:51.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>ctrl+shift+(+/-)展开全部折叠全部</li><li>ctrl+（+/-） 展开折叠当前方法</li><li>ctrl+shift+U 全部转换为大写or小写</li><li>ctrl+H 查看类继承关系，不能看实现接口</li><li>ctrl + alt + u 既能看继承关系也能看接口</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;ctrl+shift+(+/-)展开全部折叠全部&lt;/li&gt;
+&lt;li&gt;ctrl+（+/-） 展开折叠当前方法&lt;/li&gt;
+&lt;li&gt;ctrl+shift+U 全部转换为大写or小写&lt;/li&gt;
+&lt;li&gt;ctrl+H 查看类继承关系，不能看实现接口&lt;/li&gt;
+&lt;li&gt;ct</summary>
+      
+    
+    
+    
+    <category term="idea" scheme="https://songsong.ink/categories/idea/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>企业微信客服接入</title>
+    <link href="https://songsong.ink/2021/07/29/05a78b7aff72.html"/>
+    <id>https://songsong.ink/2021/07/29/05a78b7aff72.html</id>
+    <published>2021-07-29T20:18:04.000Z</published>
+    <updated>2021-09-23T15:24:02.797Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="微信客服可实现的功能"><a href="#微信客服可实现的功能" class="headerlink" title="微信客服可实现的功能"></a>微信客服可实现的功能</h1><ul><li>可将企业员工配置为微信客服的接待人员，在企业微信里接收和回复用户在微信内、外发起的咨询消息</li><li>可在企业微信里通过API来管理微信客服帐号、分配客服会话和收发客服消息等。</li><li>可使用客服工具栏、「升级服务」等工具</li></ul><h1 id="微信客服的接入场景"><a href="#微信客服的接入场景" class="headerlink" title="微信客服的接入场景"></a>微信客服的接入场景</h1><h2 id="1、在微信内接入"><a href="#1、在微信内接入" class="headerlink" title="1、在微信内接入"></a>1、在微信内接入</h2><ul><li>在视频号中接入：企业在企业微信管理后台的“微信客服应用-在视频号中接入”处，选择企业已绑定的视频号，并选择在该视频号中接入的微信客服即可。</li><li>在微信内网页接入</li><li>在公众号中接入</li><li>在小程序中接入 | 小程序API</li><li>在搜一搜品牌官方区中接入</li><li>在微信支付凭证处接入<h2 id="2、在微信外接入"><a href="#2、在微信外接入" class="headerlink" title="2、在微信外接入"></a>2、在微信外接入</h2></li><li>在App中接入 | SDK</li><li>在微信外网页接入<h2 id="开启api"><a href="#开启api" class="headerlink" title="开启api"></a>开启api</h2></li></ul><p>开启API之后，微信联系人与企业接待人员的所有消息与事件都回调给企业，企业可以调用API来收发消息、分配会话等<br> 注意：</p><ul><li>企业须已在在企业微信里使用微信客服且已开启API，才能正常在企业微信里调用微信客服相关API。</li><li>开启API后，仅可通过API来管理客服帐号、分配客服会话和收发客服消息，开发者请做好处理。</li></ul><h2 id="Api"><a href="#Api" class="headerlink" title="Api"></a>Api</h2><p>客服账号管理</p><ul><li>添加客服帐号</li><li>删除客服帐号</li><li>删除客服帐号</li><li>获取客服帐号列表</li><li>获取客服帐号链接</li></ul><p>接待人员管理</p><ul><li>添加接待人员：添加指定客服帐号的接待人员。</li><li>删除接待人员：删除接待人员</li><li>获取接待人员列表：获取某个客服帐号的接待人员列表</li></ul><p>分配客服会话</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;微信客服可实现的功能&quot;&gt;&lt;a href=&quot;#微信客服可实现的功能&quot; class=&quot;headerlink&quot; title=&quot;微信客服可实现的功能&quot;&gt;&lt;/a&gt;微信客服可实现的功能&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;可将企业员工配置为微信客服的接待人员，在企业微信里接收和回复用户</summary>
+      
+    
+    
+    
+    <category term="企业微信接入" scheme="https://songsong.ink/categories/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%8E%A5%E5%85%A5/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>秒杀缓存优化</title>
+    <link href="https://songsong.ink/2021/07/29/b80307f408ca.html"/>
+    <id>https://songsong.ink/2021/07/29/b80307f408ca.html</id>
+    <published>2021-07-29T20:18:04.000Z</published>
+    <updated>2021-09-23T15:24:02.801Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="缓存优化思路梳理"><a href="#缓存优化思路梳理" class="headerlink" title="缓存优化思路梳理"></a>缓存优化思路梳理</h1><h2 id="使用Redis做一级缓存"><a href="#使用Redis做一级缓存" class="headerlink" title="使用Redis做一级缓存"></a>使用Redis做一级缓存</h2><p>首先对接口进行压测。无缓存的情况下QPS只有80.</p><h3 id="优化步骤"><a href="#优化步骤" class="headerlink" title="优化步骤"></a>优化步骤</h3><p>首先考虑所有请求都直接读写mysql肯定是不行的。那么第一想到的是加redis缓存商品数据。查询请求进来首先查询redis缓存，缓存不存在再去读数据库，最后更新缓存。</p><p>修改日志级别到warn，减少无效日志 性能提升10%。日志也会影响性能。</p><p>不走网关直接走原始服务器，性能提升。（网关处理也会影响性能）</p><p>进行三个优化步骤后达到1000QPS。</p><h3 id="进一步思考"><a href="#进一步思考" class="headerlink" title="进一步思考"></a>进一步思考</h3><p>请求Redis会走网络请求网卡也是影响性能瓶颈的原因。而且存入redis会有序列化和反序列化的开销。会对性能产生影响。此时考虑加入本地缓存，在高并发环境下使用ConcurrentHashMap做缓存。此时考虑缓存不能无限增长的，要对缓存加入淘汰策略。此时采用经典的LRU作为淘汰策略。</p><h3 id="缓存击穿问题"><a href="#缓存击穿问题" class="headerlink" title="缓存击穿问题"></a>缓存击穿问题</h3><p>使用缓存时，会出现大量缓存失效的问题，此时会有大量的请求去读取数据库。大量的请求同时请求数据库会导致数据库宕机。此种情况下要对数据的读取操作进行同步操作，阻塞大量的数据库请求。考虑到服务时集群形式，此时采用分布式锁来同步读取操作。</p><p>可以实现分布式锁的有：</p><ul><li>Redis</li><li>Redssion</li><li>Zookeeper</li></ul><p>最后选取了Zookeeper，Redis和Redssion会有死锁问题。</p><h3 id="缓存穿透问题"><a href="#缓存穿透问题" class="headerlink" title="缓存穿透问题"></a>缓存穿透问题</h3><p>当大量id不存在的请求过去会导致瞬时大量的读取数据库请求。这就是缓存穿透问题。</p><p>解决该问题的解决方案会有三个特性：</p><ul><li>快：处理要快</li><li>准：判断要准确</li><li>省：可以压缩数据</li></ul><h4 id="redis方案"><a href="#redis方案" class="headerlink" title="redis方案"></a>redis方案</h4><p>首先，快这个特性就要求数据要存储到内存中，此时可以考虑将所有的id存到redis中，可以实现快速准确的判断，但是在数据量很大的情况下会占用大量内存。此时可以考虑对数据进行压缩，但是要保证依然可以判断出id是否存在。</p><h4 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h4><p>可以用布隆过滤器，布隆过滤器实际上就是一种压缩数据的方案，可以对数据是否存在进行判断。此时布隆过滤器放到redis。不需要每个实例维护一份布隆过滤器。</p><h5 id="布隆过滤器原理"><a href="#布隆过滤器原理" class="headerlink" title="布隆过滤器原理"></a>布隆过滤器原理</h5><p>布隆过滤器的组成：</p><ul><li>多个hash函数</li><li>位数组</li></ul><p>布隆过滤器启动时使用多个hash函数对id进行计算。然后将计算出的多个值在位数组中位置标为1。当要判断的时候就会重复该过程，同时去判断得出的结果的对应位置是不是都为1，主要有一个不为0就说明不存在。</p><p>布隆过略器准确性影响因素：</p><ul><li>哈希函数的个数</li><li>位数组的长度</li></ul><h3 id="多级缓存数据不一致问题"><a href="#多级缓存数据不一致问题" class="headerlink" title="多级缓存数据不一致问题"></a>多级缓存数据不一致问题</h3>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;缓存优化思路梳理&quot;&gt;&lt;a href=&quot;#缓存优化思路梳理&quot; class=&quot;headerlink&quot; title=&quot;缓存优化思路梳理&quot;&gt;&lt;/a&gt;缓存优化思路梳理&lt;/h1&gt;&lt;h2 id=&quot;使用Redis做一级缓存&quot;&gt;&lt;a href=&quot;#使用Redis做一级缓存&quot; cla</summary>
+      
+    
+    
+    
+    <category term="缓存" scheme="https://songsong.ink/categories/cache/"/>
+    
+    
+    <category term="缓存" scheme="https://songsong.ink/tags/%E7%BC%93%E5%AD%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>面试题汇总</title>
+    <link href="https://songsong.ink/2021/07/28/cdc84b02548f.html"/>
+    <id>https://songsong.ink/2021/07/28/cdc84b02548f.html</id>
+    <published>2021-07-28T14:07:06.000Z</published>
+    <updated>2021-09-23T15:24:02.801Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="服务器性能瓶颈"><a href="#服务器性能瓶颈" class="headerlink" title="服务器性能瓶颈"></a>服务器性能瓶颈</h3><p>服务器性能瓶颈主要在四个方面：</p><ul><li>网卡</li><li>cpu</li><li>内存</li><li>IO</li></ul><h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><h3 id="套接字"><a href="#套接字" class="headerlink" title="套接字"></a>套接字</h3><p>网络中通过ip地址来标识和区别不同的主机，通过端口号来标识和区分一台主机中的不同应用进程。在网络中采用发送方和接受方的套接字（socket）组合来识别端点。所谓套接字，实际上是一个通信端点即</p><center> 套接字 = （主机IP地址，端口号） </center>套接字唯一的标识网络中的一台主机和其上的一个应用（进程）<h3 id="TCP如何保证可靠性传输"><a href="#TCP如何保证可靠性传输" class="headerlink" title="TCP如何保证可靠性传输"></a>TCP如何保证可靠性传输</h3><p>tcp是通过序列号、确认应答、重发控制、连接管理以及窗口控制等机制实现可靠性传输的。</p><h3 id="什么是超时重传"><a href="#什么是超时重传" class="headerlink" title="什么是超时重传"></a>什么是超时重传</h3><p>在发送数据时，设定一个计时器，当超过指定的时间后没有收到对方的ACK确认应答报文，就会重新发送接着这就是<code>超时重传</code></p><h3 id="什么时候发生超时重传"><a href="#什么时候发生超时重传" class="headerlink" title="什么时候发生超时重传"></a>什么时候发生超时重传</h3><p>TCP会在一下两种情况发送超时重传</p><ul><li>数据包丢失</li><li>确认应答丢失</li></ul><h3 id="什么是RTT（Round—trip-TIme-往返时延）"><a href="#什么是RTT（Round—trip-TIme-往返时延）" class="headerlink" title="什么是RTT（Round—trip TIme 往返时延）"></a>什么是RTT（Round—trip TIme 往返时延）</h3><p>[x] RTT就是数据从网络一端传送到另一端所需的时间</p><h3 id="RTO（Retransmission-Timeout）"><a href="#RTO（Retransmission-Timeout）" class="headerlink" title="RTO（Retransmission Timeout）"></a>RTO（Retransmission Timeout）</h3><p>RTO：耗时重传时间。</p><ul><li>当RTO过大时，重发就慢，丢了很长时间才会重发，没有效率，性能差。</li><li>当RTO过小时，会导致可能并没有丢就重发，于是重发的快，会导致网络拥塞，导致更多的超时，更多超时会导致更多的重发</li></ul><p>根据上述情况，<code>超时重传时间RTO的值应该略大约报文往返RTO的值</code></p><h3 id="快速重传"><a href="#快速重传" class="headerlink" title="快速重传"></a>快速重传</h3>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;服务器性能瓶颈&quot;&gt;&lt;a href=&quot;#服务器性能瓶颈&quot; class=&quot;headerlink&quot; title=&quot;服务器性能瓶颈&quot;&gt;&lt;/a&gt;服务器性能瓶颈&lt;/h3&gt;&lt;p&gt;服务器性能瓶颈主要在四个方面：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;网卡&lt;/li&gt;
+&lt;li&gt;cpu&lt;/li&gt;
+</summary>
+      
+    
+    
+    
+    <category term="面试汇总" scheme="https://songsong.ink/categories/%E9%9D%A2%E8%AF%95%E6%B1%87%E6%80%BB/"/>
+    
+    
+  </entry>
+  
+</feed>
