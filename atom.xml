@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>松松闲谈</title>
+  
+  
+  <link href="https://songsong.ink/atom.xml" rel="self"/>
+  
+  <link href="https://songsong.ink/"/>
+  <updated>2022-05-15T08:41:27.453Z</updated>
+  <id>https://songsong.ink/</id>
+  
+  <author>
+    <name>shensongpeng</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>git proxy problem</title>
+    <link href="https://songsong.ink/2022/05/15/a61a3351e369.html"/>
+    <id>https://songsong.ink/2022/05/15/a61a3351e369.html</id>
+    <published>2022-05-15T16:28:53.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="一、在git克隆代码时遇到无法克隆问题"><a href="#一、在git克隆代码时遇到无法克隆问题" class="headerlink" title="一、在git克隆代码时遇到无法克隆问题"></a>一、在git克隆代码时遇到无法克隆问题</h3><p>问题详细提示如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cloning into &#x27;MUNIT-keras&#x27;...</span><br><span class="line">fatal: unable to access &#x27;https://github.com/shaoanlu/MUNIT-keras.git/&#x27;: OpenSSL SSL_connect: Connection was reset in connection to github.com:443</span><br></pre></td></tr></table></figure><h3 id="二、问题的缘由"><a href="#二、问题的缘由" class="headerlink" title="二、问题的缘由"></a>二、问题的缘由</h3><p>之前为git设置了代理，现在通过软路由全局进行代理，可能出现了冲突问题。</p><h3 id="三、解决方案"><a href="#三、解决方案" class="headerlink" title="三、解决方案"></a>三、解决方案</h3><p>取消了之前为git设置的代理</p><h3 id="四、相关的命令如下"><a href="#四、相关的命令如下" class="headerlink" title="四、相关的命令如下"></a>四、相关的命令如下</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#查看git配置</span></span></span><br><span class="line">git config --global -l</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#取消代理设置</span></span></span><br><span class="line">git config --global --unset http.proxy</span><br><span class="line">git config --global --unset https.proxy</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 备份一下之前配置代理的命令</span></span></span><br><span class="line">git config --global http.proxy http://127.0.0.1:1080</span><br><span class="line">git config --global https.proxy http://127.0.0.1:1080</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;一、在git克隆代码时遇到无法克隆问题&quot;&gt;&lt;a href=&quot;#一、在git克隆代码时遇到无法克隆问题&quot; class=&quot;headerlink&quot; title=&quot;一、在git克隆代码时遇到无法克隆问题&quot;&gt;&lt;/a&gt;一、在git克隆代码时遇到无法克隆问题&lt;/h3&gt;&lt;p&gt;问题</summary>
+      
+    
+    
+    
+    <category term="git" scheme="https://songsong.ink/categories/git/"/>
+    
+    
+    <category term="git" scheme="https://songsong.ink/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>spring源码阅读</title>
+    <link href="https://songsong.ink/2022/02/07/d91a37f31693.html"/>
+    <id>https://songsong.ink/2022/02/07/d91a37f31693.html</id>
+    <published>2022-02-07T18:07:50.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="IOC容器"><a href="#IOC容器" class="headerlink" title="IOC容器"></a>IOC容器</h2><p>1 类怎么注入到容器中成为一个Bean?<br>类注入到容器中需要三步 1 配置类 2 加载上下文 3 getbean<br>2 配置类的三种形式  通过xml 注解 javaconfig<br>b. 加载spring上下文<br>xml： new ClassPathXmlApplicationCOntext(“xml”)<br>注解: new AnnotationConfigApplication(config.class)</p><p>xml方式和注解形式的上下文都是读取后成为BeanDefine</p><h2 id="BeanFactory"><a href="#BeanFactory" class="headerlink" title="BeanFactory"></a>BeanFactory</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;IOC容器&quot;&gt;&lt;a href=&quot;#IOC容器&quot; class=&quot;headerlink&quot; title=&quot;IOC容器&quot;&gt;&lt;/a&gt;IOC容器&lt;/h2&gt;&lt;p&gt;1 类怎么注入到容器中成为一个Bean?&lt;br&gt;类注入到容器中需要三步 1 配置类 2 加载上下文 3 getbea</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>paper1</title>
+    <link href="https://songsong.ink/2021/12/23/a7c12a6841a6.html"/>
+    <id>https://songsong.ink/2021/12/23/a7c12a6841a6.html</id>
+    <published>2021-12-23T22:57:39.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <script id="hbeData" type="hbeData" data-hmacdigest="e8a12e4b28052de7420ee9cde29098d636654483846e14359b64b4c1e158b84b">785042224d1447b638210094ce7e79710e5e45f1824a4082c60a173d0c5f7ec8e8cea4f52873b75849cc5a5398bb2bd98e816c63eed5d93abd890620b4e2d7988d17465834a28149af4b83a99336c153b9954d19368c292949fd6f757b152565a4f186abe2da324a56ce1ea75ba57e291ed504b57ee4e28a9052d08c338afe4543938d289d709dab1633c4ad837ab7f98a6bfa120b2feebb29dd59a93f7c2ce37ec0476986ae62505432e8c72436b2475eb00aa3e1e35b461b9d4aba1b145654f89fa91b0d063b195376380f83b598c415098ae7457385e14deafd51b7a4a145895574c0790ad312dbd12e3e9e63560f166f9d31d52cd1524d98dd7e5412b472cba3ce3aaaeabc0ca32ab76e998cda3ea6f0fe92f5842c453c7ff184d33ed63ca31900e12cc98a7e22979f4ce1a26718e6adfec34c1460771c59fb5ca1498a2ee6795eff6b3b4b8342041ad27313a6703a93551d79d610c0e4dc4acaa7c3f71c8143f354ac674037d54664b4f311390ecee37e0c119dc31641f8893072d4a1d72ae85d4984210cef1a2bc392aba358121bc52374c5ad2039330e1b2f09c70f5e72e3fe97b0eabb4fb444481bc70f10b9b3ca5a73be24a3d3e3b3455839c234470812cb9373e0b294ffe69964916da0c9c76e00cbd1456440baf5e18b1e8a7c550390476cd36c425f6311581e91260d07b0c7b48b6c0d60631129a8f5f2c3ab02399a13aec4b9b0a98a41bb26326ef1c3e59f86f1e73aa3b225153b0c5adf88380f799b3c47613f453e7f2ace081ff0f48c3e9e5ffa71fff14b1687645279e6e6369cfc8b578a5bc01960675f640be1a707af8cb4afa90f0849e8a67b3f08cd07395dca6b0a3c6a71847d9ae3e4e195412158731dfe3476499ce7ca8bd06144ec997b9079a7edf175cd80e6b8942b14a9f7c3407e8c20eeac8030aaba865ebbbfef1c7e30e65df5b07e315faee5aa9f61b84b66f8edae4f40c89ff6411409d537cc8a51c6cac6773a7ac20fd6bcdc808f93c85917207c97440c579f95581f1bf1f557e8da3d91d3eb274fafd053493935ae211b469d9e772d61ecbc9adf404467bb5fc19c67e4bac27e1124eab22374cc1cab71511195e1e30257ab84f7d910d06a430d1fdee692b659a46c550aa96f32c2d210deed0612aeab888103d41fb9ff6c92bea1a3f5c2ddb2b9b8a0c7ee7f75210b0126132d88e57c8642728e406e0fa38c3275d70bb0a4b64bf08517414ddb3d4afee6d301cb276502ce6bd6b0496ee7024cfbab6f4f4b36dd674c9ebcac493c8dd78ac6c6f8890bbf5775dfe0aee2b96d808a932851bf126697f181f7695450ecebcd2fd5e481ebf082f71c26faac3a3f400a85d66b11e6bdb9f1d3d7b633400c9a46a9731eff97a527c2e221968da3968807be10470fac2bf1c0b0bd69b78959198833b2b95235e707a5bd9a79abebccdcc5935425c5ccdcce5af34850e3cc30b64c6e76cb3b73cb3d9c28db83d8be215b72b2cd57e915c2c03392e928dffb24d5c7a3d54be184ac510a71475f969ae6f429ff2691b8b08caa5e8d6126ac</script>  <div class="hbe hbe-content">    <div class="hbe hbe-input hbe-input-default">      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">        <span class="hbe hbe-input-label-content hbe-input-label-content-default">这里有东西被加密了，需要输入密码查看。</span>      </label>    </div>  </div></div><script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+    
+    
+    <summary type="html">这里有东西被加密了，需要输入密码查看。</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>开放Oracle cloud 实例的端口</title>
+    <link href="https://songsong.ink/2021/12/21/35adf57486dd.html"/>
+    <id>https://songsong.ink/2021/12/21/35adf57486dd.html</id>
+    <published>2021-12-21T21:37:10.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="甲骨文实例开放端口"><a href="#甲骨文实例开放端口" class="headerlink" title="甲骨文实例开放端口"></a>甲骨文实例开放端口</h1><ol><li>控制台开放安全组</li><li>ubuntu系统默认使用了 iptables防火墙<h1 id="iptables-防火墙开放端口"><a href="#iptables-防火墙开放端口" class="headerlink" title="iptables 防火墙开放端口"></a>iptables 防火墙开放端口</h1></li></ol><p>iptables -I INPUT -p tcp –dport 80 -j ACCEPT</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;甲骨文实例开放端口&quot;&gt;&lt;a href=&quot;#甲骨文实例开放端口&quot; class=&quot;headerlink&quot; title=&quot;甲骨文实例开放端口&quot;&gt;&lt;/a&gt;甲骨文实例开放端口&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;控制台开放安全组&lt;/li&gt;
+&lt;li&gt;ubuntu系统默认使用了 ipta</summary>
+      
+    
+    
+    
+    <category term="vps" scheme="https://songsong.ink/categories/vps/"/>
+    
+    
+    <category term="vps" scheme="https://songsong.ink/tags/vps/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux hash commond</title>
+    <link href="https://songsong.ink/2021/12/14/af17eafac893.html"/>
+    <id>https://songsong.ink/2021/12/14/af17eafac893.html</id>
+    <published>2021-12-14T17:45:48.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-linux系统下的hash指令"><a href="#1-linux系统下的hash指令" class="headerlink" title="1.linux系统下的hash指令"></a>1.linux系统下的hash指令</h2><p>说明：<br>linux系统下会有一个hash表，当你刚开机时这个hash表为空，每当你执行过一条命令时，hash表会记录下这条命令的路径，就相当于缓存一样。第一次执行命令shell解释器默认的会从PATH路径下寻找该命令的路径，当你第二次使用该命令时，shell解释器首先会查看hash表，没有该命令才会去PATH路径下寻找。<br>hash表的作用：<br>大大提高命令的调用速率。</p><h2 id="2-hash命令参数"><a href="#2-hash命令参数" class="headerlink" title="2 hash命令参数"></a>2 hash命令参数</h2><p>-l  显示hash表内容</p><p>-r 清除hash表</p><p>-d openssl 删除表中某一条（删除openssl）</p><p>-t openssl 查看openssl命令路径（hash表中没有的话，可以调用which命令）</p><p>-p /usr/bin/openssl aliesopenssl 往hash表中添加一条，执行aliesopenssl即执行openssl命令（起别名）</p><h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>判断环境中是否存在某命令</p><p>check_program_installed() {<br>    hash $1 &gt; /dev/null 2&gt;&amp;1<br>    if [ “$?” != “0” ]; then<br>    print “command $1 not found. is it installed?.”<br>    exit 1<br>    fi<br>}</p><h3 id="查看服务的启动日志"><a href="#查看服务的启动日志" class="headerlink" title="查看服务的启动日志"></a>查看服务的启动日志</h3><p>journalctl -u minio.service</p><h3 id="ubuntu-启动bbr"><a href="#ubuntu-启动bbr" class="headerlink" title="ubuntu 启动bbr"></a>ubuntu 启动bbr</h3><p>echo net.core.default_qdisc=fq &gt;&gt; /etc/sysctl.conf<br>echo net.ipv4.tcp_congestion_control=bbr &gt;&gt; /etc/sysctl.conf</p><p>sysctl -p</p><p>sysctl net.ipv4.tcp_available_congestion_control</p><p>就开启了。 执行 lsmod | grep bbr ，以检测 BBR 是否开启。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1-linux系统下的hash指令&quot;&gt;&lt;a href=&quot;#1-linux系统下的hash指令&quot; class=&quot;headerlink&quot; title=&quot;1.linux系统下的hash指令&quot;&gt;&lt;/a&gt;1.linux系统下的hash指令&lt;/h2&gt;&lt;p&gt;说明：&lt;br&gt;lin</summary>
+      
+    
+    
+    
+    <category term="linux-commond" scheme="https://songsong.ink/categories/linux-commond/"/>
+    
+    
+    <category term="linux" scheme="https://songsong.ink/tags/linux/"/>
+    
+    <category term="commond-line" scheme="https://songsong.ink/tags/commond-line/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>win10打印服务无法启动</title>
+    <link href="https://songsong.ink/2021/12/13/666267bebac1.html"/>
+    <id>https://songsong.ink/2021/12/13/666267bebac1.html</id>
+    <published>2021-12-13T14:36:59.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<p>cmd输入 net start spooler。 启动错误 1068依赖服务或组无法启动，<br>cmd中输入以下命令：sc config spooler depend= rpcss   然后再重新启动print spooler服务就可以了。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;cmd输入 net start spooler。 启动错误 1068依赖服务或组无法启动，&lt;br&gt;cmd中输入以下命令：sc config spooler depend= rpcss   然后再重新启动print spooler服务就可以了。&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="win10" scheme="https://songsong.ink/categories/win10/"/>
+    
+    
+    <category term="打印服务" scheme="https://songsong.ink/tags/%E6%89%93%E5%8D%B0%E6%9C%8D%E5%8A%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>内存泄漏</title>
+    <link href="https://songsong.ink/2021/11/17/fe26308ea62e.html"/>
+    <id>https://songsong.ink/2021/11/17/fe26308ea62e.html</id>
+    <published>2021-11-17T16:05:18.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="内存泄漏的情况"><a href="#内存泄漏的情况" class="headerlink" title="内存泄漏的情况"></a>内存泄漏的情况</h2><p>1、静态集合类，如HashMap、LinkedList等等。如果这些容器为静态的，那么它们的生命周期与程序一致，则容器中的对象在程序结束之前将不能被释放，从而造成内存泄漏。简单而言，长生命周期的对象持有短生命周期对象的引用，尽管短生命周期的对象不再使用，但是因为长生命周期对象持有它的引用而导致不能被回收。</p><p>2、各种连接，如数据库连接、网络连接和IO连接等。在对数据库进行操作的过程中，首先需要建立与数据库的连接，当不再使用时，需要调用close方法来释放与数据库的连接。只有连接被关闭后，垃圾回收器才会回收对应的对象。否则，如果在访问数据库的过程中，对Connection、Statement或ResultSet不显性地关闭，将会造成大量的对象无法被回收，从而引起内存泄漏。</p><p>3、变量不合理的作用域。一般而言，一个变量的定义的作用范围大于其使用范围，很有可能会造成内存泄漏。另一方面，如果没有及时地把对象设置为null，很有可能导致内存泄漏的发生。</p><p>4、内部类持有外部类，如果一个外部类的实例对象的方法返回了一个内部类的实例对象，这个内部类对象被长期引用了，即使那个外部类实例对象不再被使用，但由于内部类持有外部类的实例对象，这个外部类对象将不会被垃圾回收，这也会造成内存泄露。</p><p>5、改变哈希值，当一个对象被存储进HashSet集合中以后，就不能修改这个对象中的那些参与计算哈希值的字段了，否则，对象修改后的哈希值与最初存储进HashSet集合中时的哈希值就不同了，在这种情况下，即使在contains方法使用该对象的当前引用作为的参数去HashSet集合中检索对象，也将返回找不到对象的结果，这也会导致无法从HashSet集合中单独删除当前对象，造成内存泄露<br>6、内存泄漏的另一个常见来源是缓存，一旦你把对象引用放入到缓存中，他就很容易遗忘，对于这个问题，可以使用WeakHashMap代表缓存，此种Map的特点是，当除了自身有对key的引用外，此key没有其他引用那么此map会自动丢弃此值</p><p>7、 内存泄漏第三个常见来源是监听器和其他回调，如果客户端在你实现的API中注册回调，却没有显示的取消，那么就会积聚。需要确保回调立即被当作垃圾回收的最佳方法是只保存他的若引用，例如将他们保存成为WeakHashMap中的键。</p><h2 id="内存泄漏的现象"><a href="#内存泄漏的现象" class="headerlink" title="内存泄漏的现象"></a>内存泄漏的现象</h2><h2 id="定位内存泄漏"><a href="#定位内存泄漏" class="headerlink" title="定位内存泄漏"></a>定位内存泄漏</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;内存泄漏的情况&quot;&gt;&lt;a href=&quot;#内存泄漏的情况&quot; class=&quot;headerlink&quot; title=&quot;内存泄漏的情况&quot;&gt;&lt;/a&gt;内存泄漏的情况&lt;/h2&gt;&lt;p&gt;1、静态集合类，如HashMap、LinkedList等等。如果这些容器为静态的，那么它们的生命周期</summary>
+      
+    
+    
+    
+    <category term="内存泄漏" scheme="https://songsong.ink/categories/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>缓存相关问题</title>
+    <link href="https://songsong.ink/2021/11/17/c72f053f30ad.html"/>
+    <id>https://songsong.ink/2021/11/17/c72f053f30ad.html</id>
+    <published>2021-11-17T15:52:23.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1、缓存会出现的问题"><a href="#1、缓存会出现的问题" class="headerlink" title="1、缓存会出现的问题"></a>1、缓存会出现的问题</h1><h2 id="1-1缓存穿透"><a href="#1-1缓存穿透" class="headerlink" title="1.1缓存穿透"></a>1.1缓存穿透</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>缓存穿透是指缓存和数据库都没有数据，而用户不断发起请求</p><h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><ol><li>接口层增加校验，如用户鉴权校验，id做基础校验，id&lt;=0的直接拦截；</li><li>从缓存取不到的数据，在数据库中也没有取到，这时也可以将key-value对写为key-null，缓存有效时间可以设置短点，如30秒（设置太长会导致正常情况也没法使用）。这样可以防止攻击用户反复用同一个id暴力攻击</li></ol><h2 id="1-2-缓存击穿"><a href="#1-2-缓存击穿" class="headerlink" title="1.2 缓存击穿"></a>1.2 缓存击穿</h2><h3 id="问题描述-1"><a href="#问题描述-1" class="headerlink" title="问题描述"></a>问题描述</h3><p>缓存击穿是指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力</p><h3 id="解决方法-1"><a href="#解决方法-1" class="headerlink" title="解决方法"></a>解决方法</h3><ol><li>设置热点数据永远不过期。</li><li>加互斥锁，互斥锁参考代码如下：<h2 id="1-3-缓存雪崩"><a href="#1-3-缓存雪崩" class="headerlink" title="1.3 缓存雪崩"></a>1.3 缓存雪崩</h2><h3 id="问题描述-2"><a href="#问题描述-2" class="headerlink" title="问题描述"></a>问题描述</h3>缓存雪崩是指缓存中数据大批量到过期时间，而查询数据量巨大，引起数据库压力过大甚至down机。和缓存击穿不同的是，缓存击穿指并发查同一条数据，缓存雪崩是不同数据都过期了，很多数据都查不到从而查数据库。</li></ol><h3 id="解决方法-2"><a href="#解决方法-2" class="headerlink" title="解决方法"></a>解决方法</h3><ol><li>缓存数据的过期时间设置随机，防止同一时间大量数据过期现象发生。</li><li>如果缓存数据库是分布式部署，将热点数据均匀分布在不同搞得缓存数据库中。</li><li>设置热点数据永远不过期。</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;1、缓存会出现的问题&quot;&gt;&lt;a href=&quot;#1、缓存会出现的问题&quot; class=&quot;headerlink&quot; title=&quot;1、缓存会出现的问题&quot;&gt;&lt;/a&gt;1、缓存会出现的问题&lt;/h1&gt;&lt;h2 id=&quot;1-1缓存穿透&quot;&gt;&lt;a href=&quot;#1-1缓存穿透&quot; class</summary>
+      
+    
+    
+    
+    <category term="cache" scheme="https://songsong.ink/categories/cache/"/>
+    
+    
+    <category term="cache" scheme="https://songsong.ink/tags/cache/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RPC的概念以及优缺点</title>
+    <link href="https://songsong.ink/2021/11/16/6498daf82f70.html"/>
+    <id>https://songsong.ink/2021/11/16/6498daf82f70.html</id>
+    <published>2021-11-16T22:09:48.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="RPC的概念"><a href="#RPC的概念" class="headerlink" title="RPC的概念"></a>RPC的概念</h1><p>RPC(远程过程调用)可以分为两部分：远程过程以及过程调用。远程过程是指每台机器上提供的服务，过程调用就是对远程过程调用以及数据传输。</p><h1 id="RPC的优点"><a href="#RPC的优点" class="headerlink" title="RPC的优点"></a>RPC的优点</h1><p>RPC带来的优势其实就是分布式架构带来的优势。在RPC的支持下，可以实现模块的分布式部署，可以实现更好的维护性，扩展性以及协同式开发。</p><h1 id="RPC带来的问题"><a href="#RPC带来的问题" class="headerlink" title="RPC带来的问题"></a>RPC带来的问题</h1><p>RPC的出现为构建分布式架构带来了便利，但是分布式系统本身的问题也被暴漏了下来。存在的问题如下：</p><ol><li>通信延迟</li><li>地址空间隔离</li><li>局部故障</li><li>并发问题</li></ol><h2 id="1、通信延迟"><a href="#1、通信延迟" class="headerlink" title="1、通信延迟"></a>1、通信延迟</h2><p>跨机器、网络出现的通信延迟的概率一定比同一台机器的进程间通信大。编解码也会带来性能损耗。而且网络通信也是不可靠的会出现乱序、错误、丢数据等问题。</p><h2 id="2、地址空间隔离"><a href="#2、地址空间隔离" class="headerlink" title="2、地址空间隔离"></a>2、地址空间隔离</h2><p>内存地址在一台机器上才有效</p><h2 id="3、局部故障"><a href="#3、局部故障" class="headerlink" title="3、局部故障"></a>3、局部故障</h2><p>故障的发现和通知需要引入新的组件，故障的类型判断也会变得复杂，比如是网络链路故障还是机器故障，继而会存在数据不一致问题，故障节点和正常节点会出现数据不一致问题。</p><h2 id="4、并发问题"><a href="#4、并发问题" class="headerlink" title="4、并发问题"></a>4、并发问题</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;RPC的概念&quot;&gt;&lt;a href=&quot;#RPC的概念&quot; class=&quot;headerlink&quot; title=&quot;RPC的概念&quot;&gt;&lt;/a&gt;RPC的概念&lt;/h1&gt;&lt;p&gt;RPC(远程过程调用)可以分为两部分：远程过程以及过程调用。远程过程是指每台机器上提供的服务，过程调用就是对</summary>
+      
+    
+    
+    
+    <category term="RPC" scheme="https://songsong.ink/categories/RPC/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>字节测开面经</title>
+    <link href="https://songsong.ink/2021/11/04/e0b00fc968c1.html"/>
+    <id>https://songsong.ink/2021/11/04/e0b00fc968c1.html</id>
+    <published>2021-11-04T20:54:31.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <script id="hbeData" type="hbeData" data-hmacdigest="2e36186353c9624cd9e629d2d8463e7add3651002d716f67bf27635fd7f11dc3">4630436162ade97ba2718b7d0c4b3b636438bb933c28fae3a0e8db9d93a0a3f4629db893dc2558a111361d95324c3440e6a7a9b0523ccc7631aab74c40c585e84867e364a6fc1bd24e8bb1ab07eb8ea467602bdbe68ed9ab688e8094b41e35f66b9dc8b7551ae9806e0de4d4d76e21c8e992bde8673cb42e26668b5ee741c94ea28c6f32da0f0614057e8406d92903c81836122dc4783e2ee58b69625c85b325f57e84006cddec22b71b41dcbcbda2bc47d65acd853acb0e7e109a2774ff7fe414e2cbd4decf099b163a83f27db141eb7d639589d514c30a0ffa0de16dad0cc6125f21fdd132d568379d74be7d4589c77bc2f4095a6483f848996fc1c98030131d7ab316c45d551ebcb54158d27c3734b66b0234647d362858c66ae260ca13e2ef0ed179d3b46637fedad6c5c93f8a5e64ae8046f5458f8a8ee920f110c9ffc27471a015d1534a54b971245720d0bb094380cff295c5bcd1c463f23668a19e8696ccd9707ce32adbb2455a62deeaca995261a80bd8cf06a107b256b57b0b5110026a871898017fe42130e75a31d0c1cd4e761ac2787dccb4d6ca304442e44cc0ac355041614a4268ba71f4d4a705bc2905a5553a9e3b752ba2ba39d20ab6e5a51313fb705d9bc1565a6097fcf4b29a914d262a28cdee4feaafd23779339eb6057ad5c242ba4a599eff7446c047de0c7c87b25ebc4c37fb434ab2748e75312935f72315ce29ec4840a9dac2e10d113beb254e75275a02427e888e8cd35c36b678aed3c7520ad3ea9902367f76ef8cb7e1d90c9c271ed9e4e4ba6ffa95bfec892bf058488d274f819d74c84b88c0c956c49c541b2aac32acb3ec2509a28eddea9943822dcb7e04cfbf3842e14d6b78e275d6267ad48998820126d2f79856dd6eb534b926a7af5498f846097fe56e954e8231de76b317c891e30443de5d373b736406553eaf61d692cf94b5febfc8ed1c687df48e05f3cdca8a93bc596c4562aecf191df5ea7484b64e9b9bd33b9bb44c548fc30bc13245a2dec38fece4a40797c74e1d58993747eaf2a92685a14afb81e319d6da3c52f4c5015815421d27dc01747b5883972924fba258ba7b482efed3ecba7deba48b9ad4acbbd805c9c53cc77ebca848dbf734130ff7efe46586137f1b2deabc3bde45d1396e95437b30b6549be2d06e6b466fffdee78108d9d11f7de320ea9d8375d6c76c0d2eed2cac578d04a7662286e144a7cdee73cf535497a49fd48f1875cac21e4058710d48bfa934c35b668dc72a11209095bbbb66989cb7bc38774ffe1b478c792cc23d751dfc60e872c5c1ce2c4f7691bfbc4244972379f0800bd27087ac02c985ca5d02600920407f7e3f088f91dbe403ce42e8d863092eef539aa8495fc751b20bd803278343282f48bad141abf3e6bea0c450aa6b01221b95ab6202e915425a5eeb2a65a482a9476ee579baa2da81033ffba1c8c125d3f8a2c7017f96f7612ad182b5c5f2eb246c45cc610bb8e01097e747d8ed772c0e906bbca8439216f91909c65c5f8e8a7ae002ef1bf7f5c2483ed098ac71c84c2560ff557a9a17e3eccc3483ff6533f1de54fdcc0bb19b29d3498ec15fd2602c57ab7f4b82fc9a21b4f1b7b6e08e76447f3522e51e2c9dc02bfeab233e42621d521fee716142c6f1c51b39ffbefa0b82a689f63a3011f3233693de7674a60a2bade4a0201107b13470d07b2e4705fe44758ec1aa0cb8dede31809f13ee7aacea46cf905cafa879308fbb6d0d7328989a70569992ad8ca99c7a03e981eaa8525d8507e6c1265afe283c563f3b2bf7965c87c5d57de86cdd5548391b6347a7a373e9e23c5d828d93c66c7b6af10096e22c8499ab8a4ad6d80d13beae0300ed00fe1cb469324d8adff63e2e41b040fec03bbc997a404fd163ef397c2b2d364a7b4d290bbc50fdca3897739df219d7566c2cd04ffc454335d1bdcd117037073158f7df8311d14ca1a8d60773a378f8c4715d7467ecba236146c51db6a083b359f2f768c6e2edd10125738454c00fbbd1ef22230d0a1952654e715423ea930d9ed3176c97895e08bbcc36b540d2d62277a509092e18c054b466b8cf60cc07756385e2db2b8db9ab81606f9540186631153ef902cb2e39c20c0692d04c0d7fd14ac735822322c7df9c17893aa359af99eb3d6d37d0afe53b86487e8c60d25f44a0090249fbd016dfc059ad1eadae5d3db53352a2f56d673c0961f19e0c2038c9cfca56b636029c0e38e38d5a3a418adc1adde3c6a946f4998d6712a7777e3fc372e07f25b943b332b185abc856b7ed59c15eebd70a45bb4527cf4e20969f2729d74e6706deb94814c62658bf648ffeb2c7fe160fc7eaeb4f3bd207ad91d540906b5a95119be8d7892a859307a9d10d88fd8d7d89d356fe06c717dd6cbe077cf9c4f8788b66a299bdd649ee60ae8d1a2115ac147d47bed58303a7720f609929421ac20894996083a9c7ed12b57f7da5c8326ecfac0f5fad523c6ccbcb4567b93bbd22c12476320754bd2e8caf4c6c7f595a6d117399fc8fbd859f02c3c8edd9975415ba3ed178f9b29e5f525692866a28b4efeedf7c34e6469e46799ab7d772ce1da52ea66451143e8e031037095130b59e114f5332e8249887be11b340ce85859a3d4e552ca0bddd3dde953744a017ca457e5ac6be8ac98bcc4224a0542a774d05322c33d813d2480a1871554d56e365e83e7084362b6fe61ffe2b857bf474ec30c1f73bfb7c18193902893c2704cca05d9ffd8231052b565814e345b1dacd383e8e2b9083039b84e1c6c12fec5eb984687e92bdae6e4c6c4748b51a37f2d54b04991b8e524560e64c479cfba102cc6fe4c2edc05b51bd63c8176d6ef69f7276dd5286ffee96a99d072753d99556405d5502bdbc330527c33837b74389d96ee955b6a878f6674d7d59bfe92309d222f1ac02fd32ee8c18957199fc8b36d2ba3fc0b52c2f0cbce9ea2dd25e207faac57494d8d1285938b21bfc14f4d082c3cf0e99d7e3a2ed36534c1ac1cc86121e26f832321d071ba87ba543aea53e10b09d61429e4250f7a0b2ba91274e42d6b60d12691bb97e3a5b5e36dd8df48ff32d8084a4fb073e4289d1bc12dd3e37d6e508cbab0019cf273b4489155ead52c5ad712cc9b5d83d59821614828905e0349c7f7a6f48c43263e9b6fc0fac072a7f03130465a85d5220a454affd66b5dd507cff0bfa19e80908d30d39a0f58ac5352ce9752a47d37aad69a9884719d4c32974bedde32303d9a95a5ca67980b816e33103a6b66b2883a06ef062adc0e7becbfa4496712a493b50d425a19c1bd392991c2a0f106eb6cf5bed404f7b07dd44bfb3b2f4251969e9883032253df07a7724c17135bfc9b7169cd943c56d4f97a80a363da0e414eb75fce4575039e6f26b6b6419a8f4d6c1b668058bc356804419a002d9837a0b6877dd79172558002a1c527330fa095f209d64800f7de00ea27a1398a8da3903129a0fd536bffdc058ecfce41f421149e2e831f7b9999e813b56eb76e01f087f0eacacbd451680060c09b0171abbc9b52b391cf804b4a520d9c20435fc02c9b78c8422f1ca53fd3fc774c955f0146e4d648bd625e8c60e7ecb2c9eb363066fdbbf0a191c40a74d7ee58a4e5e4be7df826682c49aac3e850fe185c5cd171acedd77b13226810b721bad3acb699a2c75f85d72a6400a910c3e7c6320c52b86cdf42f33d83846ce9a248cd1318741125ede24c867a74d3ff09c2ec20f46f4add6b410e21486c0074c63b46f2a1ea46924f0e6b9c5994c25c411c317cd23234e7f827d8ff25366454ad008e7566af86acc4a890f4f18adf5f0526782b90e8e9ad3609cc9ba489857f782c7e1ce7ee4659d975859b4833df5ec7698d5231fc1f6b616094ec36ef0a76d5d07185af0b6c637cf54fe7766ad4740888d145e49f2ac4b456a8348adfd0e95999c05859cb686239d9a59dfc832d46c8b3d871378ac821f2504dbc3ef6fe15cfd41558361c18202e9301ded57fa32ea4f2b2dc061d744d3e9a87c2edd22c0320fa81acb9b410e65498e1d28520fc894b54213cf6c7e19e5090a0bbd98f582d3fda2c1e0e14eb465d679e48228566370967e1f781bfe1fd61c6832588068a79e21bfd546a75848689e215e51324efce1c0ee47709fa736b466abae9dcf99cd7a0ee8d79a5eaebf6cfbb9e13d34e81a96bc9fcb891cc5fc5cc470b0c6d740f01534a8957d0229982812cea034164a9a1ad879d91f41d41a8dbc2b2c05a5d739993a2a74c9596391d679105b2177414b2df2ebafb63ae235fb3c85b5e40533ef3db03029ffae2e3399e17ed218021f5597fa6d64b1ea9399cc37ee256db724eaedbf9d70027a4a3bf44b2e2273351ad00801d22beb4ff146627095b415e8e63e92200b4d5560b1a486a600134e0d97d1b215b5c2469b90b55981279f2624214aee5eef8735794ba740316556c8aaa3ed32ae15bfddf73da2e1f176b6c267e2c1d7a2fe9e210c0f9f1800cf9f781eb0bb82f9fc8a72f32ec511193c06f785ae90a7e88872583088cb355b03eeaf645b01b813bbe3e2e96b89b3626530e73a30c550ddca199089c2b65d49b925e0e08cbbc1399f59c682ca4a1a5f3862940fc82e8dab9b46077f94d9e89d84c000bb3a1f10fce8a8ecdc112b5a477c7bc3a36c2845577f3fecdd4eca79f6d21a4ce359d9db9e36b4aaec5cddfdd955f90dcd19d9204622f5dc20507959ae62fc4b1b8676b5d0bfdc08e1c1f02f6a03a7dd83492fa7828ac73685402539f8745a84c3e7f21d7db7548f4c519d343d221c7ba61545b9413e723240331d9fe0efa94d7eb90534baad072ce39f304bd597bd1a3f1a013429c78f9c4b457c6cd9213555b87ed92b68b30c604b7f3c773b912e3fff8848124de83dc0b3595b96e47d2a665bd85ecfa3025cefdc2fcf507f2d2b2f66aafe658a75921b83df2862e377a85ed496daac8e95f70ae7deeedcd27d91deb4392c38d156a983986c54e49eec5206fc3767243b7ed3e602d34ef2819b8155f860ce51402f02c8541411bc7a7811cbaaf53855932b600f9c111e8232408202a9238d5a89c381a79d2ee5b229147f32092c19ae139a5e31776ae73437a8bf51dafe631d87e5525873b70188a8b8fa383a9440ff61f86f2278f8981c4c26ba6b556c7ece58285811fcb5b88192d7571638b328a1c3c0fc4c494920b0b23b4527e6595918ad3a95f7dc2473866c81537ca9debb56f404ebe8c03d91e2e2bb5f74df08ff9ab0035e1bf9198cbe8916fd2299e01a783f659f5f9f81ca4ccc146a8b2545d3d29be5d74a2ae56e27ffca324ae68073035f5b57635c2ee7215c7976c35442c7515d2f2db488d77ae92e17b95b4f9924c8678b13b7bd47975ac794425f87534cb59b03699a9af5a303ace7b073fd13d1be49926ad10dbde44972284a6e062bb4d98d12dd2b9d44d1eab305fd08ef6f327a7ca65eb54afcfca90dcf9c38987d71c7c41d296291f6f8c202d9c5c486fecc9fbdf35aa8c73304fa9326b860e1afa23799a0f46d0137961c1fcc49eef2a45c4886204ac52896c607adb82c1fd5b4312b3879db1cbdaf36af1bf5a715c603ab3e054d032e2ca2fd25144b25de7a5a5a01c9f54551a93ecd4982ee73dc22648353c44d62205bdc2ae68870042ede7cb1961335d0341ef019788b54a8a08395ba987412b35b77766a6b2d536d31983bc1466b69e14a54c33f2f3fc335fb2e43b01072a5564b99f76e39d4e495e7f4084793e3207ea9c39d3b3514c97933085cebdf9ab57a5e40ced26892ed79add0f990bc69b500d834bfe1f7b2d54636095008ab24e058e7aa1ffc43f6d33ecd59b1744ab79e97c7bf09126d8bb85ecfe3104505baefc39c16549de0885a4903d59c142c78c0ac6e4d2b4afd93829cff36fe06cdbb42c62747fa58871f9f453452d6089634dde61ca9e9240b3460053582ed85dd679c84aac84fd71f102b52e1fe7d352a14c4ffa6e4cda762926f3e9c1b590f82788f25ff2b6cd5e78ecc16c60d147d5d51b909b87dd82d49f195495d3e59d5af89c4ca44b1614721da856eb0e26cb158b71ce8f465a1374dd371a46b69bca7fee3610db075e4fec92c6b4315258bf4f4497bd6d4f45b82cb2cc547ee1e43319b308f09a0b6c3a9464f89a6fa9140df5a236edc4415f7eb5cd941d48879533a2f290ccf6f68fcb476b6835f67c6bfd32c2eea9ea2aada571378168368e833ea0b2ea1b47969ab8ff2ff6227d91a87b6e4d86dd3e3ae279a4f4de941d15147d5eae3d98b4f85fc348f09efd9364fb6a9a91c8420bef846f6172c85e1409afb484f2dd5b6ea0133684aa90632a24e432b4ea93a54321abf350dcb9271fe822f65c19b37bf3dd556bf02fda95ee42b40793338bdc8fddb264680229a2d630c69505456cc399b1ecd9e7f896c9fcf2c611900f7d99520175752f1845b0322b0c7056ec57f96adedd17a6463f0b3cb0e628149f6a1d45539572cbecb4bfe28124030ef7c9ba72920f387670db61bf3c1434bd86aeb4d842c9b8fbf74a0614204097a2f560a56537065e01139165c3a400315b3ecf695b11b3e8fd1875a9d84fff144a4599b23b77a021225d380d130a697e42bc1d3a2f50848a4aa54cc0f7fa4057092ad44b89d52a829fed8584d6b29729cbd7d8bded35a03912c6dc95d1f2ea7d81cb18e7bb10917c58666ceb9a529a08c628c82792cf706163175bc0c84a19f3299c2eca2c8fa4ea21c8cf51777392481883d70333a3fc6d39608e7f7afea45fed5c5abe10c3c74e5cf5e7f512ab12f319ae41f863687dcba899f64765e8f5062e58ed65913e23f60a73ede99afe5d01704536ddadd1637df6369abfb31d7f6bca084305fa6a6963546cc549bf23b9bda09123b9d1b2883dd12e2b0af59253b3c293c0b4f99d7bf95686eaf28dec2a31db13dc79244ba21841b1249afc37f4dd4bb4460322fdf42d85a5d7f430f9404096f40f402a2b5421c4a11ea8999ca12ea7ef19fd1ca0964e13dc85fad798cfa8498e8c85c2d0dfebae51be9abe7519e83d1605be6561d01abb54815916dddda36c2b673facc33278f267c3c7031136cbb3dfc2e21e43765f89a2e5c35cc74d366167d8a2c7c10589746be8e2625019c4998154918cd3b3d747ff0e844cb85b57d37cfa884cd9c27c371468228ebdaf588ea37f9f6fa7f782271fa5d34c3daa69d1a9707a00030afff16e9025586c189f6aef9d7e7e9be27599ea62d007b50cead821e8fd1ee587401f14851b7b1941de49f8585db48222f3c1422620b0eb72840bc380d183170ea6d66824acbde16ee79ee5e24597b6bbdcd595d059ab8da0dc2ee31b20f38c5676abd74ead71c4e2bc4a4a7477bf7de65e478f56145025c4953fb83e4302ce03c3c4168539528eb8670a6cc544a4b6a337e6bb0e6a94cda16cfb8354708e5ff33f87c93de8600ea34c8b65ecf0ea0e463a829c7bccb2c0fcb25b8ca7bf6f200453f2272985980a9a243e5232adfb2f614dbbe59a5a2ebcb4a32b96cbdc383f1ab4809ebb21ab88de9662d46f937dbc10587b4004eeef3e8374541f0d05a2422c170431f4d168ff24d0eb188a8d35a30f6763c945145207b57282e4881bcefc0a22f4a62c0fa99bf6f36292393ccabe9f92dcace0410303f025ae45f0cb7a43016f7f370fa9c92dc790ea3b8632312540e7bfc250f13f8e6f059b029fc3879311b95e2d5fce87d24b4e1d947c4e0a6134a86b431aef4a3ed8d4e26f1edb9cd8839727000aadc1df1afa515be83d9a799a91d9ce6f388dcf7310342708f4b7fdf6799a5d879856dcc41249235b9fa5f7a7c40a5920e700d8c9615d79d03a0b69c8a6aa963b7b772bda3720b2cb142e75f55d3f70752e59e7102fd940967bee596a035426a3ee22aa444987f420ca9ca7896cfbdcace5935a736a420a7dcd7aeab050fcf789ab4cb7917ce07ba3bd07d3fb57428cf6d6faf485b754ce99e79b482a7a3c58a63578e6ff12a54e6fdb3c1d1562cfd8a6c468c45d5049a0ec3eb11038b2ad5487e3151abf868d26146d7a9c94075697cbcb624085b28d69cb6c71cb3cbbc6122c911cfdd498014c931bb85ff7cee9a70ce9551e1455da0c5d2d1257df9358545235226473e7541706257af0564834d0c2ad447ce375b9e5d7e1612162bd57d874201819bddc8a1ef29b2986dd49bed89301980269b2904c2f5eeaad73b5531f79a2a87681ad201042a04d4846e473c580a6fdaf1851de3f9f5cc5b60f556a7014ceb68a59a4617f5a38826c32d23ee6e624b5cc644438dda1335687a7d5414e8a03bac97d4783f67b32b94d1cb4b5176a4c751cbd9936f2b9d1a0393e908841c5158a3bca8808df8e5aa8ad8d154672e999ba836ac46b5611213a3f96e94e101653efa6c60ea2da0f073da3aa3a9a99133c96af69a464ffc08a9a948126dd46aae60b786ea1ac258db801f5e02ac6a241e37e90c39dacb0d3e5e6b2e97c6e8ebab0b7c4709009a561dc0203295adf88a3b9b72575e8891b18b7e76600e3f31491e060ab4673f1c07746799c905c03ef55d8ab87efab2c827ed9ae6de682b58d7099e31181278fb872cadcb4abe124b75b4a3d81f712459bb1b2bd1994352dc3c3aa5d9700b1ba6dec9d8e629e5c555149ce6d8df7ede0abf4e72bbb33f152e3eacf3e55af8b216ed43d9a538e74a9e19bfc802ce1c0dc5a4beaf92a0bba4e889efceef7fb8b3607d073929aae2c7ffb339d077aa90b5e45d27febf255583810a45df1c155cb08e99193f974761959bab2c0d5f31df7dd16e0b2cd2b6d1a5fd68c458a3ab0f53c6d7b4ced3f26ab2e38b0719f3d9f05903e778655f5de56bf346468556360410f07da26959986aad4325e330a31923d19b72fa928a0b5ea5dd9b0b49bcb36c7d45ab3f104ce933024beb60b4e65604d6af63023d56725c55db8e811067e3b7c48a0dd7cf570b6fcd6b212ed2c9db7623bb0124fb79b49785e9dda749e633fe2330dfd49ef9ebc2955b137fd65afc4a53c4f3f73da96179fd633dd3436dc7d723abcd17158871a3faa2927f98c2b8d694002de7e4f89decc9e57e572e97eddd52ece63715b72395f8b577d1b37b1a8526925067e336bf9e4c468907e8821605699a6acc91affd60c45a2f8dd3601cca7f2ccc64539792b501dfb0e82d9f24b0e2f4cd1a1aec86900e47674023cb7d76862d3a6d8e2a4765793f23e963c62a0f65fc46aba50be7f6164e9c5862f740cd49820c1873ed5719aaebf89534677f4e839dc54d05a662ce2c701f2b2a45b2bce3c80e19d2049a338b188ec3be301cdf304d9a99c219b245c557e5934837cd3dba663c3d0fdd3f25ba2be6c4729a8ce659df6db1cd1b195f964bbd0c3262ec0f6b28ace2fa9048b24f0c0e207d316fb8ef0eb8b1dd383eb65b99b214379065bc57986ff015799b3fec0687df25e03956b2e9d331d1125511030d0983118fab471bab1e9af766279d1d31b43831c5e2f36cff24f9a94ac0b57c7f5cd732138f0df7008641a067a9d63edf8809c6d86d975de6b835fc003108317d1665eb4d7496d4985fbcc907c2ad635c4ab05c</script>  <div class="hbe hbe-content">    <div class="hbe hbe-input hbe-input-default">      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">        <span class="hbe hbe-input-label-content hbe-input-label-content-default">这里有东西被加密了，需要输入密码查看。</span>      </label>    </div>  </div></div><script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+    
+    
+    <summary type="html">这里有东西被加密了，需要输入密码查看。</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>零拷贝</title>
+    <link href="https://songsong.ink/2021/11/03/4104be24b2f4.html"/>
+    <id>https://songsong.ink/2021/11/03/4104be24b2f4.html</id>
+    <published>2021-11-03T15:11:03.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="什么是零拷贝"><a href="#什么是零拷贝" class="headerlink" title="什么是零拷贝"></a>什么是零拷贝</h2><p>零拷贝（Zero-copy）：指计算机执行操作时，cpu不需要先将数据从某处内存复制到另一个特定区域。这种技术通常用于通过网络传输文件时节省CPU周期和内存带宽。</p><p>好处：</p><ol><li>可以减少数据拷贝和共享总线操作的次数，消除传输数据在存储器之间不必要的中间拷贝次数，从而有效地提高数据传输效率。</li><li>零拷贝技术减少了用户进程地址空间和内核空间之间因为上下文切换带来的开销</li></ol><h2 id="Linux-IO流程"><a href="#Linux-IO流程" class="headerlink" title="Linux IO流程"></a>Linux IO流程</h2><ol><li>DMA拷贝：通过DMA方式将文件从硬盘拷贝到内核缓冲区域</li><li>CPU拷贝：从内核缓冲区拷贝到用户用户空间缓冲区</li></ol><h3 id="读取一个文件然后通过Socket发送的流程"><a href="#读取一个文件然后通过Socket发送的流程" class="headerlink" title="读取一个文件然后通过Socket发送的流程"></a>读取一个文件然后通过Socket发送的流程</h3><ol><li>File.read(fileDesc,buf,len);</li><li>Socket.send(socket,buf,len);<br><img src="%E9%9B%B6%E6%8B%B7%E8%B4%9D_files/1.jpg" class="lazyload" data-srcset="%E9%9B%B6%E6%8B%B7%E8%B4%9D_files/1.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="><br><img src="%E9%9B%B6%E6%8B%B7%E8%B4%9D_files/2.jpg" class="lazyload" data-srcset="%E9%9B%B6%E6%8B%B7%E8%B4%9D_files/2.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></li></ol><p>在上述过程中经历了四次拷贝：2次cpucopy，2次dma copy，4次上下文切换</p><h2 id="怎么实现零拷贝"><a href="#怎么实现零拷贝" class="headerlink" title="怎么实现零拷贝"></a>怎么实现零拷贝</h2><p>零拷贝实际上就是减少IO流程中不必要的拷贝，需要操作系统的支持。通过直接将ReadBUfferkao拷贝到内核的SocketBuffer这样减少了一次cpu拷贝和两次上下文切换。<br><img src="%E9%9B%B6%E6%8B%B7%E8%B4%9D_files/3.jpg" class="lazyload" data-srcset="%E9%9B%B6%E6%8B%B7%E8%B4%9D_files/3.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="><br><img src="%E9%9B%B6%E6%8B%B7%E8%B4%9D_files/4.jpg" class="lazyload" data-srcset="%E9%9B%B6%E6%8B%B7%E8%B4%9D_files/4.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p><h2 id="Java零拷贝的使用"><a href="#Java零拷贝的使用" class="headerlink" title="Java零拷贝的使用"></a>Java零拷贝的使用</h2><h3 id="1-内存映射（mmap）"><a href="#1-内存映射（mmap）" class="headerlink" title="1 内存映射（mmap）"></a>1 内存映射（mmap）</h3><p>将内核缓冲区映射到用户缓冲区，通过虚拟内存器实现，（存在时空开销所以不适合小文件）。Java通过MappedByteBUffer实现。cpu拷贝次数一次，dma拷贝次数不变。上下文切换四次</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">File file = <span class="keyword">new</span> File(<span class="string">&quot;data.zip&quot;</span>);</span><br><span class="line">RandomAccessFile rad = <span class="keyword">new</span> RandomAccessFile(file,<span class="string">&quot;rw&quot;</span>);</span><br><span class="line">FileChannel filechannel = raf.getChannel();</span><br><span class="line">MappedByteBuffer buffer = filechannel.map(FileChannel.MapMode.READ_ONLY,<span class="number">0</span>,filechannel.size());</span><br><span class="line"></span><br></pre></td></tr></table></figure><h3 id="3-JavaNIO-FileChannel-transferTo"><a href="#3-JavaNIO-FileChannel-transferTo" class="headerlink" title="3 JavaNIO FileChannel.transferTo"></a>3 JavaNIO FileChannel.transferTo</h3><p>Linux2.1 提供了sendfile系统调用。可以实现内核读缓冲到socket缓冲的拷贝。一次cpu拷贝和两次DMA拷贝。两次上下文切换。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">File file = new File(&quot;test.zip&quot;);         </span><br><span class="line">RandomAccessFile raf = new RandomAccessFile(file, &quot;rw&quot;);         </span><br><span class="line">FileChannel fileChannel = raf.getChannel();         </span><br><span class="line">SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress(&quot;&quot;, 1234));         </span><br><span class="line">// 直接使用了transferTo()进行通道间的数据传输         </span><br><span class="line">fileChannel.transferTo(0, fileChannel.size(), socketChannel);</span><br></pre></td></tr></table></figure><h2 id="Netty中的零拷贝"><a href="#Netty中的零拷贝" class="headerlink" title="Netty中的零拷贝"></a>Netty中的零拷贝</h2><h2 id="哪里用到了零拷贝"><a href="#哪里用到了零拷贝" class="headerlink" title="哪里用到了零拷贝"></a>哪里用到了零拷贝</h2><ol><li>kafka</li><li>Netty</li><li>RocketMQ</li><li>Nginx</li><li>Apache</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;什么是零拷贝&quot;&gt;&lt;a href=&quot;#什么是零拷贝&quot; class=&quot;headerlink&quot; title=&quot;什么是零拷贝&quot;&gt;&lt;/a&gt;什么是零拷贝&lt;/h2&gt;&lt;p&gt;零拷贝（Zero-copy）：指计算机执行操作时，cpu不需要先将数据从某处内存复制到另一个特定区域。这种技</summary>
+      
+    
+    
+    
+    <category term="面试题" scheme="https://songsong.ink/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/"/>
+    
+    
+    <category term="零拷贝" scheme="https://songsong.ink/tags/%E9%9B%B6%E6%8B%B7%E8%B4%9D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux挂载硬盘</title>
+    <link href="https://songsong.ink/2021/11/02/7a593bbc05f0.html"/>
+    <id>https://songsong.ink/2021/11/02/7a593bbc05f0.html</id>
+    <published>2021-11-02T14:16:00.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="硬盘情况"><a href="#硬盘情况" class="headerlink" title="硬盘情况"></a>硬盘情况</h2><p>硬盘为无分区表的空白硬盘</p><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol><li>fdisk -l 查看所有硬盘信息找到要挂载的硬盘（我要挂载的是/dev/sdb）</li><li>fdisk /dev/sdb  输入g 常见GPT分区表  在输入n创建分区</li><li>mke2fs  -t ext4 /dev/sdb1 将该分区的文件系统设置为ext4</li><li>parted -l 查看分区的文件系统确认设置成功</li><li>修改 /etc/fstab 添加要挂载的设备 和挂载点</li><li>mount -a 让上一步的修改立即生效</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;硬盘情况&quot;&gt;&lt;a href=&quot;#硬盘情况&quot; class=&quot;headerlink&quot; title=&quot;硬盘情况&quot;&gt;&lt;/a&gt;硬盘情况&lt;/h2&gt;&lt;p&gt;硬盘为无分区表的空白硬盘&lt;/p&gt;
+&lt;h2 id=&quot;步骤&quot;&gt;&lt;a href=&quot;#步骤&quot; class=&quot;headerlink&quot; </summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>rabbitmq记录</title>
+    <link href="https://songsong.ink/2021/10/02/8b32a579046d.html"/>
+    <id>https://songsong.ink/2021/10/02/8b32a579046d.html</id>
+    <published>2021-10-02T23:34:01.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 添加用户</span></span><br><span class="line">rabbitmqctl add_user admin 111111</span><br></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmqctl set_permissions -p / admin <span class="string">&quot;.*&quot;</span> <span class="string">&quot;.*&quot;</span> <span class="string">&quot;.*&quot;</span></span><br></pre></td></tr></table></figure> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmqctl set_user_tags admin administrator</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="rabbitmq" scheme="https://songsong.ink/categories/rabbitmq/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>面经记录</title>
+    <link href="https://songsong.ink/2021/09/27/cf616068382c.html"/>
+    <id>https://songsong.ink/2021/09/27/cf616068382c.html</id>
+    <published>2021-09-27T15:33:12.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="2021-9-27-小米"><a href="#2021-9-27-小米" class="headerlink" title="2021/9/27 小米"></a>2021/9/27 小米</h1><ol><li>上来自我接受问项目遇到哪些难点</li><li>动态代理了解吗</li><li>static了解吗（回答可以修饰类 、方法和变量）</li><li>内部类有哪些（回到静态内部类，普通内部类，还有别的吗？你用过new Thead(new Runable() {})）引导我回到匿名内部类</li><li>异常有分类</li><li>运行时异常有哪些举例</li><li>ERROR可以被捕获吗</li><li>序列化反序列化了解吗？有哪些格式，什么时候会有用到系列化</li><li>==和equals区别，基本数据类型能用equals吗？</li><li>集合类有哪些，我把list和map，set都说了</li><li>说说map的put()方法步骤</li><li>你没提到map的扩容，说一说map的扩容机制</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;2021-9-27-小米&quot;&gt;&lt;a href=&quot;#2021-9-27-小米&quot; class=&quot;headerlink&quot; title=&quot;2021/9/27 小米&quot;&gt;&lt;/a&gt;2021/9/27 小米&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;上来自我接受问项目遇到哪些难点&lt;/li&gt;
+&lt;li</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>面试常考问题总结</title>
+    <link href="https://songsong.ink/2021/09/25/82c441ab4d2c.html"/>
+    <id>https://songsong.ink/2021/09/25/82c441ab4d2c.html</id>
+    <published>2021-09-25T22:40:11.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="计算机网络面试题"><a href="#计算机网络面试题" class="headerlink" title="计算机网络面试题"></a>计算机网络面试题</h2><ol><li><p>对TCP协议的了解</p></li><li><p>TCP的特性以及为什么是可靠的？</p></li><li><p>三次握手？为什么要做三次握手？</p></li><li><p>三次握手说一下，ACK为啥加一。</p></li><li><p>time_wait状态知道不，说一下</p></li><li><p>HTTP请求报头，状态码</p></li><li><p>ios模型七层是什么，为什么分层。</p></li><li><p>   TCP和UDP有什么区别？9</p></li><li><p>   TCP怎么三次握手的？</p></li><li><p>   说下TCP断开连接的过程。</p></li><li><p>   TCP的可靠是怎么保证的</p></li><li><p>   三次握手、四次挥手、timewait意义</p></li><li><p>   http状态吗</p></li><li><p>   http报头有什么</p></li><li><p>   传输视频用什么协议、传输文件用什么协议</p></li><li><p>   10亿的数据如何找前10大的</p></li><li><p>   TCP流量控制怎么实现</p></li><li><p>   TCP建立链接后，网线突然拔掉，在插上，链接还在不在</p></li><li><p>   TCP保活定时器应用层能知道吗</p></li><li><p>   TIME_WAIT会不会占用端口号？TIME_WAIT占用大量端口号，客户端链接不上服务器，怎么解决？</p></li><li><ol start="20"><li>   Udp如何实现可靠性传输</li></ol></li><li><ol start="23"><li>   遥控器控制电视是用tcp还是udp</li></ol></li><li><p>   syn攻击解决方法（回答了一种）</p></li><li><p>   四次挥手 timewait没有会发生什么（提示下回答）</p></li><li><p>   epoll 两种模式 边沿触发和水平触发（提示下回答出来）</p></li><li><p>   虚拟内存 交换区</p></li><li><p>   set和无序的set谁的效率高为什么</p></li><li><p>   HTTP的了解  post和get的区别</p></li><li><p>   HTTP详细的（不会，跳过）</p></li><li><p>   6.浏览器输入<a href="http://www.maoyan.com发生了什么？">www.maoyan.com发生了什么？</a></p></li><li><p>   http长链接与短连接？长链接一直不断开会出现什么问题？怎么解决这个问题？</p></li><li><p>长链接实现原理？</p></li><li><p>http中GET和POST请求的方式？</p></li><li><p>http状态码含义，500和502的区别？401？</p></li><li><p>ARP协议？</p></li><li><p>http中的一些请求方法。</p></li><li><p>8、Time_wait 状态的作用</p></li><li><p>三次握手解决了什么问题</p></li><li><p>两台主机能同时相互进行三次握手连接嘛</p></li><li><p>ARP协议 </p></li><li><p>.为什么有了ip地址还要mac地址</p></li><li><p>Tcp有可能被劫持吗？  tcp传输过程中信息会泄露吗？</p></li><li><p>HTTPS怎么保证安全的</p></li><li><p>查看tcp状态用哪个命令</p></li><li><p>把这些状态统计起来用哪个命令（比如time_wait状态有几个）</p></li><li><p>粘包问题</p></li><li><p>说一下管道，进程间的五种通信方式，三种线程同步方式</p></li><li><p>为什么用无名管道不用有名管道</p></li><li><p>除了管道，具体说一下其他方式</p></li><li><p>.一般网络上的视频传输用的是什么协议</p></li><li><p>微信支付中客户端发起一笔支付用tcp还是udp</p></li><li><p>HTTP协议常见的状态码</p></li><li><p>对称加密和非对称加密的区别</p></li><li><p>数字签名</p></li><li><p>tcp拥塞控制知道吗？讲一下拥塞控制</p></li><li><p>慢启动中的起始值是1，单位是什么？</p></li><li><p>tcp报文头部有哪些信息，怎么知道自己可以发送多少数据给对方？</p></li><li><p>socket编程里象征三次握手的地方在哪儿？TCP三次握手四次挥手的状态，如果没有TIME_WAIT状态会怎样，time-wait状态如果很多，怎么避免？</p></li><li><p>udp发送的数据一定是完整的嘛？</p></li><li><p>为什么分层？（1）多层之间相互独立，灵活性好（2）结构上可分割开来，易于实现和维护（3）促进标准化工作</p></li><li><p>问我怎么获取ip地址，我给他讲了从应用层到各层的数据段封装。他说不是，然后让我用电脑打开cmd 输入ipconfig /all 看一下DHCP服务器问我DHCP是干啥的？我说不清楚，然后他给我讲了5分的DHCP原理</p></li><li><p>问了下进程通讯及目的，进程间内存隔离。</p></li><li><p>fork3次之后创建几个进程</p></li><li><p>linux两台主机之间拷贝数据命令</p></li><li><p>三次握手的过程？每一次都携带什么数据？为什么要给确认报文段中的ack的值加1，为什么不是2,3,4？<br>（1）客户端请求建立连接，发送序列号<br>（2）服务器确认连接，发送确认报文，并发送自己的序列号<br>（3）客户端发送确认报文<br>如果是在建立连接的过程中，那么这仅仅是一个规定，三次握手的协议就是如此说明的。在数据收发的过程中，确认号也表示了在次字节之前的数据已经收到的到确认，可以放心发送后边的数据，加一可以确定下一次发送应该其实的位置。</p></li><li><p>四次挥手最后主动断开方为什么要等待2MSL？TIME_WAIT状态是什么?<br>（1）保证安全的断开连接，假设被动断开方第一次发送的断开请求报文在网络滞留了，收不到确认又重新发了一次，第二次收到了确认则连接断开，如果此时滞留的报文又到达了，此时主动断开方有可能已经重新建立的tcp连接，就会收到一个错误的报文<br>（2）保证迟到的报文被丢弃</p></li><li><p>管道是半双工、socket是全双工</p></li><li><p>TCP和UDP的区别？如何处理TCP粘包问题？<br>Tcp是面向连接的可靠的流式服务<br>Udp是无连接的不可靠的数据报服务<br>粘包问题的解决方法：<br>（1）    暴力解决，每次需要发数据时再建立tcp连接，发送结束就断开连接<br>（2）    定常数据结构，如果规定每次发送的数据报长度是一定的，那么接收方每次读取固定长读的报文即可<br>（3）    不定长数据结构：多数情况我们使用的不是定长的数据结构，第一种方法可以规定一个特殊的符号作为结束符，每当遇到这个结束符才认为该报文接收结束，但是该方法只适用于字符数据，因        为对其他二进制数据无法确定是结束符还是要发送的数据第二种方法是，在固定的偏移位置写入报文的长度，接收方每次读取先获取到报文的长度，再接收该长度大小的报文即可</p></li><li><p>HTTP协议的报头是什么？请求方法？<br>Http协议的报头是用来区分报文的类型，比如客户端发送一个请求报文，那么该报文是请求报文就要在报头中说明，是响应报文也要在报头中说明。<br>Get、Post</p></li><li><p>time_wait的意义，2 MLS指的是什么</p></li><li><p>HTTP协议头部的TTL字段代表什么？代表报文的最大跳数（最长生存时间），主要是为了防止报文段在网络中一直循环的进行传输所设置的，当达到最大跳数后该报文段会被自动丢弃。</p></li></ol><h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><ol><li>进程间通信</li><li>线程间通信，</li><li>线程间的同步方式具体说</li><li>说下共享内存 ，有两个进程，连接同一共享内存，这两个进程映射到共享内存上的虚拟地址是相同的吗？ 两个进程之间通过共享内存共享一段内存地址空间，这个是怎么实现的？</li><li>共享内存解决互斥</li><li>进程线程的资源分配的区别 </li><li>select和epoll吗？有什么区别？</li><li>怎样解决线程互斥</li><li>虚拟空间地址大小用户态和内核态</li><li>系统调用从用户态到内核态的过程</li><li>epoll的ET、LT模式 简短的说下</li><li>内存泄漏，怎么解决？</li><li>用户态内核态，切换过程</li><li>如果很多个用户同时用了一个系统调用，会发生什么情况？怎么解决？</li><li> Linux2.6版本后内核的抢占式，是依据什么可以进行抢占的</li><li>内存对齐，内存对齐是编译器还是操作系统实现的？为什么要有内存对齐？</li><li>分页管理和分段管理的区别</li><li>软链接和硬链接的区别</li><li>udp发送的数据报在网络层丢失了怎么办？应用层会不会知道这个包丢失了？udp知不知道</li><li>连续多次malloc和free之后是否能直接使用内存（不懂）</li><li>僵尸进程的概念、处理方法？通过信号调用wait函数可能出现的问题？</li><li>死锁</li><li>协程比线程有哪些优势</li><li>.两个进程之间使用管道会启动新进程吗</li><li>管道是怎么实现的</li><li>多进程和多线程区别？微信底层用的是多进程，你怎么看？（多进程相比多线程的优势），</li><li>select,poll,epoll的区别。</li><li>代码里面从一个文件读内容，操作系统都做了什么</li></ol><h2 id="linux命令"><a href="#linux命令" class="headerlink" title="linux命令"></a>linux命令</h2><ol><li>文件夹按时间排序显示的命令（没答出来），那ls -t中-t参数是什么意思</li><li>查看进程的命令（回答的ps -ef），-ef所表示的意思是什么</li><li>用过head命令吗</li><li>linux文件合并，进程状态查询，cpu内存使用查询，磁盘内存查询。</li><li>如何在Linux下查看磁盘空间？</li><li>如何查看端口有没有监听？</li><li>查看网络状态的命令</li><li>liunx命令，查看进程，查看负载均衡</li><li>介绍管道，项目中用的是什么管道，项目中怎么用的管道</li><li>Linux中对文件和进程等相关操作的命令。</li><li>Linux 查看系统IO的命令</li><li>建立软链接的命令</li><li>修改文件的读写权限用到的命令，这个命令有哪些参数？</li><li>统计文件有多少行、多少字节用什么命令？</li><li>查找文件里字符串的命令？</li><li>ps的参数</li><li>了解脚本，awk sed</li><li>如何查看tcp状态，用什么命令？查看进程的命令，查看负载均衡的命令，linux脚本里如何获取文件的某一行某一列数据</li><li>如何查看tcp的状态  netstat</li><li>如何查看共享内存 ipcs</li><li>Tcp查看状态用什么命令，具体的参数，会出现什么状态？TIME_WAIT和CLOSE_WAIT有什么区别？</li><li>ttl</li><li>缺页中断</li><li>strcpy函数原型和实现</li><li>内存泄漏了怎么办？有哪些内存泄漏？内存泄漏的检测工具？</li><li>布隆过滤器</li><li>read和fread的区别，哪个效率高</li><li>查看内存运行状态命令（一个八核的系统，如何查看所有内存运行状态）</li><li>.Linux下操作指令执行过程</li><li>.recv函数返回值的意义</li><li>查看共享内存命令</li><li>pwd命令怎么实现的</li><li>top和ps命令</li><li>在linux下，程序出现了死循环，会产生什么现象，除了jdb调试，还有其他什么方法可以查看出现了死循环</li><li>linux下buff、swap。。。。。。什么什么的区别</li><li>Linux查看资源使用情况，具体是什么函数比较消耗资源。</li><li>当你top命令时，每一列的含义是什么讲一下。</li><li>已经连接上了，服务器down了，客户端会作何反应。</li><li>连接池知道吗？讲一下。</li><li>io复用（select和epoll的区别）</li><li>要求回答关于进程操作等命令</li><li>如果某一进程造成CPU满了，是什么原因造成的，如何解决？</li><li>如何查看系统性能/系统监测的命令</li><li>top命令中关于负载的命令是什么，loadavg知道吗</li><li>负载在操作系统里跟什么关联，怎么判断一个服务负载很高（不会，他解释说跟物理核数有关，任务比核数多会导致CPU频繁切换，负载高，比核数少会让CPU闲置）</li><li>随便说，说明操作系统是怎么应用的，当你进行一个操作时，操作系统在这个过程中都做了什么事情，操作系统怎么运转的（我说的是系统调用这个点）</li><li>怎么设计一个分布式存储系统</li></ol><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><ol><li>数据库引擎知道哪些，有什么区别</li><li>什么是索引，索引的存储结构是什么</li><li>给你一个sql语句,怎么优化</li><li>mysql索引方式</li><li>数据库提高查询效率的方法？索引的实现原理？</li><li>操作系统内存管理？</li><li>说一下第二范式和第三范式</li><li>索引的底层实现，为什么要用索引？加了索引，还是查询很慢，问题出在哪里？</li><li>索引是可以优化查询，那还有其他优化方式吗</li><li>索引单列索引和多列索引有什么区别</li><li>有哪些Sql优化</li><li>聚集索引高效，为什么要有非聚集索引</li><li>为什么要建立索引，好处和坏处。</li><li>左连接、右连接、内连接讲一下。</li><li>？mysql可不可以对多个字段建索引？</li></ol><h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ol><li>如何解决哈希表的冲突？</li><li>B+和B-的区别是什么？b树和b+树有什么却别，分别适合应用在什么场景</li><li>map的底层，红黑树的特点，为什么用红黑树而不用别的树</li><li>了解nat吗？</li><li>map中的key可不可以是结构体？是结构体的话怎么判断key重复</li><li>二叉树，平衡树  二叉树：红黑树，平衡二叉树（问的比较细，时间复杂度，特征）</li><li>堆栈的区别</li><li>堆栈的数据结构</li><li>一个email表，有id/name两列，用sql语句删除重复的name，只剩下一个（这个真的触及到盲区了，面试官说可以用join做）</li></ol><h2 id="场景题"><a href="#场景题" class="headerlink" title="场景题"></a>场景题</h2><ol><li>如果有一个项目跑了两天之后崩溃了，怎么查这个原因？    </li><li>在Linux下有调试过吗？如果CPU达到100%，怎么调试？如果只有一个程序？如何确认是因为多个线程为响应造成的CPU达满？</li><li>除了多线程和多进程之外，什么也可以用来实现并发，提高效率？</li><li>对分布式系统的了解，多个地方的服务器怎么保证数据的一致性？</li><li>遍历一个文件获取文件后十行（我说用tail命令，他让我不要用命令自己想办法实现，又说了好几种方法他都不满意，最后提示我用快慢指针解决）</li><li>设计题：设计一个类似于朋友圈或者微博的软件，上线之后看关注的好友的发的最新动态</li><li>情景题：有64皮马，一个马场里有8个跑道，用最少的场数确定跑的最快的4皮马，</li><li>买火车票经常出现无法访问，服务器负载过大，如何解决?  客户端方向和服务器方向思考 如何降低服务器上的连接数量。</li><li>了解过cache方面的编程么?</li><li>TCP和UDP的使用场景。</li><li>服务端要给别人回包，但是对端套接字已经关了，服务器会出现什么情况 ?如果只是客户端的进程退出了，会怎么样，从网络交互方面回答</li><li>3、有一栋100层高的大楼，给你两个完全相同的玻璃球。假设从某一层开始，丢下玻璃球会摔碎，请问到哪一层会摔碎？（说思想，说了一种方法让继续改进），如果照你说的，先扔x层的思想，怎么确定这个分组。</li><li>linux命令中的mv，cp，mv,cp谁的效率快？为什么他们有什么区别？结合指针谈谈他们的实现？如果让你写一个mv,和cp，你会怎么设计？（有什么更好的办法？）。</li><li>缓存知道不？作用是什么？在数据库之间加缓存，缓存属于内存吗？数据库的数据在哪儿放着？</li><li>10.编程题找10亿个数字前100大</li><li>udp报文最大发送大小     </li><li>读文件找出积分最高的100个用户 大顶堆 treemap （其实我的思路是优先队列，但面试官要我用treemap）</li></ol><h2 id="算法："><a href="#算法：" class="headerlink" title="算法："></a>算法：</h2><ol><li>找到一个链表环的入口</li><li>二进制转换成8进制</li><li>大文件去重排序</li><li>，冒泡、归并、快排、选择排序的时间复杂度？</li><li>atoi</li><li>快排怎么实现的，讲思路</li><li>怎么用两个栈实现一个队列？有没有更好的办法</li><li>编写代码，求二叉树的宽度</li><li>将100,101,102,103,104,105以数组的形式写入到Dest.txt文件中，并以相反的顺序读出显示在屏幕上。</li><li><ol start="5"><li>   给出10G的数据，每条存储的一条ip地址，求重复率最高的top5</li></ol></li><li>有s个人，围着桌子坐，随机选取一个人开始报数，报到m号时将他剔除，重新开始报数，依次进行，输出剔除序列（主要说数据结构）</li><li>对数据进行排序，选择算法进行排序（我选了快排加插入）？排序思想</li><li>海量数据进行排序</li><li>排序有没有考虑堆排？我说堆排适用于topk之类的算法</li><li>1~10000个数随机取出一个数，且乱序，找出这个数</li><li>链表找环</li><li>大根堆，小根堆。</li><li>一个单向链表，应该怎么样设计一个方法，看里面是否存在一个环 除了快慢指针还有什么办法   要求空间复杂度是O(1)</li><li>寻找数组中前10大的数据？时间复杂度？排序：如果数字基于有序：插入排序、希尔排序 如果数字毫无规则：快速排序  如果数字集中在某个较小的区域内，建立哈希表</li><li>升序数组找出和为指定数字的所有对(小米)</li><li>1 3 5 6 4 1类似这种先升后降的单链表 将其变成排好序的链表（小米）</li><li>一个数组中一个数出现两次，其它数都出现四次，要求找出这个数，要求时间复杂度nlogn，空间复杂度logn，</li></ol><ol start="20"><li>进程间通讯的方式有哪些？使用同一块共享内存的进程使用的虚拟地址相同吗？为什么？<br>信号、信号量、共享内存、消息队列、管道、套接字<br>有可能相同有可能不同，共享内存实际上已相当于文件，对于共享内存的文件映射到内存，如果两个进程完全相同的话，虚拟地址就是相同的，比如fork出来的进程和父进程访问同一个共享内存虚拟地址就可能相同。而进程如果有一点细微的不同，那么虚拟地址就会有差异</li></ol><h2 id="语言方面："><a href="#语言方面：" class="headerlink" title="语言方面："></a>语言方面：</h2><ol><li>i++是原子操作</li><li>多态</li><li>new一个对象，new之后java后台做了哪些工作</li><li>类加载过程</li><li>双亲委派模型的好处</li><li>怎样破坏双亲委派模型</li><li>互斥锁 读写锁 读写锁怎么用 手写实现一个读写锁（。。。不会）</li><li>用多线程手写一个生产者消费者模型（。。。也不会）</li><li>事务 并发事务造成的问题 事务的隔离级别</li><li>索引 聚集 非聚集 B+树 唯一性索引 普通索引 全文索引 最左前缀 联合索引</li><li>锁 表锁中共享读锁 独占写锁 行锁中共享锁 排他锁</li><li>乐观锁 悲观锁 间隙锁 （当时忘讲意向锁了）</li><li>项目中用到的索引有啥？</li><li>实际应用中有用到锁机制吗？</li><li>多线程锁的区别</li><li>Java访问修饰符的区别</li><li>为什么重写equals方法必须重写hashcode()方法。</li><li>如何实现子线程结束父线程才能结束</li><li>Spring AOP的原理</li></ol><p>c++；</p><ol><li>说下基类派生类的构造析构顺序？</li><li>构造函数能不能是纯虚函数？ 不能的原因？</li></ol><p>设计模式</p><ol><li>观察者模式是什么？大致说一下代码</li><li>单例模式 手写单例模式（写的双重if判断带锁的）-》问怎么优化？饿汉模式、懒汉模式 以及具体使用场景 使用单例模式应该注意什么<br>为什么要使用单例模式<br>（3）工厂模式 普通工厂 抽象工厂<br>（4）观察者模式</li></ol><h2 id="Java面试题"><a href="#Java面试题" class="headerlink" title="Java面试题"></a>Java面试题</h2><ol><li>多级缓存是怎么做的，怎么保证缓存中的数据是最新的</li><li>分布式下，怎么保证多个定时任务服务不会重复执行？</li><li>一个用户订单表，一个用户有可能多个订单，查询出每个用户的最新订单（当时脑子抽筋了，想太复杂了，后面想了一下好像只要先group by 再 max（date））</li><li>Java 新建线程有哪几种方式</li><li>Java 内存区域，new出来的对象分配在哪里，堆内存里面是怎么划分的，为什么要分为新生代，老年代</li><li>线程有哪些状态，阻塞状态和等待状态有什么区别</li><li>数据库建立索引的原则，复合索引的命中规则</li><li>zookeeper 节点类型</li><li>说下 spring 的 IOC 与 AOP</li><li>Java 反射有哪几种方式</li><li>-1000 到 1000 这两千个数用什么排序比较好</li><li>100 万个数用什么排序比较好</li><li>解决哈希冲突的方法</li><li>HashMap 的源码，把知道的都说说，后面追问 HashMap 扩容后怎么确定的元素在新的数组中的位置</li><li>B 树与 B+ 树的区别</li><li>redis 为什么快</li><li>怎么解决缓存穿透和缓存击穿，例如有黑客一直请求 id=-1 的数据怎么办？</li><li>Java的集合有了解吗，有哪几种</li><li>了解HashMap吗</li><li>HashMap的原理讲一下</li><li>HashMap和HashTable有什么区别</li><li>HashTable和ConCurrentHashMap的区别</li><li>HashMap的get实现是怎样的一个过程</li><li>多线程了解吗，讲一下线程的操作</li><li>sleep和wait的区别</li><li>线程池有了解吗</li><li>有哪几种线程池</li><li>线程池的优点</li><li>java的泛型了解吗，一般用在什么场景        泛型就是把类型参数化，在编译的时候才会确定具体的参数。可以用在类、接口、方法中。场景：我觉得当类 方法 接口 这些 当我们不确定使用的对象的类型是啥 或者 可能存在多种类型的可能的时候，可以使用泛型。最熟悉的就是集合类的实现都用到了泛型，这样我们在用的时候可以在&lt;&gt;中指定自己的需求，而不针对每种类型设计一个新的类。用上泛型可以提高类型的安全性，避免强转等。（有官方回答的求指导）</li><li>什么场景用String，什么场景用StringBuffer 看需求 是否存在线程安全问题，空间限制，时间限制</li><li>JVM怎么判断对象是否可以回收（可达性分析法）</li><li>可达性分析法中一般可以选哪些对象作为GC root，常量可以吗？虚拟机栈(栈帧中的本地变量表)中引用的对象。方法区中静态属性引用的对象。方法区中常量引用的对象。本地方法栈中(Native方法)引用的对象</li><li>springBoot启动流程</li><li>springMVC请求流程(不会，答适配器模式，json互相转换，就硬扯)</li><li>springboot自动配置原理(好多次问到我这个了，我是真的不会呀，八股文一背就会，一说就废)</li><li>定义了事务但是事务失效的场景</li><li>拦截器原理(不会)</li><li>mybatis动态SQL原理(不会)</li><li>已经在zookeeper中注册了的类，再次注册会怎样(知识盲区，不会)</li><li>Redis的5种数据类型以及底层数据结构</li><li>ArrayList和LinkedList的区别和应用场景</li><li>上面的两个集合对应的线程安全类</li><li>LinkedBlockQueue源码</li><li>CopyOnWriteArrayList源码</li><li>HashMap源码</li><li>ConcurrentHashMap源码</li><li>问多线程了解吗(因为框架答得不好，就说了精通多线程，哈哈哈，头铁)</li><li>线程创建方式</li><li>FutureTask如何获取返回值</li><li>Java线程生命周期和操作系统生命周期</li><li>多线程的debug</li><li>如何解决并发问题</li><li>AQS源码</li><li>公平锁，非公平锁，可重入锁，不可重入锁怎么设计的</li><li>CountDownLatch源码</li><li>四种引用类型以及应用场景</li><li>threadlocal源码</li><li>synchronized修饰静态方法和非静态方法区别</li><li>字节码中两个monitorexit分别代表什么</li><li>读写屏障</li><li>synchronized可重入原理</li><li>从OS层面讲一下为什么synchronized要尽量减小加锁范围和避免重入</li><li>synchronized锁升级过程</li><li>如何判断对象锁状态</li><li>偏心锁的记录过程</li><li>什么情况下hash码处不能放线程ID</li><li>hashcode如何计算</li><li>对象如何分配，垃圾如何回收，经历了哪些流程</li><li>很多线程同时往Eden区同时申请内存，分配对象，虚拟机怎么减少往同一块内存上分配对象的冲突</li><li>gc分代年龄最大值，为什么最大值是15</li><li>假设你设计jvm，你会在哪存gc年龄</li><li>cms是老年代垃圾回收器，它的搭档有哪些?</li><li>cms为什么使用串行垃圾回收器作为备案</li><li>cms如何调优</li><li>G1垃圾回收过程</li><li>散射标记法(完全没听过)</li><li>颜色指针</li><li>B+树数据结构，聚簇索引，回表</li><li>没有唯一值，还有聚簇索引吗</li><li>explain会关注哪些信息</li><li>索引失效场景</li><li>jmm</li><li>volatile</li><li>指令重排序，内存屏障</li><li>cas/aba问题</li><li>synchronized锁升级过程</li><li>自旋锁一定会提高效率？</li><li>重量级锁的原理</li><li>线程池七大参数&amp;拒绝策略&amp;工作原理</li><li>JUC相关知道哪些？</li><li>集合ArrayList，hashmap，linkedlist，concurrentHashmap原理&amp;扩容机制</li><li>知道哪些Gc算法，可达性分析算法什么对象做为根对象？</li><li>Tcp知道什么（说了保证可靠性的机制&amp;提高性能的机制）</li><li>幂等性的实现</li><li>线程池中的线程为什么可以一直处理任务不销毁</li><li>mvc 和 servlet 的关系</li><li>ping 在什么层</li><li>创建一个存放100个元素的 hashmap 应该设置多大保证不扩容</li><li>linux进程之间怎么通信的。(IPC)</li><li>多态问的很底层 两个方法，一个参数string，一个参数obj， 调用传参null，问调用哪个方法， 不会</li><li>10亿个数找两个重复数字 </li><li>10亿个数找最小10个</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;计算机网络面试题&quot;&gt;&lt;a href=&quot;#计算机网络面试题&quot; class=&quot;headerlink&quot; title=&quot;计算机网络面试题&quot;&gt;&lt;/a&gt;计算机网络面试题&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;对TCP协议的了解&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;TCP的特性以及为什</summary>
+      
+    
+    
+    
+    <category term="计算机网络" scheme="https://songsong.ink/categories/Network/"/>
+    
+    
+    <category term="review" scheme="https://songsong.ink/tags/review/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>负载均衡</title>
+    <link href="https://songsong.ink/2021/09/18/a3e5f334146b.html"/>
+    <id>https://songsong.ink/2021/09/18/a3e5f334146b.html</id>
+    <published>2021-09-18T16:44:16.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="负载均衡算法"><a href="#负载均衡算法" class="headerlink" title="负载均衡算法"></a>负载均衡算法</h1><h2 id="1-轮循均衡（Round-Robin）"><a href="#1-轮循均衡（Round-Robin）" class="headerlink" title="1. 轮循均衡（Round Robin）"></a>1. 轮循均衡（Round Robin）</h2><p>每一次来自网络的请求轮流分配给内部中的服务器，从 1 至N然后重新开始。此种均衡算法适合 于服务器组中的所有服务器都有相同的软硬件配置并且平均服务请求相对均衡的情况。</p><h2 id="2-权重轮循均衡（Weighted-Round-Robin）"><a href="#2-权重轮循均衡（Weighted-Round-Robin）" class="headerlink" title="2. 权重轮循均衡（Weighted Round Robin）"></a>2. 权重轮循均衡（Weighted Round Robin）</h2><p>根据服务器的不同处理能力，给每个服务器分配不同的权值，使其能够接受相应权值数的服务请 求。例如：服务器A的权值被设计成 1，B 的权值是 3，C的权值是 6，则服务器A、B、C将分 别接受到10%、30％、60％的服务请求。此种均衡算法能确保高性能的服务器得到更多的使用 率，避免低性能的服务器负载过重。</p><h2 id="3-随机均衡（Random）"><a href="#3-随机均衡（Random）" class="headerlink" title="3. 随机均衡（Random）"></a>3. 随机均衡（Random）</h2><p>把来自网络的请求随机分配给内部中的多个服务器。 </p><h2 id="4-权重随机均衡（Weighted-Random）"><a href="#4-权重随机均衡（Weighted-Random）" class="headerlink" title="4. 权重随机均衡（Weighted Random）"></a>4. 权重随机均衡（Weighted Random）</h2><p>此种均衡算法类似于权重轮循算法，不过在处理请求分担时是个随机选择的过程。 </p><h2 id="5-响应速度均衡（Response-Time-探测时间）"><a href="#5-响应速度均衡（Response-Time-探测时间）" class="headerlink" title="5. 响应速度均衡（Response Time 探测时间）"></a>5. 响应速度均衡（Response Time 探测时间）</h2><p>负载均衡设备对内部各服务器发出一个探测请求（例如 Ping），然后根据内部中各服务器对探测 请求的最快响应时间来决定哪一台服务器来响应客户端的服务请求。此种均衡算法能较好的反映 服务器的当前运行状态，但这最快响应时间仅仅指的是负载均衡设备与服务器间的最快响应时<br>间，而不是客户端与服务器间的最快响应时间</p><h2 id="6-最少连接数均衡（Least-Connection）"><a href="#6-最少连接数均衡（Least-Connection）" class="headerlink" title="6. 最少连接数均衡（Least Connection）"></a>6. 最少连接数均衡（Least Connection）</h2><p>  最少连接数均衡算法对内部中需负载的每一台服务器都有一个数据记录，记录当前该服务器正在 处理的连接数量，当有新的服务连接请求时，将把当前请求分配给连接数最少的服务器，使均衡 更加符合实际情况，负载更加均衡。此种均衡算法适合长时处理的请求服务，如 FTP。</p><h2 id="7-处理能力均衡（CPU、内存）"><a href="#7-处理能力均衡（CPU、内存）" class="headerlink" title="7. 处理能力均衡（CPU、内存）"></a>7. 处理能力均衡（CPU、内存）</h2><p>此种均衡算法将把服务请求分配给内部中处理负荷（根据服务器CPU型号、CPU数量、内存大小 及当前连接数等换算而成）最轻的服务器，由于考虑到了内部服务器的处理能力及当前网络运行 状况，所以此种均衡算法相对来说更加精确，尤其适合运用到第七层（应用层）负载均衡的情况 下。</p><h2 id="8-DNS响应均衡（Flash-DNS）"><a href="#8-DNS响应均衡（Flash-DNS）" class="headerlink" title="8. DNS响应均衡（Flash DNS）"></a>8. DNS响应均衡（Flash DNS）</h2><p>在此均衡算法下，分处在不同地理位置的负载均衡设备收到同一个客户端的域名解析请求，并在 同一时间内把此域名解析成各自相对应服务器的 IP 地址并返回给客户端，则客户端将以最先收到 的域名解析 IP 地址来继续请求服务，而忽略其它的 IP 地址响应。在种均衡策略适合应用在全局负 载均衡的情况下，对本地负载均衡是没有意义的。</p><h2 id="9-哈希算法"><a href="#9-哈希算法" class="headerlink" title="9. 哈希算法"></a>9. 哈希算法</h2><p>一致性哈希一致性Hash，相同参数的请求总是发到同一提供者。当某一台提供者挂时，原本发往 该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。</p><h2 id="10-IP-地址散列（保证客户端服务器对应关系稳定）"><a href="#10-IP-地址散列（保证客户端服务器对应关系稳定）" class="headerlink" title="10. IP 地址散列（保证客户端服务器对应关系稳定）"></a>10. IP 地址散列（保证客户端服务器对应关系稳定）</h2><p>通过管理发送方 IP 和目的地 IP 地址的散列，将来自同一发送方的分组(或发送至同一目的地的分 组)统一转发到相同服务器的算法。当客户端有一系列业务需要处理而必须和一个服务器反复通信 时，该算法能够以流(会话)为单位，保证来自相同客户端的通信能够一直在同一服务器中进行处 理。</p><h2 id="11-URL-散列"><a href="#11-URL-散列" class="headerlink" title="11. URL 散列"></a>11. URL 散列</h2><p>通过管理客户端请求URL 信息的散列，将发送至相同URL 的请求转发至同一服务器的算法。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;负载均衡算法&quot;&gt;&lt;a href=&quot;#负载均衡算法&quot; class=&quot;headerlink&quot; title=&quot;负载均衡算法&quot;&gt;&lt;/a&gt;负载均衡算法&lt;/h1&gt;&lt;h2 id=&quot;1-轮循均衡（Round-Robin）&quot;&gt;&lt;a href=&quot;#1-轮循均衡（Round-Robin</summary>
+      
+    
+    
+    
+    <category term="nginx" scheme="https://songsong.ink/categories/nginx/"/>
+    
+    
+    <category term="nginx" scheme="https://songsong.ink/tags/nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>spring面试</title>
+    <link href="https://songsong.ink/2021/09/09/a1a07dd22c32.html"/>
+    <id>https://songsong.ink/2021/09/09/a1a07dd22c32.html</id>
+    <published>2021-09-09T16:02:43.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;headerlink&quot; title=&quot;&quot;&gt;&lt;/a&gt;&lt;/h1&gt;</summary>
+      
+    
+    
+    
+    <category term="spring" scheme="https://songsong.ink/categories/spring/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>redis常用操作哦</title>
+    <link href="https://songsong.ink/2021/08/23/5ed71c7fdf57.html"/>
+    <id>https://songsong.ink/2021/08/23/5ed71c7fdf57.html</id>
+    <published>2021-08-23T20:43:53.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-redis的五种数据结构"><a href="#1-redis的五种数据结构" class="headerlink" title="1.redis的五种数据结构"></a>1.redis的五种数据结构</h1><ol><li>字符串String</li><li>哈希表hash</li><li>列表list</li><li>集合set</li><li>有序集合zset</li></ol><h2 id="1-1字符串的常用操作"><a href="#1-1字符串的常用操作" class="headerlink" title="1.1字符串的常用操作"></a>1.1字符串的常用操作</h2><ol><li>set key value  存储一个键值对</li><li>mset key value key value … 存储多个键值对</li><li>setnx key value 存储一个不存在的键值对</li><li>get key 获取一个value</li><li>mget key … 批量获取key的value</li><li>del key … 批量删除键值对</li><li>expire key seconds 设置过期时间</li><li>incr key key的整数值加1</li><li>decr key key的整数值减1</li><li>incrby key increment key的值加increment</li><li>decrby key decrement key的值减去decrement</li></ol><p>规范化自己的代码风格，使用缓存优化效率，在高并发情况下的边界问题问题处理。学习优秀的开源项目源码，并且加上自己的实现完成自己的开发。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;1-redis的五种数据结构&quot;&gt;&lt;a href=&quot;#1-redis的五种数据结构&quot; class=&quot;headerlink&quot; title=&quot;1.redis的五种数据结构&quot;&gt;&lt;/a&gt;1.redis的五种数据结构&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;字符串String&lt;/li&gt;
+&lt;</summary>
+      
+    
+    
+    
+    <category term="redis" scheme="https://songsong.ink/categories/redis/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ubuntu修改hostname</title>
+    <link href="https://songsong.ink/2021/08/20/3f9300d23ecc.html"/>
+    <id>https://songsong.ink/2021/08/20/3f9300d23ecc.html</id>
+    <published>2021-08-20T15:40:40.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="修改-etc-cloud-cloud-cfg文件"><a href="#修改-etc-cloud-cloud-cfg文件" class="headerlink" title="修改/etc/cloud/cloud.cfg文件"></a>修改/etc/cloud/cloud.cfg文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">preserve_hostname: <span class="literal">false</span></span><br><span class="line">修改</span><br><span class="line">preserve_hostname: <span class="literal">true</span></span><br></pre></td></tr></table></figure><h2 id="执行命令-hostnamectl-set-hostname-主机名"><a href="#执行命令-hostnamectl-set-hostname-主机名" class="headerlink" title="执行命令 hostnamectl set-hostname 主机名"></a>执行命令 hostnamectl set-hostname 主机名</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname testname</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;修改-etc-cloud-cloud-cfg文件&quot;&gt;&lt;a href=&quot;#修改-etc-cloud-cloud-cfg文件&quot; class=&quot;headerlink&quot; title=&quot;修改/etc/cloud/cloud.cfg文件&quot;&gt;&lt;/a&gt;修改/etc/cloud/c</summary>
+      
+    
+    
+    
+    <category term="linux" scheme="https://songsong.ink/categories/linux/"/>
+    
+    
+    <category term="ubuntu hostname" scheme="https://songsong.ink/tags/ubuntu-hostname/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux端口号</title>
+    <link href="https://songsong.ink/2021/08/20/c4bf1f45066d.html"/>
+    <id>https://songsong.ink/2021/08/20/c4bf1f45066d.html</id>
+    <published>2021-08-20T15:17:13.000Z</published>
+    <updated>2022-05-15T08:41:27.453Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="第一种："><a href="#第一种：" class="headerlink" title="第一种："></a>第一种：</h2><p>lsof -i:端口号</p><h2 id="第二种："><a href="#第二种：" class="headerlink" title="第二种："></a>第二种：</h2><p>netstat -nltp | grep 端口号</p><ol><li>-a：显示本机所有连接和监听地端口</li><li>-n：网络IP地址的形式，显示当前建立的有效连接和端口</li><li>-r：显示路由表信息</li><li>-s：显示按协议的统计信息</li><li>-v：显示当前有效的连接</li><li>-t：显示所有TCP协议连接情况</li><li>-u：显示所有UDP协议连接情况</li><li>-i：显示自动配置端口的状态</li><li>-l：仅仅显示连接状态为listening的服务网络状态</li><li>-p：显示pid/program name</li></ol><h2 id="TCP连接的几种状态"><a href="#TCP连接的几种状态" class="headerlink" title="TCP连接的几种状态"></a>TCP连接的几种状态</h2><ol><li>ESTABLISHED    已建立 </li><li>CLOSED   已关闭 </li><li>LISTENING  正在监听</li><li>FIN-WAIT-2   等待连接关闭</li><li>TIME-WAIT   等待足够时间，确保服务器正常关闭该连接</li></ol>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;第一种：&quot;&gt;&lt;a href=&quot;#第一种：&quot; class=&quot;headerlink&quot; title=&quot;第一种：&quot;&gt;&lt;/a&gt;第一种：&lt;/h2&gt;&lt;p&gt;lsof -i:端口号&lt;/p&gt;
+&lt;h2 id=&quot;第二种：&quot;&gt;&lt;a href=&quot;#第二种：&quot; class=&quot;headerlin</summary>
+      
+    
+    
+    
+    <category term="linux" scheme="https://songsong.ink/categories/linux/"/>
+    
+    
+  </entry>
+  
+</feed>

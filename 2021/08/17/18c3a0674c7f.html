@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>hashmap - 松松闲谈</title>
+  
+
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="松松闲谈" type="application/atom+xml">
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=启用JavaScript"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div id='cover-backstretch'></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">松松闲谈</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>首页</p>
+            </a>
+          
+            <a href="/categories/"
+              
+              
+              id="categories">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4da.svg'><p>分类</p>
+            </a>
+          
+            <a href="/tags/"
+              
+              
+              id="tags">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>标签</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4dc.svg'><p>归档</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>博客</p>
+            </a>
+          
+            <a target="_blank" rel="noopener" href="https://github.com/volantis-x/hexo-theme-volantis/"
+              
+              
+              id="https:githubcomvolantis-xhexo-theme-volantis">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        hashmap
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>申松朋</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年8月17日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="hashmap" data-path="/2021/08/17/18c3a0674c7f.html">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h1 id="HashMap源码分析（jdk1-8，保证你能看懂）"><a href="#HashMap源码分析（jdk1-8，保证你能看懂）" class="headerlink" title="HashMap源码分析（jdk1.8，保证你能看懂）"></a>HashMap源码分析（jdk1.8，保证你能看懂）</h1><hr>
+<p>现在的面试当中凡是那些大厂，基本上都会问到一些关于HashMap的问题了，而且这个集合在开发中也经常会使用到。于是花费了大量的时间去研究分析写了这篇文章。本文是基于jdk1.8来分析的。篇幅较长，但是都是循序渐进的。耐心读完相信你会有所收获。</p>
+<p><strong>一、带着问题分析</strong></p>
+<p>这篇文章，希望能解决以下问题。</p>
+<p>（1）HashMap的底层数据结构是什么？</p>
+<p>（2）HashMap中增删改查操作的底部实现原理是什么？</p>
+<p>（3）HashMap是如何实现扩容的？</p>
+<p>（4）HashMap是如何解决hash冲突的？</p>
+<p>（7）HashMap为什么是非线程安全的？</p>
+<p>下面我们就带着这些问题，揭开HashMap的面纱。</p>
+<p><strong>二、认识HashMap</strong></p>
+<p>HashMap最早是在jdk1.2中开始出现的，一直到jdk1.7一直没有太大的变化。但是到了jdk1.8突然进行了一个很大的改动。其中一个最显著的改动就是：</p>
+<blockquote>
+<p>之前jdk1.7的存储结构是数组+链表，到了jdk1.8变成了数组+链表+红黑树。</p>
+</blockquote>
+<p>另外，HashMap是非线程安全的，也就是说在多个线程同时对HashMap中的某个元素进行增删改操作的时候，是不能保证数据的一致性的。</p>
+<p>下面我们就开始一步一步的分析。</p>
+<p><strong>三、深入分析HashMap</strong></p>
+<p><strong>1、底层数据结构</strong></p>
+<p>为了进行一个对比分析，我们先给出一个jdk1.7的存储结构图</p>
+<p><img src="https://pic4.zhimg.com/v2-13f265dfbfe4f6bf0505cd31d7b3cf47_b.jpg" class="lazyload" data-srcset="https://pic4.zhimg.com/v2-13f265dfbfe4f6bf0505cd31d7b3cf47_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p>
+<p>从上图我们可以看到，在jdk1.7中，首先是把元素放在一个个数组里面，后来存放的数据元素越来越多，于是就出现了链表，对于数组中的每一个元素，都可以有一条链表来存储元素。这就是有名的“拉链式”存储方法。</p>
+<p>就这样用了几年，后来存储的元素越来越多，链表也越来越长，在查找一个元素时候效率不仅没有提高（链表不适合查找，适合增删），反倒是下降了不少，于是就对这条链表进行了一个改进。如何改进呢？就是把这条链表变成一个适合查找的树形结构，没错就是红黑树。于是HashMap的存储数据结构就变成了下面的这种。</p>
+<p><img src="https://pic2.zhimg.com/v2-14ccbe757a467d874cb7999f62caddcd_b.jpg" class="lazyload" data-srcset="https://pic2.zhimg.com/v2-14ccbe757a467d874cb7999f62caddcd_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p>
+<p>我们会发现优化的部分就是把链表结构变成了红黑树。原来jdk1.7的优点是增删效率高，于是在jdk1.8的时候，不仅仅增删效率高，而且查找效率也提升了。</p>
+<p><strong>注意：不是说变成了红黑树效率就一定提高了，只有在链表的长度不小于8，而且数组的长度不小于64的时候才会将链表转化为红黑树，</strong></p>
+<p><strong>问题一：什么是红黑树呢？</strong></p>
+<p>红黑树是一个自平衡的二叉查找树，也就是说红黑树的查找效率是非常的高，查找效率会从链表的o(n)降低为o(logn)。如果之前没有了解过红黑树的话，也没关系，你就记住红黑树的查找效率很高就OK了。</p>
+<p><strong>问题二：为什么不一下子把整个链表变为红黑树呢？</strong></p>
+<p>这个问题的意思是这样的，就是说我们为什么非要等到链表的长度大于等于8的时候，才转变成红黑树？在这里可以从两方面来解释</p>
+<p>（1）构造红黑树要比构造链表复杂，在链表的节点不多的时候，从整体的性能看来， 数组+链表+红黑树的结构可能不一定比数组+链表的结构性能高。就好比杀鸡焉用牛刀的意思。</p>
+<p>（2）HashMap频繁的扩容，会造成底部红黑树不断的进行拆分和重组，这是非常耗时的。因此，也就是链表长度比较长的时候转变成红黑树才会显著提高效率。</p>
+<p>OK，到这里相信我们对hashMap的底层数据结构有了一个认识。现在带着上面的结构图，看一下如何存储一个元素。</p>
+<p><strong>2、存储元素put</strong></p>
+<p>我们在存储一个元素的时候，大多是使用下面的这种方式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        HashMap&lt;String, Integer&gt; map= new HashMap&lt;&gt;();</span><br><span class="line">        //存储一个元素</span><br><span class="line">        map.put(&quot;张三&quot;, 20);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在这里HashMap&lt;String, Integer&gt;，第一个参数是键，第二个参数是值，合起来叫做键值对。存储的时候只需要调用put方法即可。那底层的实现原理是怎么样的呢？这里还是先给出一个流程图</p>
+<p><img src="https://pic3.zhimg.com/v2-bb8ee0ee1c0cc51537ae5f8e02038102_b.jpg" class="lazyload" data-srcset="https://pic3.zhimg.com/v2-bb8ee0ee1c0cc51537ae5f8e02038102_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p>
+<p>上面这个流程，不知道你能否看到，红色字迹的是三个判断框，也是转折点，我们使用文字来梳理一下这个流程：</p>
+<p>（1）第一步：调用put方法传入键值对</p>
+<p>（2）第二步：使用hash算法计算hash值</p>
+<p>（3）第三步：根据hash值确定存放的位置，判断是否和其他键值对位置发生了冲突</p>
+<p>（4）第四步：若没有发生冲突，直接存放在数组中即可</p>
+<p>（5）第五步：若发生了冲突，还要判断此时的数据结构是什么？</p>
+<p>（6）第六步：若此时的数据结构是红黑树，那就直接插入红黑树中</p>
+<p>（7）第七步：若此时的数据结构是链表，判断插入之后是否大于等于8</p>
+<p>（8）第八步：插入之后大于8了，就要先调整为红黑树，在插入</p>
+<p>（9）第九步：插入之后不大于8，那么就直接插入到链表尾部即可。</p>
+<p>上面就是插入数据的整个流程，光看流程还不行，我们还需要深入到源码中去看看底部是如何按照这个流程写代码的。</p>
+<p>鼠标聚焦在put方法上面，按一下F3，我们就能进入put的源码。来看一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public V put(K key, V value) &#123;</span><br><span class="line">     return putVal(hash(key), key, value, false, true);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，put方法其实调用的是putVal方法。putVal方法有5个参数：</p>
+<p>（1）第一个参数hash：调用了hash方法计算hash值</p>
+<p>（2）第二个参数key：就是我们传入的key值，也就是例子中的张三</p>
+<p>（3）第三个参数value：就是我们传入的value值，也就是例子中的20</p>
+<p>（4）第四个参数onlyIfAbsent：也就是当键相同时，不修改已存在的值</p>
+<p>（5）第五个参数evict ：如果为false，那么数组就处于创建模式中，所以一般为true。</p>
+<p>知道了这5个参数的含义，我们就进入到这个putVal方法中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,</span><br><span class="line">               boolean evict) &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;</span><br><span class="line">    //第一部分</span><br><span class="line">    if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">        n = (tab = resize()).length;</span><br><span class="line">    //第二部分</span><br><span class="line">    if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">        tab[i] = newNode(hash, key, value, null);</span><br><span class="line">    //第三部分</span><br><span class="line">    else &#123;</span><br><span class="line">        Node&lt;K,V&gt; e; K k;</span><br><span class="line">        //第三部分第一小节</span><br><span class="line">        if (p.hash == hash &amp;&amp;</span><br><span class="line">            ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">            e = p;</span><br><span class="line">        //第三部分第二小节</span><br><span class="line">        else if (p instanceof TreeNode)</span><br><span class="line">            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br><span class="line">        //第三部分第三小节</span><br><span class="line">        else &#123;</span><br><span class="line">            for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">                //第三小节第一段</span><br><span class="line">                if ((e = p.next) == null) &#123;</span><br><span class="line">                    p.next = newNode(hash, key, value, null);</span><br><span class="line">                    if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                        treeifyBin(tab, hash);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                //第三小节第一段</span><br><span class="line">                if (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                    break;</span><br><span class="line">                //第三小节第三段</span><br><span class="line">                p = e;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //第三部分第四小节</span><br><span class="line">        if (e != null) &#123; // existing mapping for key</span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            if (!onlyIfAbsent || oldValue == null)</span><br><span class="line">                e.value = value;</span><br><span class="line">            afterNodeAccess(e);</span><br><span class="line">            return oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ++modCount;</span><br><span class="line">    //第四部分</span><br><span class="line">    if (++size &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">    afterNodeInsertion(evict);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>乍一看，这代码完全没有读下去的欲望，第一次看的时候真实恶心到想吐，但是结合上一开始画的流程图再来分析，相信就会好很多。我们把代码进行拆分（整体分了四大部分）：</p>
+<p>（1）Node&lt;K,V&gt;[] tab中tab表示的就是数组。Node&lt;K,V&gt; p中p表示的就是当前插入的节点</p>
+<p>（2）第一部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">       n = (tab = resize()).length;</span><br></pre></td></tr></table></figure>
+
+<p>这一部分表示的意思是如果数组是空的，那么就通过resize方法来创建一个新的数组。在这里resize方法先不说明，在下一小节扩容的时候会提到。</p>
+<p>（3）第二部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">      tab[i] = newNode(hash, key, value, null);</span><br></pre></td></tr></table></figure>
+
+<p>i表示在数组中插入的位置，计算的方式为(n - 1) &amp; hash。在这里需要判断插入的位置是否是冲突的，如果不冲突就直接newNode，插入到数组中即可，这就和流程图中第一个判断框对应了。</p>
+<p>如果插入的hash值冲突了，那就转到第三部分，处理冲突</p>
+<p>（4）第三部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">else &#123;</span><br><span class="line">    Node&lt;K,V&gt; e; K k;</span><br><span class="line">    //第三部分a</span><br><span class="line">    if (p.hash == hash &amp;&amp;</span><br><span class="line">        ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">        e = p;</span><br><span class="line">    //第三部分b</span><br><span class="line">    else if (p instanceof TreeNode)</span><br><span class="line">        e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br><span class="line">    //第三部分c</span><br><span class="line">    else &#123;</span><br><span class="line">        for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">            //第三小节第一段</span><br><span class="line">            if ((e = p.next) == null) &#123;</span><br><span class="line">                p.next = newNode(hash, key, value, null);</span><br><span class="line">                if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                    treeifyBin(tab, hash);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            //第三小节第一段</span><br><span class="line">            if (e.hash == hash &amp;&amp;</span><br><span class="line">                ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                break;</span><br><span class="line">            //第三小节第三段</span><br><span class="line">            p = e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //第三部分d</span><br><span class="line">    if (e != null) &#123; // existing mapping for key</span><br><span class="line">        V oldValue = e.value;</span><br><span class="line">        if (!onlyIfAbsent || oldValue == null)</span><br><span class="line">            e.value = value;</span><br><span class="line">        afterNodeAccess(e);</span><br><span class="line">        return oldValue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们会看到，处理冲突还真是麻烦，好在我们对这一部分又进行了划分</p>
+<p>a）第三部分第一小节：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (p.hash == hash </span><br><span class="line">     &amp;&amp;((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">     e = p;</span><br></pre></td></tr></table></figure>
+
+<p>在这里判断table[i]中的元素是否与插入的key一样，若相同那就直接使用插入的值p替换掉旧的值e。</p>
+<p>b）第三部分第二小节：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">else if (p instanceof TreeNode)</span><br><span class="line">       e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br></pre></td></tr></table></figure>
+
+<p>判断插入的数据结构是红黑树还是链表，在这里表示如果是红黑树，那就直接putTreeVal到红黑树中。这就和流程图里面的第二个判断框对应了。</p>
+<p>c）第三部分第三小节：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//第三部分c</span><br><span class="line">else &#123;</span><br><span class="line">     for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">        //第三小节第一段</span><br><span class="line">         if ((e = p.next) == null) &#123;</span><br><span class="line">              p.next = newNode(hash, key, value, null);</span><br><span class="line">              if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                  treeifyBin(tab, hash);</span><br><span class="line">                  break;</span><br><span class="line">         &#125;</span><br><span class="line">         //第三小节第一段</span><br><span class="line">         if (e.hash == hash &amp;&amp;</span><br><span class="line">               ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">              break;</span><br><span class="line">         //第三小节第三段</span><br><span class="line">         p = e;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果数据结构是链表，首先要遍历table数组是否存在，如果不存在直接newNode(hash, key, value, null)。如果存在了直接使用新的value替换掉旧的。</p>
+<p>注意一点：不存在并且在链表末尾插入元素的时候，会判断binCount &gt;= TREEIFY_THRESHOLD - 1。也就是判断当前链表的长度是否大于阈值8，如果大于那就会把当前链表转变成红黑树，方法是treeifyBin。这也就和流程图中第三个判断框对应了。</p>
+<p>（5）第四部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (++size &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">afterNodeInsertion(evict);</span><br><span class="line">return null;</span><br></pre></td></tr></table></figure>
+
+<p>插入成功之后，还要判断一下实际存在的键值对数量size是否大于阈值threshold。如果大于那就开始扩容了。</p>
+<p><strong>3、扩容</strong></p>
+<p>为什么扩容呢？很明显就是当前容量不够，也就是put了太多的元素。为此我们还是先给出一个流程图，再来进行分析。</p>
+<p><img src="https://pic2.zhimg.com/v2-f43eafe4e5d4d7616f885335fc185f3d_b.jpg" class="lazyload" data-srcset="https://pic2.zhimg.com/v2-f43eafe4e5d4d7616f885335fc185f3d_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p>
+<p>这个扩容就比较简单了，HaspMap扩容就是就是先计算 新的hash表容量和新的容量阀值，然后初始化一个新的hash表，将旧的键值对重新映射在新的hash表里。如果在旧的hash表里涉及到红黑树，那么在映射到新的hash表中还涉及到红黑树的拆分。整个流程也符合我们正常扩容一个容量的过程，我们根据流程图结合代码来分析：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">final Node&lt;K,V&gt;[] resize() &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] oldTab = table;</span><br><span class="line">    int oldCap = (oldTab == null) ? 0 : oldTab.length;</span><br><span class="line">    int oldThr = threshold;</span><br><span class="line">    int newCap, newThr = 0;</span><br><span class="line">    //第一部分：扩容</span><br><span class="line">    if (oldCap &gt; 0) &#123;</span><br><span class="line">        if (oldCap &gt;= MAXIMUM_CAPACITY) &#123;</span><br><span class="line">            threshold = Integer.MAX_VALUE;</span><br><span class="line">            return oldTab;</span><br><span class="line">        &#125;</span><br><span class="line">        else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;</span><br><span class="line">                 oldCap &gt;= DEFAULT_INITIAL_CAPACITY)</span><br><span class="line">            newThr = oldThr &lt;&lt; 1; // double threshold</span><br><span class="line">    &#125;</span><br><span class="line">    //第二部分：设置阈值</span><br><span class="line">    else if (oldThr &gt; 0) // initial capacity was placed in threshold</span><br><span class="line">        newCap = oldThr;</span><br><span class="line">    else &#123;               // zero initial threshold signifies using defaults</span><br><span class="line">        newCap = DEFAULT_INITIAL_CAPACITY;</span><br><span class="line">        newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);</span><br><span class="line">    &#125;</span><br><span class="line">    if (newThr == 0) &#123;</span><br><span class="line">        float ft = (float)newCap * loadFactor;</span><br><span class="line">        newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?</span><br><span class="line">                  (int)ft : Integer.MAX_VALUE);</span><br><span class="line">    &#125;</span><br><span class="line">    threshold = newThr;</span><br><span class="line">    @SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span><br><span class="line">        Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];</span><br><span class="line">    table = newTab;</span><br><span class="line">    //第三部分：旧数据保存在新数组里面</span><br><span class="line">    if (oldTab != null) &#123;</span><br><span class="line">        for (int j = 0; j &lt; oldCap; ++j) &#123;</span><br><span class="line">            Node&lt;K,V&gt; e;</span><br><span class="line">            if ((e = oldTab[j]) != null) &#123;</span><br><span class="line">                oldTab[j] = null;</span><br><span class="line">                //只有一个节点，通过索引位置直接映射</span><br><span class="line">                if (e.next == null)</span><br><span class="line">                    newTab[e.hash &amp; (newCap - 1)] = e;</span><br><span class="line">                //如果是红黑树，需要进行树拆分然后映射</span><br><span class="line">                else if (e instanceof TreeNode)</span><br><span class="line">                    ((TreeNode&lt;K,V&gt;)e).split(this, newTab, j, oldCap);</span><br><span class="line">                else &#123;</span><br><span class="line">                     //如果是多个节点的链表，将原链表拆分为两个链表</span><br><span class="line">                    Node&lt;K,V&gt; loHead = null, loTail = null;</span><br><span class="line">                    Node&lt;K,V&gt; hiHead = null, hiTail = null;</span><br><span class="line">                    Node&lt;K,V&gt; next;</span><br><span class="line">                    do &#123;</span><br><span class="line">                        next = e.next;</span><br><span class="line">                        if ((e.hash &amp; oldCap) == 0) &#123;</span><br><span class="line">                            if (loTail == null)</span><br><span class="line">                                loHead = e;</span><br><span class="line">                            else</span><br><span class="line">                                loTail.next = e;</span><br><span class="line">                            loTail = e;</span><br><span class="line">                        &#125;</span><br><span class="line">                        else &#123;</span><br><span class="line">                            if (hiTail == null)</span><br><span class="line">                                hiHead = e;</span><br><span class="line">                            else</span><br><span class="line">                                hiTail.next = e;</span><br><span class="line">                            hiTail = e;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; while ((e = next) != null);</span><br><span class="line">                    //链表1存于原索引</span><br><span class="line">                    if (loTail != null) &#123;</span><br><span class="line">                        loTail.next = null;</span><br><span class="line">                        newTab[j] = loHead;</span><br><span class="line">                    &#125;</span><br><span class="line">                    //链表2存于原索引加上原hash桶长度的偏移量</span><br><span class="line">                    if (hiTail != null) &#123;</span><br><span class="line">                        hiTail.next = null;</span><br><span class="line">                        newTab[j + oldCap] = hiHead;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return newTab;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这代码量同样让人恶心，不过我们还是分段来分析：</p>
+<p>（1）第一部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//第一部分：扩容</span><br><span class="line">if (oldCap &gt; 0) &#123;</span><br><span class="line">      if (oldCap &gt;= MAXIMUM_CAPACITY) &#123;</span><br><span class="line">           threshold = Integer.MAX_VALUE;</span><br><span class="line">           return oldTab;</span><br><span class="line">      &#125;</span><br><span class="line">      else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;</span><br><span class="line">          oldCap &gt;= DEFAULT_INITIAL_CAPACITY)</span><br><span class="line">            newThr = oldThr &lt;&lt; 1; // double threshold</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据代码也能看明白：首先如果超过了数组的最大容量，那么就直接将阈值设置为整数最大值，然后如果没有超过，那就扩容为原来的2倍，这里要注意是oldThr &lt;&lt; 1，移位操作来实现的。</p>
+<p>（2）第二部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//第二部分：设置阈值</span><br><span class="line">else if (oldThr &gt; 0) //阈值已经初始化了，就直接使用</span><br><span class="line">      newCap = oldThr;</span><br><span class="line">else &#123;    // 没有初始化阈值那就初始化一个默认的容量和阈值</span><br><span class="line">      newCap = DEFAULT_INITIAL_CAPACITY;</span><br><span class="line">      newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);</span><br><span class="line">&#125;</span><br><span class="line">if (newThr == 0) &#123;</span><br><span class="line">      float ft = (float)newCap * loadFactor;</span><br><span class="line">      newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?</span><br><span class="line">                      (int)ft : Integer.MAX_VALUE);</span><br><span class="line">&#125;</span><br><span class="line">//为当前的容量阈值赋值</span><br><span class="line">threshold = newThr;</span><br><span class="line">@SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span><br><span class="line">Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];</span><br><span class="line">table = newTab;</span><br></pre></td></tr></table></figure>
+
+<p>首先第一个else if表示如果阈值已经初始化过了，那就直接使用旧的阈值。然后第二个else表示如果没有初始化，那就初始化一个新的数组容量和新的阈值。</p>
+<p>（3）第三部分</p>
+<p>第三部分同样也很复杂，就是把旧数据复制到新数组里面。这里面需要注意的有下面几种情况：</p>
+<p>A：扩容后，若hash值新增参与运算的位=0，那么元素在扩容后的位置=原始位置</p>
+<p>B：扩容后，若hash值新增参与运算的位=1，那么元素在扩容后的位置=原始位置+扩容后的旧位置。</p>
+<p>hash值新增参与运算的位是什么呢？我们把hash值转变成二进制数字，新增参与运算的位就是倒数第五位。</p>
+<p>这里面有一个非常好的设计理念，扩容后长度为原hash表的2倍，于是把hash表分为两半，分为低位和高位，如果能把原链表的键值对， 一半放在低位，一半放在高位，而且是通过e.hash &amp; oldCap == 0来判断，这个判断有什么优点呢？</p>
+<p>举个例子：n = 16，二进制为10000，第5位为1，e.hash &amp; oldCap 是否等于0就取决于e.hash第5 位是0还是1，这就相当于有50%的概率放在新hash表低位，50%的概率放在新hash表高位。</p>
+<p>OK，到这一步基本上就算是把扩容这一部分讲完了，还有一个问题没有解决，也就是说存储的原理讲明白了，存储的元素多了如何扩容也明白了，扩容之后出现了地址冲突怎么办呢？</p>
+<p><strong>4、解决地址冲突</strong></p>
+<p>解决地址冲突的前提是计算的hash值出现了重复，我们就先来看看HashMap中，是如何计算hash值的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">     int h;</span><br><span class="line">     return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码是超级简单，hash值其实就是通过hashcode与16异或计算的来的，为什么要使用异或运算呢？画一张图你就明白了：</p>
+<p><img src="https://pic1.zhimg.com/v2-fe6755c8e427026b155c867f11efdbd0_b.jpg" class="lazyload" data-srcset="https://pic1.zhimg.com/v2-fe6755c8e427026b155c867f11efdbd0_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p>
+<p>也就是说，通过异或运算能够是的计算出来的hash比较均匀，不容易出现冲突。但是偏偏出现了冲突现象，这时候该如何去解决呢？</p>
+<p><strong>在数据结构中，我们处理hash冲突常使用的方法有：开发定址法、再哈希法、链地址法、建立公共溢出区。而hashMap中处理hash冲突的方法就是链地址法。</strong></p>
+<p>这种方法的基本思想是将所有哈希地址为i的元素构成一个称为同义词链的单链表，并将单链表的头指针存在哈希表的第i个单元中，因而查找、插入和删除主要在同义词链中进行。链地址法适用于经常进行插入和删除的情况。</p>
+<p><img src="https://pic2.zhimg.com/v2-08b1b12dfb7507704d45ecca236ebf91_b.jpg" class="lazyload" data-srcset="https://pic2.zhimg.com/v2-08b1b12dfb7507704d45ecca236ebf91_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p>
+<p>相信大家都能看明白，出现地址冲突的时候，一个接一个排成一条链就OK了。正好与HashMap底层的数据结构相呼应。</p>
+<p><strong>5、构造一个HashMap</strong></p>
+<p>上面可能出现的问题，我们都已经说明了，关于他的构造方法却姗姗来迟。下面我们好好说一下他的构造方法：</p>
+<p>他的构造方法一共有四个：</p>
+<p>第一个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public HashMap() &#123;</span><br><span class="line">     this.loadFactor = DEFAULT_LOAD_FACTOR; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public HashMap(int initialCapacity) &#123;</span><br><span class="line">     this(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第三个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public HashMap(Map&lt;? extends K, ? extends V&gt; m) &#123;</span><br><span class="line">    this.loadFactor = DEFAULT_LOAD_FACTOR;</span><br><span class="line">    putMapEntries(m, false);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第四个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public HashMap(int initialCapacity, float loadFactor) &#123;</span><br><span class="line">     if (initialCapacity &lt; 0)</span><br><span class="line">         throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +</span><br><span class="line">                                            initialCapacity);</span><br><span class="line">     if (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">         initialCapacity = MAXIMUM_CAPACITY;</span><br><span class="line">     if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))</span><br><span class="line">         throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +</span><br><span class="line">                                            loadFactor);</span><br><span class="line">     this.loadFactor = loadFactor;</span><br><span class="line">     this.threshold = tableSizeFor(initialCapacity);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这四个构造方法很明显第四个最麻烦，我们就来分析一下第四个构造方法，其他三个自然而然也就明白了。上面出现了两个新的名词：loadFactor和initialCapacity。我们一个一个来分析：</p>
+<p>（1）initialCapacity初始容量</p>
+<p>官方要求我们要输入一个2的N次幂的值，比如说2、4、8、16等等这些，但是我们忽然一个不小心，输入了一个20怎么办？没关系，虚拟机会根据你输入的值，找一个离20最近的2的N次幂的值，比如说16离他最近，就取16为初始容量。</p>
+<p>（2）loadFactor负载因子</p>
+<p>负载因子，默认值是0.75。负载因子表示一个散列表的空间的使用程度，有这样一个公式：initailCapacity*loadFactor=HashMap的容量。 所以负载因子越大则散列表的装填程度越高，也就是能容纳更多的元素，元素多了，链表大了，所以此时索引效率就会降低。反之，负载因子越小则链表中的数据量就越稀疏，此时会对空间造成烂费，但是此时索引效率高。</p>
+<p>为什么默认值会是0.75呢？我们截取一段jdk文档：</p>
+<p><img src="https://pic3.zhimg.com/v2-4e6b224503e39e90b9419946ba2f7166_b.jpg" class="lazyload" data-srcset="https://pic3.zhimg.com/v2-4e6b224503e39e90b9419946ba2f7166_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p>
+<p><img src="https://pic1.zhimg.com/v2-2936da1806372ffe26efa072de7da934_b.jpg" class="lazyload" data-srcset="https://pic1.zhimg.com/v2-2936da1806372ffe26efa072de7da934_b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p>
+<p>英语不好的人看的我真是一脸懵逼，不过好在大概意思还能明白。看第三行Poisson_distribution这不就是泊淞分布嘛。而且最关键的就是</p>
+<p>当桶中元素到达8个的时候，概率已经变得非常小，也就是说用0.75作为加载因子，每个碰撞位置的链表长度超过８个是几乎不可能的。当桶中元素到达8个的时候，概率已经变得非常小，也就是说用0.75作为加载因子，每个碰撞位置的链表长度超过８个是几乎不可能的。</p>
+<p><strong>6、HashMap为什么是非线程安全的？</strong></p>
+<p>想要解决这个问题，答案很简单，因为源码里面方法全部都是非线程安全的呀，你根本找不到synchronized这样的关键字。保证不了线程安全。于是出现了ConcurrentHashMap。</p>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=https://songsong.ink/2021/08/17/18c3a0674c7f.html>https://songsong.ink/2021/08/17/18c3a0674c7f.html</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+        <div class='donate'>
+          <div class='imgs'>
+            
+              <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'>
+            
+              <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'>
+            
+          </div>
+        </div>
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2022-05-15T08:41:27+00:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2022年5月15日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://songsong.ink/2021/08/17/18c3a0674c7f.html&title=hashmap - 松松闲谈&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://songsong.ink/2021/08/17/18c3a0674c7f.html&title=hashmap - 松松闲谈&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://songsong.ink/2021/08/17/18c3a0674c7f.html&title=hashmap - 松松闲谈&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/2021/08/20/c4bf1f45066d.html'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>linux端口号</p>
+          <p class='content'>第一种：lsof -i:端口号
+第二种：netstat -nltp | grep 端口号
+
+-a：显示本机所有连接和监听地端口
+-n：网络IP地址的形式，显示当前建立的有效连接和端口
+-r：显示...</p>
+        </a>
+      
+      
+        <a class='next' href='/2021/08/16/f5eb7f7f9a8b.html'>
+          <p class='title'>进程间通信<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>进程间的通信方式
+管道
+消息队列
+共享内存
+信号量
+信号
+Socket
+
+管道管道方式举例: | 就是一个匿名管道将ps aux的输出作为后一个命令的输入，而且很显然管道是单向的。双向通信就需要...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="hashmap";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+  // header 这里无论是否开启pjax都需要
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+  
+    // cover
+    var cover_wrapper=document.querySelector('.cover-wrapper');
+    
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
+    
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1" target="_blank" class="codename">Volantis</a>
+        作为主题
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+      
+        
+          <div><p><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">冀ICP备20008971号-1</a> | <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13042702000176">冀公网安备 13042702000176</a></p>
+</div>
+        
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+  
+  
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+        var imgs=["https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/001.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/002.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/003.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/004.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/005.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/006.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/012.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/016.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/019.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/025.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/033.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/034.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/035.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/038.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/039.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/042.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/046.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/051.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/052.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/054.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/056.jpg"];
+        if ('true' == 'true') {
+          function shuffle(arr){
+            /*From countercurrent-time*/
+            var n = arr.length;
+            while(n--) {
+              var index = Math.floor(Math.random() * n);
+              var temp = arr[index];
+              arr[index] = arr[n];
+              arr[n] = temp;
+            }
+          }
+          shuffle(imgs);
+        }
+	  function Pjax_backstretch(){
+        
+          $('#cover-backstretch').backstretch(
+            imgs,
+          {
+            duration: "10000",
+            fade: "1500"
+          });
+        
+	  }
+	  loadScript("https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js",Pjax_backstretch)
+    </script>
+  
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"45XuYwW4CnkTjOslixYzl0SF-gzGzoHsz","appKey":"F6snhsB3zg7uSRF7mTRKh6Ub","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'https://songsong.ink' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'https://songsong.ink' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'https://songsong.ink' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+var btn=$("#wrapper .toggle-mode-btn,#rightmenu-wrapper .toggle-mode-btn");
+function bindToggleButton() {
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	btn.unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>

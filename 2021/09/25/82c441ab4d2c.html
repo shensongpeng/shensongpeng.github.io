@@ -1,0 +1,2083 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>面试常考问题总结 - 松松闲谈</title>
+  
+    <meta name="keywords" content="review">
+  
+
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="松松闲谈" type="application/atom+xml">
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=启用JavaScript"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div id='cover-backstretch'></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">松松闲谈</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>首页</p>
+            </a>
+          
+            <a href="/categories/"
+              
+              
+              id="categories">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4da.svg'><p>分类</p>
+            </a>
+          
+            <a href="/tags/"
+              
+              
+              id="tags">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>标签</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4dc.svg'><p>归档</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>博客</p>
+            </a>
+          
+            <a target="_blank" rel="noopener" href="https://github.com/volantis-x/hexo-theme-volantis/"
+              
+              
+              id="https:githubcomvolantis-xhexo-theme-volantis">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f9ec.svg'><p>源码</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        面试常考问题总结
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>申松朋</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/Network/">计算机网络</a>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年9月25日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="面试常考问题总结" data-path="/2021/09/25/82c441ab4d2c.html">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <h2 id="计算机网络面试题"><a href="#计算机网络面试题" class="headerlink" title="计算机网络面试题"></a>计算机网络面试题</h2><ol>
+<li><p>对TCP协议的了解</p>
+</li>
+<li><p>TCP的特性以及为什么是可靠的？</p>
+</li>
+<li><p>三次握手？为什么要做三次握手？</p>
+</li>
+<li><p>三次握手说一下，ACK为啥加一。</p>
+</li>
+<li><p>time_wait状态知道不，说一下</p>
+</li>
+<li><p>HTTP请求报头，状态码</p>
+</li>
+<li><p>ios模型七层是什么，为什么分层。</p>
+</li>
+<li><p>   TCP和UDP有什么区别？9</p>
+</li>
+<li><p>   TCP怎么三次握手的？</p>
+</li>
+<li><p>   说下TCP断开连接的过程。</p>
+</li>
+<li><p>   TCP的可靠是怎么保证的</p>
+</li>
+<li><p>   三次握手、四次挥手、timewait意义</p>
+</li>
+<li><p>   http状态吗</p>
+</li>
+<li><p>   http报头有什么</p>
+</li>
+<li><p>   传输视频用什么协议、传输文件用什么协议</p>
+</li>
+<li><p>   10亿的数据如何找前10大的</p>
+</li>
+<li><p>   TCP流量控制怎么实现</p>
+</li>
+<li><p>   TCP建立链接后，网线突然拔掉，在插上，链接还在不在</p>
+</li>
+<li><p>   TCP保活定时器应用层能知道吗</p>
+</li>
+<li><p>   TIME_WAIT会不会占用端口号？TIME_WAIT占用大量端口号，客户端链接不上服务器，怎么解决？</p>
+</li>
+<li><ol start="20">
+<li>   Udp如何实现可靠性传输</li>
+</ol>
+</li>
+<li><ol start="23">
+<li>   遥控器控制电视是用tcp还是udp</li>
+</ol>
+</li>
+<li><p>   syn攻击解决方法（回答了一种）</p>
+</li>
+<li><p>   四次挥手 timewait没有会发生什么（提示下回答）</p>
+</li>
+<li><p>   epoll 两种模式 边沿触发和水平触发（提示下回答出来）</p>
+</li>
+<li><p>   虚拟内存 交换区</p>
+</li>
+<li><p>   set和无序的set谁的效率高为什么</p>
+</li>
+<li><p>   HTTP的了解  post和get的区别</p>
+</li>
+<li><p>   HTTP详细的（不会，跳过）</p>
+</li>
+<li><p>   6.浏览器输入<a href="http://www.maoyan.com发生了什么？">www.maoyan.com发生了什么？</a></p>
+</li>
+<li><p>   http长链接与短连接？长链接一直不断开会出现什么问题？怎么解决这个问题？</p>
+</li>
+<li><p>长链接实现原理？</p>
+</li>
+<li><p>http中GET和POST请求的方式？</p>
+</li>
+<li><p>http状态码含义，500和502的区别？401？</p>
+</li>
+<li><p>ARP协议？</p>
+</li>
+<li><p>http中的一些请求方法。</p>
+</li>
+<li><p>8、Time_wait 状态的作用</p>
+</li>
+<li><p>三次握手解决了什么问题</p>
+</li>
+<li><p>两台主机能同时相互进行三次握手连接嘛</p>
+</li>
+<li><p>ARP协议 </p>
+</li>
+<li><p>.为什么有了ip地址还要mac地址</p>
+</li>
+<li><p>Tcp有可能被劫持吗？  tcp传输过程中信息会泄露吗？</p>
+</li>
+<li><p>HTTPS怎么保证安全的</p>
+</li>
+<li><p>查看tcp状态用哪个命令</p>
+</li>
+<li><p>把这些状态统计起来用哪个命令（比如time_wait状态有几个）</p>
+</li>
+<li><p>粘包问题</p>
+</li>
+<li><p>说一下管道，进程间的五种通信方式，三种线程同步方式</p>
+</li>
+<li><p>为什么用无名管道不用有名管道</p>
+</li>
+<li><p>除了管道，具体说一下其他方式</p>
+</li>
+<li><p>.一般网络上的视频传输用的是什么协议</p>
+</li>
+<li><p>微信支付中客户端发起一笔支付用tcp还是udp</p>
+</li>
+<li><p>HTTP协议常见的状态码</p>
+</li>
+<li><p>对称加密和非对称加密的区别</p>
+</li>
+<li><p>数字签名</p>
+</li>
+<li><p>tcp拥塞控制知道吗？讲一下拥塞控制</p>
+</li>
+<li><p>慢启动中的起始值是1，单位是什么？</p>
+</li>
+<li><p>tcp报文头部有哪些信息，怎么知道自己可以发送多少数据给对方？</p>
+</li>
+<li><p>socket编程里象征三次握手的地方在哪儿？TCP三次握手四次挥手的状态，如果没有TIME_WAIT状态会怎样，time-wait状态如果很多，怎么避免？</p>
+</li>
+<li><p>udp发送的数据一定是完整的嘛？</p>
+</li>
+<li><p>为什么分层？（1）多层之间相互独立，灵活性好（2）结构上可分割开来，易于实现和维护（3）促进标准化工作</p>
+</li>
+<li><p>问我怎么获取ip地址，我给他讲了从应用层到各层的数据段封装。他说不是，然后让我用电脑打开cmd 输入ipconfig /all 看一下DHCP服务器问我DHCP是干啥的？我说不清楚，然后他给我讲了5分的DHCP原理</p>
+</li>
+<li><p>问了下进程通讯及目的，进程间内存隔离。</p>
+</li>
+<li><p>fork3次之后创建几个进程</p>
+</li>
+<li><p>linux两台主机之间拷贝数据命令</p>
+</li>
+<li><p>三次握手的过程？每一次都携带什么数据？为什么要给确认报文段中的ack的值加1，为什么不是2,3,4？<br>（1）客户端请求建立连接，发送序列号<br>（2）服务器确认连接，发送确认报文，并发送自己的序列号<br>（3）客户端发送确认报文<br>如果是在建立连接的过程中，那么这仅仅是一个规定，三次握手的协议就是如此说明的。在数据收发的过程中，确认号也表示了在次字节之前的数据已经收到的到确认，可以放心发送后边的数据，加一可以确定下一次发送应该其实的位置。</p>
+</li>
+<li><p>四次挥手最后主动断开方为什么要等待2MSL？TIME_WAIT状态是什么?<br>（1）保证安全的断开连接，假设被动断开方第一次发送的断开请求报文在网络滞留了，收不到确认又重新发了一次，第二次收到了确认则连接断开，如果此时滞留的报文又到达了，此时主动断开方有可能已经重新建立的tcp连接，就会收到一个错误的报文<br>（2）保证迟到的报文被丢弃</p>
+</li>
+<li><p>管道是半双工、socket是全双工</p>
+</li>
+<li><p>TCP和UDP的区别？如何处理TCP粘包问题？<br>Tcp是面向连接的可靠的流式服务<br>Udp是无连接的不可靠的数据报服务<br>粘包问题的解决方法：<br>（1）    暴力解决，每次需要发数据时再建立tcp连接，发送结束就断开连接<br>（2）    定常数据结构，如果规定每次发送的数据报长度是一定的，那么接收方每次读取固定长读的报文即可<br>（3）    不定长数据结构：多数情况我们使用的不是定长的数据结构，第一种方法可以规定一个特殊的符号作为结束符，每当遇到这个结束符才认为该报文接收结束，但是该方法只适用于字符数据，因        为对其他二进制数据无法确定是结束符还是要发送的数据第二种方法是，在固定的偏移位置写入报文的长度，接收方每次读取先获取到报文的长度，再接收该长度大小的报文即可</p>
+</li>
+<li><p>HTTP协议的报头是什么？请求方法？<br>Http协议的报头是用来区分报文的类型，比如客户端发送一个请求报文，那么该报文是请求报文就要在报头中说明，是响应报文也要在报头中说明。<br>Get、Post</p>
+</li>
+<li><p>time_wait的意义，2 MLS指的是什么</p>
+</li>
+<li><p>HTTP协议头部的TTL字段代表什么？代表报文的最大跳数（最长生存时间），主要是为了防止报文段在网络中一直循环的进行传输所设置的，当达到最大跳数后该报文段会被自动丢弃。</p>
+</li>
+</ol>
+<h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><ol>
+<li>进程间通信</li>
+<li>线程间通信，</li>
+<li>线程间的同步方式具体说</li>
+<li>说下共享内存 ，有两个进程，连接同一共享内存，这两个进程映射到共享内存上的虚拟地址是相同的吗？ 两个进程之间通过共享内存共享一段内存地址空间，这个是怎么实现的？</li>
+<li>共享内存解决互斥</li>
+<li>进程线程的资源分配的区别 </li>
+<li>select和epoll吗？有什么区别？</li>
+<li>怎样解决线程互斥</li>
+<li>虚拟空间地址大小用户态和内核态</li>
+<li>系统调用从用户态到内核态的过程</li>
+<li>epoll的ET、LT模式 简短的说下</li>
+<li>内存泄漏，怎么解决？</li>
+<li>用户态内核态，切换过程</li>
+<li>如果很多个用户同时用了一个系统调用，会发生什么情况？怎么解决？</li>
+<li> Linux2.6版本后内核的抢占式，是依据什么可以进行抢占的</li>
+<li>内存对齐，内存对齐是编译器还是操作系统实现的？为什么要有内存对齐？</li>
+<li>分页管理和分段管理的区别</li>
+<li>软链接和硬链接的区别</li>
+<li>udp发送的数据报在网络层丢失了怎么办？应用层会不会知道这个包丢失了？udp知不知道</li>
+<li>连续多次malloc和free之后是否能直接使用内存（不懂）</li>
+<li>僵尸进程的概念、处理方法？通过信号调用wait函数可能出现的问题？</li>
+<li>死锁</li>
+<li>协程比线程有哪些优势</li>
+<li>.两个进程之间使用管道会启动新进程吗</li>
+<li>管道是怎么实现的</li>
+<li>多进程和多线程区别？微信底层用的是多进程，你怎么看？（多进程相比多线程的优势），</li>
+<li>select,poll,epoll的区别。</li>
+<li>代码里面从一个文件读内容，操作系统都做了什么</li>
+</ol>
+<h2 id="linux命令"><a href="#linux命令" class="headerlink" title="linux命令"></a>linux命令</h2><ol>
+<li>文件夹按时间排序显示的命令（没答出来），那ls -t中-t参数是什么意思</li>
+<li>查看进程的命令（回答的ps -ef），-ef所表示的意思是什么</li>
+<li>用过head命令吗</li>
+<li>linux文件合并，进程状态查询，cpu内存使用查询，磁盘内存查询。</li>
+<li>如何在Linux下查看磁盘空间？</li>
+<li>如何查看端口有没有监听？</li>
+<li>查看网络状态的命令</li>
+<li>liunx命令，查看进程，查看负载均衡</li>
+<li>介绍管道，项目中用的是什么管道，项目中怎么用的管道</li>
+<li>Linux中对文件和进程等相关操作的命令。</li>
+<li>Linux 查看系统IO的命令</li>
+<li>建立软链接的命令</li>
+<li>修改文件的读写权限用到的命令，这个命令有哪些参数？</li>
+<li>统计文件有多少行、多少字节用什么命令？</li>
+<li>查找文件里字符串的命令？</li>
+<li>ps的参数</li>
+<li>了解脚本，awk sed</li>
+<li>如何查看tcp状态，用什么命令？查看进程的命令，查看负载均衡的命令，linux脚本里如何获取文件的某一行某一列数据</li>
+<li>如何查看tcp的状态  netstat</li>
+<li>如何查看共享内存 ipcs</li>
+<li>Tcp查看状态用什么命令，具体的参数，会出现什么状态？TIME_WAIT和CLOSE_WAIT有什么区别？</li>
+<li>ttl</li>
+<li>缺页中断</li>
+<li>strcpy函数原型和实现</li>
+<li>内存泄漏了怎么办？有哪些内存泄漏？内存泄漏的检测工具？</li>
+<li>布隆过滤器</li>
+<li>read和fread的区别，哪个效率高</li>
+<li>查看内存运行状态命令（一个八核的系统，如何查看所有内存运行状态）</li>
+<li>.Linux下操作指令执行过程</li>
+<li>.recv函数返回值的意义</li>
+<li>查看共享内存命令</li>
+<li>pwd命令怎么实现的</li>
+<li>top和ps命令</li>
+<li>在linux下，程序出现了死循环，会产生什么现象，除了jdb调试，还有其他什么方法可以查看出现了死循环</li>
+<li>linux下buff、swap。。。。。。什么什么的区别</li>
+<li>Linux查看资源使用情况，具体是什么函数比较消耗资源。</li>
+<li>当你top命令时，每一列的含义是什么讲一下。</li>
+<li>已经连接上了，服务器down了，客户端会作何反应。</li>
+<li>连接池知道吗？讲一下。</li>
+<li>io复用（select和epoll的区别）</li>
+<li>要求回答关于进程操作等命令</li>
+<li>如果某一进程造成CPU满了，是什么原因造成的，如何解决？</li>
+<li>如何查看系统性能/系统监测的命令</li>
+<li>top命令中关于负载的命令是什么，loadavg知道吗</li>
+<li>负载在操作系统里跟什么关联，怎么判断一个服务负载很高（不会，他解释说跟物理核数有关，任务比核数多会导致CPU频繁切换，负载高，比核数少会让CPU闲置）</li>
+<li>随便说，说明操作系统是怎么应用的，当你进行一个操作时，操作系统在这个过程中都做了什么事情，操作系统怎么运转的（我说的是系统调用这个点）</li>
+<li>怎么设计一个分布式存储系统</li>
+</ol>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><ol>
+<li>数据库引擎知道哪些，有什么区别</li>
+<li>什么是索引，索引的存储结构是什么</li>
+<li>给你一个sql语句,怎么优化</li>
+<li>mysql索引方式</li>
+<li>数据库提高查询效率的方法？索引的实现原理？</li>
+<li>操作系统内存管理？</li>
+<li>说一下第二范式和第三范式</li>
+<li>索引的底层实现，为什么要用索引？加了索引，还是查询很慢，问题出在哪里？</li>
+<li>索引是可以优化查询，那还有其他优化方式吗</li>
+<li>索引单列索引和多列索引有什么区别</li>
+<li>有哪些Sql优化</li>
+<li>聚集索引高效，为什么要有非聚集索引</li>
+<li>为什么要建立索引，好处和坏处。</li>
+<li>左连接、右连接、内连接讲一下。</li>
+<li>？mysql可不可以对多个字段建索引？</li>
+</ol>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ol>
+<li>如何解决哈希表的冲突？</li>
+<li>B+和B-的区别是什么？b树和b+树有什么却别，分别适合应用在什么场景</li>
+<li>map的底层，红黑树的特点，为什么用红黑树而不用别的树</li>
+<li>了解nat吗？</li>
+<li>map中的key可不可以是结构体？是结构体的话怎么判断key重复</li>
+<li>二叉树，平衡树  二叉树：红黑树，平衡二叉树（问的比较细，时间复杂度，特征）</li>
+<li>堆栈的区别</li>
+<li>堆栈的数据结构</li>
+<li>一个email表，有id/name两列，用sql语句删除重复的name，只剩下一个（这个真的触及到盲区了，面试官说可以用join做）</li>
+</ol>
+<h2 id="场景题"><a href="#场景题" class="headerlink" title="场景题"></a>场景题</h2><ol>
+<li>如果有一个项目跑了两天之后崩溃了，怎么查这个原因？    </li>
+<li>在Linux下有调试过吗？如果CPU达到100%，怎么调试？如果只有一个程序？如何确认是因为多个线程为响应造成的CPU达满？</li>
+<li>除了多线程和多进程之外，什么也可以用来实现并发，提高效率？</li>
+<li>对分布式系统的了解，多个地方的服务器怎么保证数据的一致性？</li>
+<li>遍历一个文件获取文件后十行（我说用tail命令，他让我不要用命令自己想办法实现，又说了好几种方法他都不满意，最后提示我用快慢指针解决）</li>
+<li>设计题：设计一个类似于朋友圈或者微博的软件，上线之后看关注的好友的发的最新动态</li>
+<li>情景题：有64皮马，一个马场里有8个跑道，用最少的场数确定跑的最快的4皮马，</li>
+<li>买火车票经常出现无法访问，服务器负载过大，如何解决?  客户端方向和服务器方向思考 如何降低服务器上的连接数量。</li>
+<li>了解过cache方面的编程么?</li>
+<li>TCP和UDP的使用场景。</li>
+<li>服务端要给别人回包，但是对端套接字已经关了，服务器会出现什么情况 ?如果只是客户端的进程退出了，会怎么样，从网络交互方面回答</li>
+<li>3、有一栋100层高的大楼，给你两个完全相同的玻璃球。假设从某一层开始，丢下玻璃球会摔碎，请问到哪一层会摔碎？（说思想，说了一种方法让继续改进），如果照你说的，先扔x层的思想，怎么确定这个分组。</li>
+<li>linux命令中的mv，cp，mv,cp谁的效率快？为什么他们有什么区别？结合指针谈谈他们的实现？如果让你写一个mv,和cp，你会怎么设计？（有什么更好的办法？）。</li>
+<li>缓存知道不？作用是什么？在数据库之间加缓存，缓存属于内存吗？数据库的数据在哪儿放着？</li>
+<li>10.编程题找10亿个数字前100大</li>
+<li>udp报文最大发送大小     </li>
+<li>读文件找出积分最高的100个用户 大顶堆 treemap （其实我的思路是优先队列，但面试官要我用treemap）</li>
+</ol>
+<h2 id="算法："><a href="#算法：" class="headerlink" title="算法："></a>算法：</h2><ol>
+<li>找到一个链表环的入口</li>
+<li>二进制转换成8进制</li>
+<li>大文件去重排序</li>
+<li>，冒泡、归并、快排、选择排序的时间复杂度？</li>
+<li>atoi</li>
+<li>快排怎么实现的，讲思路</li>
+<li>怎么用两个栈实现一个队列？有没有更好的办法</li>
+<li>编写代码，求二叉树的宽度</li>
+<li>将100,101,102,103,104,105以数组的形式写入到Dest.txt文件中，并以相反的顺序读出显示在屏幕上。</li>
+<li><ol start="5">
+<li>   给出10G的数据，每条存储的一条ip地址，求重复率最高的top5</li>
+</ol>
+</li>
+<li>有s个人，围着桌子坐，随机选取一个人开始报数，报到m号时将他剔除，重新开始报数，依次进行，输出剔除序列（主要说数据结构）</li>
+<li>对数据进行排序，选择算法进行排序（我选了快排加插入）？排序思想</li>
+<li>海量数据进行排序</li>
+<li>排序有没有考虑堆排？我说堆排适用于topk之类的算法</li>
+<li>1~10000个数随机取出一个数，且乱序，找出这个数</li>
+<li>链表找环</li>
+<li>大根堆，小根堆。</li>
+<li>一个单向链表，应该怎么样设计一个方法，看里面是否存在一个环 除了快慢指针还有什么办法   要求空间复杂度是O(1)</li>
+<li>寻找数组中前10大的数据？时间复杂度？排序：如果数字基于有序：插入排序、希尔排序 如果数字毫无规则：快速排序  如果数字集中在某个较小的区域内，建立哈希表</li>
+<li>升序数组找出和为指定数字的所有对(小米)</li>
+<li>1 3 5 6 4 1类似这种先升后降的单链表 将其变成排好序的链表（小米）</li>
+<li>一个数组中一个数出现两次，其它数都出现四次，要求找出这个数，要求时间复杂度nlogn，空间复杂度logn，</li>
+</ol>
+<ol start="20">
+<li>进程间通讯的方式有哪些？使用同一块共享内存的进程使用的虚拟地址相同吗？为什么？<br>信号、信号量、共享内存、消息队列、管道、套接字<br>有可能相同有可能不同，共享内存实际上已相当于文件，对于共享内存的文件映射到内存，如果两个进程完全相同的话，虚拟地址就是相同的，比如fork出来的进程和父进程访问同一个共享内存虚拟地址就可能相同。而进程如果有一点细微的不同，那么虚拟地址就会有差异</li>
+</ol>
+<h2 id="语言方面："><a href="#语言方面：" class="headerlink" title="语言方面："></a>语言方面：</h2><ol>
+<li>i++是原子操作</li>
+<li>多态</li>
+<li>new一个对象，new之后java后台做了哪些工作</li>
+<li>类加载过程</li>
+<li>双亲委派模型的好处</li>
+<li>怎样破坏双亲委派模型</li>
+<li>互斥锁 读写锁 读写锁怎么用 手写实现一个读写锁（。。。不会）</li>
+<li>用多线程手写一个生产者消费者模型（。。。也不会）</li>
+<li>事务 并发事务造成的问题 事务的隔离级别</li>
+<li>索引 聚集 非聚集 B+树 唯一性索引 普通索引 全文索引 最左前缀 联合索引</li>
+<li>锁 表锁中共享读锁 独占写锁 行锁中共享锁 排他锁</li>
+<li>乐观锁 悲观锁 间隙锁 （当时忘讲意向锁了）</li>
+<li>项目中用到的索引有啥？</li>
+<li>实际应用中有用到锁机制吗？</li>
+<li>多线程锁的区别</li>
+<li>Java访问修饰符的区别</li>
+<li>为什么重写equals方法必须重写hashcode()方法。</li>
+<li>如何实现子线程结束父线程才能结束</li>
+<li>Spring AOP的原理</li>
+</ol>
+<p>c++；</p>
+<ol>
+<li>说下基类派生类的构造析构顺序？</li>
+<li>构造函数能不能是纯虚函数？ 不能的原因？</li>
+</ol>
+<p>设计模式</p>
+<ol>
+<li>观察者模式是什么？大致说一下代码</li>
+<li>单例模式 手写单例模式（写的双重if判断带锁的）-》问怎么优化？饿汉模式、懒汉模式 以及具体使用场景 使用单例模式应该注意什么<br>为什么要使用单例模式<br>（3）工厂模式 普通工厂 抽象工厂<br>（4）观察者模式</li>
+</ol>
+<h2 id="Java面试题"><a href="#Java面试题" class="headerlink" title="Java面试题"></a>Java面试题</h2><ol>
+<li>多级缓存是怎么做的，怎么保证缓存中的数据是最新的</li>
+<li>分布式下，怎么保证多个定时任务服务不会重复执行？</li>
+<li>一个用户订单表，一个用户有可能多个订单，查询出每个用户的最新订单（当时脑子抽筋了，想太复杂了，后面想了一下好像只要先group by 再 max（date））</li>
+<li>Java 新建线程有哪几种方式</li>
+<li>Java 内存区域，new出来的对象分配在哪里，堆内存里面是怎么划分的，为什么要分为新生代，老年代</li>
+<li>线程有哪些状态，阻塞状态和等待状态有什么区别</li>
+<li>数据库建立索引的原则，复合索引的命中规则</li>
+<li>zookeeper 节点类型</li>
+<li>说下 spring 的 IOC 与 AOP</li>
+<li>Java 反射有哪几种方式</li>
+<li>-1000 到 1000 这两千个数用什么排序比较好</li>
+<li>100 万个数用什么排序比较好</li>
+<li>解决哈希冲突的方法</li>
+<li>HashMap 的源码，把知道的都说说，后面追问 HashMap 扩容后怎么确定的元素在新的数组中的位置</li>
+<li>B 树与 B+ 树的区别</li>
+<li>redis 为什么快</li>
+<li>怎么解决缓存穿透和缓存击穿，例如有黑客一直请求 id=-1 的数据怎么办？</li>
+<li>Java的集合有了解吗，有哪几种</li>
+<li>了解HashMap吗</li>
+<li>HashMap的原理讲一下</li>
+<li>HashMap和HashTable有什么区别</li>
+<li>HashTable和ConCurrentHashMap的区别</li>
+<li>HashMap的get实现是怎样的一个过程</li>
+<li>多线程了解吗，讲一下线程的操作</li>
+<li>sleep和wait的区别</li>
+<li>线程池有了解吗</li>
+<li>有哪几种线程池</li>
+<li>线程池的优点</li>
+<li>java的泛型了解吗，一般用在什么场景        泛型就是把类型参数化，在编译的时候才会确定具体的参数。可以用在类、接口、方法中。场景：我觉得当类 方法 接口 这些 当我们不确定使用的对象的类型是啥 或者 可能存在多种类型的可能的时候，可以使用泛型。最熟悉的就是集合类的实现都用到了泛型，这样我们在用的时候可以在&lt;&gt;中指定自己的需求，而不针对每种类型设计一个新的类。用上泛型可以提高类型的安全性，避免强转等。（有官方回答的求指导）</li>
+<li>什么场景用String，什么场景用StringBuffer 看需求 是否存在线程安全问题，空间限制，时间限制</li>
+<li>JVM怎么判断对象是否可以回收（可达性分析法）</li>
+<li>可达性分析法中一般可以选哪些对象作为GC root，常量可以吗？虚拟机栈(栈帧中的本地变量表)中引用的对象。方法区中静态属性引用的对象。方法区中常量引用的对象。本地方法栈中(Native方法)引用的对象</li>
+<li>springBoot启动流程</li>
+<li>springMVC请求流程(不会，答适配器模式，json互相转换，就硬扯)</li>
+<li>springboot自动配置原理(好多次问到我这个了，我是真的不会呀，八股文一背就会，一说就废)</li>
+<li>定义了事务但是事务失效的场景</li>
+<li>拦截器原理(不会)</li>
+<li>mybatis动态SQL原理(不会)</li>
+<li>已经在zookeeper中注册了的类，再次注册会怎样(知识盲区，不会)</li>
+<li>Redis的5种数据类型以及底层数据结构</li>
+<li>ArrayList和LinkedList的区别和应用场景</li>
+<li>上面的两个集合对应的线程安全类</li>
+<li>LinkedBlockQueue源码</li>
+<li>CopyOnWriteArrayList源码</li>
+<li>HashMap源码</li>
+<li>ConcurrentHashMap源码</li>
+<li>问多线程了解吗(因为框架答得不好，就说了精通多线程，哈哈哈，头铁)</li>
+<li>线程创建方式</li>
+<li>FutureTask如何获取返回值</li>
+<li>Java线程生命周期和操作系统生命周期</li>
+<li>多线程的debug</li>
+<li>如何解决并发问题</li>
+<li>AQS源码</li>
+<li>公平锁，非公平锁，可重入锁，不可重入锁怎么设计的</li>
+<li>CountDownLatch源码</li>
+<li>四种引用类型以及应用场景</li>
+<li>threadlocal源码</li>
+<li>synchronized修饰静态方法和非静态方法区别</li>
+<li>字节码中两个monitorexit分别代表什么</li>
+<li>读写屏障</li>
+<li>synchronized可重入原理</li>
+<li>从OS层面讲一下为什么synchronized要尽量减小加锁范围和避免重入</li>
+<li>synchronized锁升级过程</li>
+<li>如何判断对象锁状态</li>
+<li>偏心锁的记录过程</li>
+<li>什么情况下hash码处不能放线程ID</li>
+<li>hashcode如何计算</li>
+<li>对象如何分配，垃圾如何回收，经历了哪些流程</li>
+<li>很多线程同时往Eden区同时申请内存，分配对象，虚拟机怎么减少往同一块内存上分配对象的冲突</li>
+<li>gc分代年龄最大值，为什么最大值是15</li>
+<li>假设你设计jvm，你会在哪存gc年龄</li>
+<li>cms是老年代垃圾回收器，它的搭档有哪些?</li>
+<li>cms为什么使用串行垃圾回收器作为备案</li>
+<li>cms如何调优</li>
+<li>G1垃圾回收过程</li>
+<li>散射标记法(完全没听过)</li>
+<li>颜色指针</li>
+<li>B+树数据结构，聚簇索引，回表</li>
+<li>没有唯一值，还有聚簇索引吗</li>
+<li>explain会关注哪些信息</li>
+<li>索引失效场景</li>
+<li>jmm</li>
+<li>volatile</li>
+<li>指令重排序，内存屏障</li>
+<li>cas/aba问题</li>
+<li>synchronized锁升级过程</li>
+<li>自旋锁一定会提高效率？</li>
+<li>重量级锁的原理</li>
+<li>线程池七大参数&amp;拒绝策略&amp;工作原理</li>
+<li>JUC相关知道哪些？</li>
+<li>集合ArrayList，hashmap，linkedlist，concurrentHashmap原理&amp;扩容机制</li>
+<li>知道哪些Gc算法，可达性分析算法什么对象做为根对象？</li>
+<li>Tcp知道什么（说了保证可靠性的机制&amp;提高性能的机制）</li>
+<li>幂等性的实现</li>
+<li>线程池中的线程为什么可以一直处理任务不销毁</li>
+<li>mvc 和 servlet 的关系</li>
+<li>ping 在什么层</li>
+<li>创建一个存放100个元素的 hashmap 应该设置多大保证不扩容</li>
+<li>linux进程之间怎么通信的。(IPC)</li>
+<li>多态问的很底层 两个方法，一个参数string，一个参数obj， 调用传参null，问调用哪个方法， 不会</li>
+<li>10亿个数找两个重复数字 </li>
+<li>10亿个数找最小10个</li>
+</ol>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=https://songsong.ink/2021/09/25/82c441ab4d2c.html>https://songsong.ink/2021/09/25/82c441ab4d2c.html</a></p>
+              
+            
+          </blockquote>
+        </div>
+      
+      
+        <div class='donate'>
+          <div class='imgs'>
+            
+              <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'>
+            
+              <img src='https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/qrcode/github@volantis.png'>
+            
+          </div>
+        </div>
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2022-05-15T08:41:27+00:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2022年5月15日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/review/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>review</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://songsong.ink/2021/09/25/82c441ab4d2c.html&title=面试常考问题总结 - 松松闲谈&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://songsong.ink/2021/09/25/82c441ab4d2c.html&title=面试常考问题总结 - 松松闲谈&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=https://songsong.ink/2021/09/25/82c441ab4d2c.html&title=面试常考问题总结 - 松松闲谈&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=">
+          
+        </a>
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/2021/09/27/cf616068382c.html'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>面经记录</p>
+          <p class='content'>2021/9/27 小米
+上来自我接受问项目遇到哪些难点
+动态代理了解吗
+static了解吗（回答可以修饰类 、方法和变量）
+内部类有哪些（回到静态内部类，普通内部类，还有别的吗？你用过new ...</p>
+        </a>
+      
+      
+        <a class='next' href='/2021/09/18/a3e5f334146b.html'>
+          <p class='title'>负载均衡<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>负载均衡算法1. 轮循均衡（Round Robin）每一次来自网络的请求轮流分配给内部中的服务器，从 1 至N然后重新开始。此种均衡算法适合 于服务器组中的所有服务器都有相同的软硬件配置并且平均...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-text">计算机网络面试题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-text">操作系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linux%E5%91%BD%E4%BB%A4"><span class="toc-text">linux命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E9%A2%98"><span class="toc-text">场景题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%EF%BC%9A"><span class="toc-text">算法：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E6%96%B9%E9%9D%A2%EF%BC%9A"><span class="toc-text">语言方面：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-text">Java面试题</span></a></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="面试常考问题总结";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+  // header 这里无论是否开启pjax都需要
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+  
+    // cover
+    var cover_wrapper=document.querySelector('.cover-wrapper');
+    
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
+    
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+          
+            
+          
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1" target="_blank" class="codename">Volantis</a>
+        作为主题
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2020 XXX</a></p>
+
+        </div>
+      
+    
+      
+        
+          <div><p><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">冀ICP备20008971号-1</a> | <a target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13042702000176">冀公网安备 13042702000176</a></p>
+</div>
+        
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+  
+  
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+        var imgs=["https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/001.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/002.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/003.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/004.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/005.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/006.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/012.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/016.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/019.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/025.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/033.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/034.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/035.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/038.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/039.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/042.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/046.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/051.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/052.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/054.jpg", "https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper-minimalist/2020/056.jpg"];
+        if ('true' == 'true') {
+          function shuffle(arr){
+            /*From countercurrent-time*/
+            var n = arr.length;
+            while(n--) {
+              var index = Math.floor(Math.random() * n);
+              var temp = arr[index];
+              arr[index] = arr[n];
+              arr[n] = temp;
+            }
+          }
+          shuffle(imgs);
+        }
+	  function Pjax_backstretch(){
+        
+          $('#cover-backstretch').backstretch(
+            imgs,
+          {
+            duration: "10000",
+            fade: "1500"
+          });
+        
+	  }
+	  loadScript("https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js",Pjax_backstretch)
+    </script>
+  
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":"45XuYwW4CnkTjOslixYzl0SF-gzGzoHsz","appKey":"F6snhsB3zg7uSRF7mTRKh6Ub","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'https://songsong.ink' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'https://songsong.ink' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'https://songsong.ink' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+var btn=$("#wrapper .toggle-mode-btn,#rightmenu-wrapper .toggle-mode-btn");
+function bindToggleButton() {
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	btn.unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>
